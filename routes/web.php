@@ -1,5 +1,7 @@
 <?php
 
+use App\User;
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,6 +17,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/search', function() {
+	$user = User::find(2);
+
+	return $user->research;
+});
+
+Route::get('/search/{searchKey}', function ($searchKey) {
+    return \App\User::search($searchKey)->get();;
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/search', 'HomeController@search')->name('search');
