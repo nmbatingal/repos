@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Researches extends Model
 {
-	public function 
+	//
 }

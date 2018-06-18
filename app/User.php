@@ -11,13 +11,20 @@ class User extends Authenticatable
     use Notifiable;
     use Searchable;
 
+    protected $table = 'users';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 
+        'firstname', 
+        'middlename',
+        'lastname',
+        'email',
+        'mobile',
+        'password',
     ];
 
     /**
@@ -32,10 +39,5 @@ class User extends Authenticatable
     public function searchableAs()
     {
         return 'users_index';
-    }
-
-    public static function researches()
-    {
-        return $this->belongsToMany('App\Researchers');
     }
 }

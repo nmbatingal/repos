@@ -14,13 +14,11 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('landing');
 });
 
-Route::get('/search', function() {
-	$user = User::find(2);
-
-	return $user->research;
+Route::get('/author/upload', function () {
+    return view('author.upload');
 });
 
 Route::get('/search/{searchKey}', function ($searchKey) {
