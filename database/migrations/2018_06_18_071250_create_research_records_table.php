@@ -27,7 +27,8 @@ class CreateResearchRecordsTable extends Migration
             $table->integer('created_by_id')->nullable()->unsigned();
 
             $table->text('authors');
-            $table->string('file_attachment')->nullable();
+            $table->string('filename')->nullable();
+            $table->string('filesize')->nullable();
 
             $table->timestamps();
 

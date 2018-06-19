@@ -8,7 +8,7 @@
                 <div class="panel-heading">Upload Research</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="#" enctype="multipart/form-data">
+                    <form class="form-horizontal" method="POST" action="{{ route('author.store') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
                         <div class="form-group">

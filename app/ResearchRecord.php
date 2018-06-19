@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ResearchRecord extends Model
 {
+    use Uuids;
+
+    public $incrementing = false;
     protected $table = 'research_records';
 
     protected $fillable = [
@@ -13,11 +16,13 @@ class ResearchRecord extends Model
         'alternate_title',
         'abstract',
         'publication_type',
+        'publication_date',
         'pages',
         'keywords',
         'created_by_id',
         'authors',
-        'file_attachment',
+        'filename',
+        'filesize',
     ];
 
     public function createdBy()

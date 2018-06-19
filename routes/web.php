@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
-    return view('landing');
+    return view('welcome');
 });
 
 Route::get('/author/upload', function () {
@@ -28,4 +28,5 @@ Route::get('/search/{searchKey}', function ($searchKey) {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('/author', 'ResearchRecordController');
 // Route::get('/search', 'HomeController@search')->name('search');
