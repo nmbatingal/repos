@@ -10,7 +10,9 @@ class User extends Authenticatable
 {
     use Notifiable;
     use Searchable;
+    use Uuids;
 
+    public $incrementing = false;
     protected $table = 'users';
     /**
      * The attributes that are mass assignable.

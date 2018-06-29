@@ -24,7 +24,7 @@ class CreateResearchRecordsTable extends Migration
             $table->integer('pages');
 
             $table->string('keywords')->nullable();
-            $table->integer('created_by_id')->nullable()->unsigned();
+            $table->uuid('created_by_id')->index()->nullable();
 
             $table->text('authors');
             $table->string('filename')->nullable();

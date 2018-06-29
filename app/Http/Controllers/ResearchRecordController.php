@@ -52,17 +52,16 @@ class ResearchRecordController extends Controller
 
             $filename = $request->pub_file->getClientOriginalName();
             $filesize = $request->pub_file->getClientSize();
-
             
             $record->filename = $filename;
             $record->filesize = $filesize;
         }
 
         if ( $record->save() ) {
-            $request->pub_file->storeAs('public/user-'.$record->created_by_id.'/'.$record->id, $filename);
+            $request->pub_file->storeAs('public/users/'.$record->created_by_id.'/research/'.$record->id, $filename);
         }
 
-        return redirect();
+        return redirect('/home');
     }
 
     /**
