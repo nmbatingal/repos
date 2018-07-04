@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use DB;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -36,6 +37,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
+        // DB::setDefaultConnection('user_connection');
         $this->middleware('guest');
     }
 
@@ -66,7 +68,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        /*return User::connection('user_connection')->create([
             'name' => $data['firstname'] .' ' . $data['lastname'],
             'firstname' => $data['firstname'],
             'middlename' => $data['middlename'] ?: '',
@@ -74,6 +76,17 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'mobile' => $data['mobile'],
             'password' => bcrypt($data['password']),
-        ]);
+        ]);*/
+
+        $user = new User;
+        $user->name = $data['firstname'] .' ' . $data['lastname'];
+        $user->firstname = $data['firstname'];
+        $user->middlename = $data['middlename'] ?: '';
+        $user->lastname = $data['lastname'];
+        $user->email = $data['email'];
+        $user->mobile = $data['mobile'];
+        $user->password = bcrypt($data['password']);
+
+        return $user->save();
     }
 }

@@ -9,11 +9,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
-    use Searchable;
+    // use Searchable;
     use Uuids;
 
-    public $incrementing = false;
-    protected $table = 'users';
+    protected $connection = "user_connection";
+    protected $table      = "users";
+    public $incrementing  = false;
     /**
      * The attributes that are mass assignable.
      *
@@ -35,7 +36,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'id', 'password', 'remember_token',
     ];
 
     public function searchableAs()
