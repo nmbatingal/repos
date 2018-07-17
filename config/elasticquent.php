@@ -27,6 +27,6 @@ return array(
     | Elasticquent models.
     */
 
-    'default_index' => 'articles',
+    'default_index' => 'research',
 
 );

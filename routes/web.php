@@ -1,7 +1,6 @@
 <?php
 
-use App\User;
-use Illuminate\Http\Request;
+use App\Articles;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,7 +13,20 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
+
+	// Articles::deleteIndex();
+	// Articles::createIndex();
+	Articles::reindex();
+
     return view('welcome');
+});
+
+Route::get('/search', function() {
+
+    $articles = Articles::searchByQuery(['match' => ['title' => 'Sed']]);
+
+    // return $articles->chunk(2);
+
 });
 
 Route::get('/author/upload', function () {
@@ -29,4 +41,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/author', 'ResearchRecordController');
+
+
 // Route::get('/search', 'HomeController@search')->name('search');
