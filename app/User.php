@@ -12,15 +12,16 @@ class User extends Authenticatable
     // use Searchable;
     use Uuids;
 
-    protected $connection = "user_connection";
-    protected $table      = "users";
-    public $incrementing  = false;
+    protected $connection    = "user_connection";
+    protected $table         = "users";
+    public    $incrementing  = false;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
+        'username', 
         'name', 
         'firstname', 
         'middlename',
@@ -28,6 +29,7 @@ class User extends Authenticatable
         'email',
         'mobile',
         'password',
+        'isactive',
     ];
 
     /**
@@ -36,7 +38,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'id', 'password', 'remember_token',
+        'id', 'password', 'remember_token', 'isactive',
     ];
 
     public function searchableAs()
