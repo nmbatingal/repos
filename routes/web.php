@@ -16,7 +16,7 @@ Route::get('/', function () {
 
 	// Articles::deleteIndex();
 	// Articles::createIndex();
-	Articles::reindex();
+	// Articles::reindex();
 
     return view('welcome');
 });
@@ -25,7 +25,7 @@ Route::get('/search', function() {
 
     $articles = Articles::searchByQuery(['match' => ['title' => 'Sed']]);
 
-    // return $articles->chunk(2);
+    return dd($articles);
 
 });
 
