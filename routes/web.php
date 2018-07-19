@@ -25,7 +25,19 @@ Route::get('/search', function() {
 
     $articles = Articles::searchByQuery(['match' => ['title' => 'Sed']]);
 
+    //return dd($articles);
+
+    /*$hits = array_pluck($articles['hits']['hits'], '_source') ?: [];
+
+    $sources = array_map(function ($source) {
+    	$source['tags'] = json_encode($source['tags']);
+    	return $source;
+    }, $hits);
+
+    return Articles::hydrate($sources);*/
+
     return dd($articles);
+
 
 });
 
