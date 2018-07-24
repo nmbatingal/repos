@@ -35,6 +35,7 @@ Route::get('/search', function() {
             ];
 
     $research = ResearchRecord::searchByQuery($query);
+    // $research = ResearchRecord::hydrateElasticsearchResult($query);
 
     // $hits = array_pluck($research['hits']['hits'], '_source') ?: [];
 
@@ -46,7 +47,7 @@ Route::get('/search', function() {
         }, $hits);*/
 
 
-    return dd($research);
+    return $research;
 
     /*$hits = array_pluck($articles['hits']['hits'], '_source') ?: [];
 
