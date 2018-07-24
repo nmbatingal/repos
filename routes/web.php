@@ -27,9 +27,26 @@ Route::get('/', function () {
 Route::get('/search', function() {
 
     //$articles = Articles::searchByQuery(['match' => ['title' => 'Sed']]);
-    $research = ResearchRecord::searchByQuery(['match' => ['title' => request('q')]]);
+    $query = [
+                'multi_match' => [
+                    'query' => (string) request('q'),
+                    'fields' => ['title^3', 'abstract', 'keywords'],                
+                ],
+            ];
 
-    //return dd($articles);
+    $research = ResearchRecord::searchByQuery($query);
+
+    // $hits = array_pluck($research['hits']['hits'], '_source') ?: [];
+
+    /*$sources = array_map(function ($source) {
+            // The hydrate method will try to decode this
+            // field but ES gives us an array already.
+            $source['keywords'] = json_encode($source['keywords']);
+            return $source;
+        }, $hits);*/
+
+
+    return dd($research);
 
     /*$hits = array_pluck($articles['hits']['hits'], '_source') ?: [];
 
@@ -40,7 +57,8 @@ Route::get('/search', function() {
 
     return Articles::hydrate($sources);*/
 
-    return dd($research);
+    //return dd($research);
+    //return ResearchRecord::hydrate($sources);
 
 
 });
