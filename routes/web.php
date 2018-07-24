@@ -1,6 +1,8 @@
 <?php
 
 use App\Articles;
+use App\ResearchRecord;
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,14 +18,16 @@ Route::get('/', function () {
 
 	// Articles::deleteIndex();
 	// Articles::createIndex();
-	// Articles::reindex();
+    // Articles::reindex();
+	// ResearchRecord::reindex();
 
     return view('welcome');
 });
 
 Route::get('/search', function() {
 
-    $articles = Articles::searchByQuery(['match' => ['title' => 'Sed']]);
+    //$articles = Articles::searchByQuery(['match' => ['title' => 'Sed']]);
+    $research = ResearchRecord::searchByQuery(['match' => ['title' => request('q')]]);
 
     //return dd($articles);
 
@@ -36,7 +40,7 @@ Route::get('/search', function() {
 
     return Articles::hydrate($sources);*/
 
-    return dd($articles);
+    return dd($research);
 
 
 });

@@ -25,7 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $records = Record::all();
+        $records = Record::paginate(10);
         return view('home', compact('records'));
     }
 

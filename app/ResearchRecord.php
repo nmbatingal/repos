@@ -2,11 +2,13 @@
 
 namespace App;
 
+use Elasticquent\ElasticquentTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class ResearchRecord extends Model
 {
     use Uuids;
+    use ElasticquentTrait;
 
     public $incrementing = false;
     protected $table = 'research_records';
@@ -24,6 +26,26 @@ class ResearchRecord extends Model
         'filename',
         'filesize',
     ];
+
+    protected $mappingProperties = [
+        'title' => [
+          'type' => 'text',
+          "analyzer" => "standard",
+        ],
+        'abstract' => [
+          'type' => 'text',
+          "analyzer" => "standard",
+        ],
+        'keywords' => [
+          'type' => 'text',
+          "analyzer" => "standard",
+        ],
+    ];
+
+    public function getIndexName()
+    {
+        return 'research';
+    }
 
     public function createdBy()
     {

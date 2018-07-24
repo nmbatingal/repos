@@ -9,6 +9,7 @@
         "algolia/algoliasearch-client-php": "^1.25",
         "doctrine/dbal": "^2.5",
         "elasticquent/elasticquent": "dev-master",
+        "elasticsearch/elasticsearch": "^6.0",
         "laravel/framework": "5.4.*",
         "laravel/scout": "^3.0",
         "laravel/tinker": "~1.0",

@@ -3,55 +3,51 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <form action="{{ url('search') }}" method="get">
+                        <div class="form-group">
+                            <input
+                                type="text"
+                                name="q"
+                                class="form-control"
+                                placeholder="Search..."
+                                value="{{ request('q') }}"
+                            />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Articles <small>({{ $records->count() }})</small></div>
 
                 <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+                    @forelse($records as $record)
+                        <article>
+                            <h2>{{ $record->title }}</h2>
 
-                    You are logged in!
+                            <p>{{ $record->abstract }}</p>
+                            <p>
+                                <a href="{{ asset('storage/users/'.$record->created_by_id.'/research/'.$record->id.'/'.$record->filename) }}">
+                                   {{ $record->filename }}
+                                </a>
+                            </p>
+                            <p class="well">{{ $record->keywords }}</p>
+                        </article>
+                    @empty
+                        <p>No articles found</p>
+                    @endforelse
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Records List</div>
 
-                <div class="panel-body"><table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">First</th>
-                      <th scope="col">Last</th>
-                      <th scope="col">Handle</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($records as $record)
-                        <tr>
-                          <th scope="row"></th>
-                          <td>{{ $record->title }}</td>
-                          <td>
-                            <a href="{{ asset('storage/users/'.$record->created_by_id.'/research/'.$record->id.'/'.$record->filename) }}">
-                              {{ $record->filename }}
-                            </a>
-                            
-                          </td>
-                          <td></td>
-                        </tr>
-                    @endforeach
-                  </tbody>
-                </table>
-                </div>
-            </div>
-        </div>
-    </div>
+    {{ $records->render() }}
 </div>
 @endsection
