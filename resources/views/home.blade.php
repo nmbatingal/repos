@@ -25,10 +25,10 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-primary">
-                <div class="panel-heading">Articles <small>({{ $records->count() }})</small></div>
+                <div class="panel-heading">Articles <small>({{ $research->count() }})</small></div>
 
                 <div class="panel-body">
-                    @forelse($records as $record)
+                    @forelse($research as $record)
                         <article>
                             <h2>{{ $record->title }}</h2>
 
@@ -47,7 +47,5 @@
             </div>
         </div>
     </div>
-
-    {{ $records->render() }}
 </div>
 @endsection

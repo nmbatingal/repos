@@ -80,11 +80,11 @@ Route::get('/search', function() {
         ]
     ];
 
-
     $response = $client->search($params);
     $research = ResearchRecord::hydrateElasticsearchResult( (array) $response );
-    return dd($research);
 
+    // return dd($research);
+    return view('home', compact('research'));
 
 });
 

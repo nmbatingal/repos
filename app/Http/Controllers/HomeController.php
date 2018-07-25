@@ -25,14 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $records = Record::paginate(10);
-        return view('home', compact('records'));
-    }
-
-
-    public function search()
-    {
-        // $users = User::search('users')->get();
-        // return view('search', compact('users'));
+        $research = Record::all();
+        return view('home', compact('research'));
     }
 }
