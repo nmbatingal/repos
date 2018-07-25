@@ -3,6 +3,7 @@
 use App\Articles;
 use App\ResearchRecord;
 use Illuminate\Http\Request;
+use Elasticsearch\ClientBuilder;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,13 +15,16 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('/articles', function() {
+    Articles::deleteIndex();
+});
+
+Route::get('/research', function() {
+    // ResearchRecord::deleteIndex();
+    ResearchRecord::reindex();
+});
+
 Route::get('/', function () {
-
-	// Articles::deleteIndex();
-	// Articles::createIndex();
-    // Articles::reindex();
-	// ResearchRecord::reindex();
-
     return view('welcome');
 });
 
@@ -34,8 +38,8 @@ Route::get('/search', function() {
                 ],
             ];
 
-    $research = ResearchRecord::searchByQuery($query);
-    // $research = ResearchRecord::hydrateElasticsearchResult($query);
+    // $result   = ResearchRecord::search('harum');
+    // $research = ResearchRecord::hydrateElasticsearchResult( (array) $result );
 
     // $hits = array_pluck($research['hits']['hits'], '_source') ?: [];
 
@@ -47,7 +51,7 @@ Route::get('/search', function() {
         }, $hits);*/
 
 
-    return $research;
+    // return $result;
 
     /*$hits = array_pluck($articles['hits']['hits'], '_source') ?: [];
 
@@ -60,6 +64,26 @@ Route::get('/search', function() {
 
     //return dd($research);
     //return ResearchRecord::hydrate($sources);
+
+    $client = ClientBuilder::create()->build();
+
+    $params = [
+        'index' => 'research',
+        'type' => 'research_type',
+        'body' => [
+            'query' => [
+                'multi_match' => [
+                    'query' => (string) request('q'),
+                    'fields' => ['title^3', 'abstract', 'keywords'],                
+                ],
+            ]
+        ]
+    ];
+
+
+    $response = $client->search($params);
+    $research = ResearchRecord::hydrateElasticsearchResult( (array) $response );
+    return dd($research);
 
 
 });

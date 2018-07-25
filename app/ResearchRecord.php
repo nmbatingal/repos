@@ -47,6 +47,11 @@ class ResearchRecord extends Model
         return 'research';
     }
 
+    public function getTypeName()
+    {
+        return 'research_type';
+    }
+
     public function createdBy()
     {
         return $this->belongsTo('App\User', 'created_by_id', 'id');
