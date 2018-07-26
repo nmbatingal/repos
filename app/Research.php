@@ -5,51 +5,60 @@ namespace App;
 use Elasticquent\ElasticquentTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class ResearchRecord extends Model
+class Research extends Model
 {
     use Uuids;
     use ElasticquentTrait;
 
     public $incrementing = false;
-    protected $table = 'research_records';
+    protected $table = 'researches';
 
     protected $fillable = [
         'title',                
-        'alternate_title',          // nullable
-        'abstract',         
-        'publication_type',         // nullable
-        'publication_date',         // nullable
-        'pages',                    
-        'keywords',                 // nullable
-        'created_by_id',            // nullable
-        'authors',                  
+        'authors',
+        'project_duration',         // nullable         
+        'funding_agency',           // nullable
+        'project_cost',             // nullable                  
+        'abstract',                  
         'filename',                 // nullable
         'filesize',                 // nullable
+        'keywords',
+        'log_id',                   // nullable
+        'status',                   // nullable  
     ];
 
     protected $mappingProperties = [
         'title' => [
           'type' => 'text',
-          "analyzer" => "standard",
+        ],
+        'project_duration' => [
+          'type' => 'text',
+        ],
+        'funding_agency' => [
+          'type' => 'text',
+        ],
+        'project_cost' => [
+          'type' => 'text',
         ],
         'abstract' => [
           'type' => 'text',
-          "analyzer" => "standard",
         ],
         'keywords' => [
           'type' => 'text',
-          "analyzer" => "standard",
+        ],
+        'status' => [
+          'type' => 'boolean',
         ],
     ];
 
     public function getIndexName()
     {
-        return 'research';
+        return $this->table;
     }
 
     public function getTypeName()
     {
-        return 'research_type';
+        return 'research';
     }
 
     public function createdBy()

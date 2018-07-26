@@ -1,6 +1,7 @@
 <?php
 
 use App\Articles;
+use App\Research;
 use App\ResearchRecord;
 use Illuminate\Http\Request;
 use Elasticsearch\ClientBuilder;
@@ -16,12 +17,14 @@ use Elasticsearch\ClientBuilder;
 */
 
 Route::get('/articles', function() {
-    Articles::deleteIndex();
+    // Articles::deleteIndex();
 });
 
 Route::get('/research', function() {
     // ResearchRecord::deleteIndex();
-    ResearchRecord::reindex();
+    // ResearchRecord::reindex();
+    // Research::createIndex($shards = null, $replicas = null);
+    // Research::reindex();
 });
 
 Route::get('/', function () {
@@ -74,22 +77,24 @@ Route::get('/search', function() {
             'query' => [
                 'multi_match' => [
                     'query' => (string) request('q'),
-                    'fields' => ['title^3', 'abstract', 'keywords'],                
+                    'fields' => ['title^5', 'abstract', 'keywords'],                
                 ],
             ]
         ]
     ];
 
-    $response = $client->search($params);
-    $research = ResearchRecord::hydrateElasticsearchResult( (array) $response );
+    // $response = $client->search($params);
+    $research = ResearchRecord::searchByQuery($query);
+    // $research = ResearchRecord::hydrateElasticsearchResult( (array) $response );
 
     // return dd($research);
     return view('home', compact('research'));
+    // return dd($research);
 
 });
 
-Route::get('/author/upload', function () {
-    return view('author.upload');
+Route::get('/research/upload', function () {
+    return view('research.upload');
 });
 
 Route::get('/search/{searchKey}', function ($searchKey) {
@@ -100,6 +105,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/author', 'ResearchRecordController');
+Route::resource('/research', 'ResearchController');
 
 
 // Route::get('/search', 'HomeController@search')->name('search');

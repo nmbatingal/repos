@@ -4,11 +4,21 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Storage;
-use App\ResearchRecord as Record;
+use App\Researches;
 use Illuminate\Http\Request;
 
-class ResearchRecordController extends Controller
+class ResearchController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -37,28 +47,28 @@ class ResearchRecordController extends Controller
      */
     public function store(Request $request)
     {
-        $record = new Record;
-        $record->title = $request->title;
-        $record->alternate_title = $request->alttitle ?: Null;
-        $record->abstract = nl2br($request->abstract);
-        $record->publication_type = nl2br($request->pub_type) ?: Null;
-        $record->publication_date = nl2br($request->pub_date) ?: Null;
-        $record->keywords = nl2br($request->keywords) ?: Null;
-        $record->authors = nl2br($request->author);
-        $record->pages = $request->pub_pages ?: Null;
-        $record->created_by_id = auth()->user()->id;
+        $research = new Researches;
+        $research->title = $request->title;
+        $research->authors = $request->author;
+        $research->abstract = nl2br($request->abstract);
+        $research->pages = $request->pub_pages ?: Null;
+        $research->created_by_id = Auth::user()->id;
 
         if ( $request->hasFile('pub_file') ) {
 
             $filename = $request->pub_file->getClientOriginalName();
             $filesize = $request->pub_file->getClientSize();
             
-            $record->filename = $filename;
-            $record->filesize = $filesize;
+            $research->filename = $filename;
+            $research->filesize = $filesize;
+
+            $request->pub_file->storeAs('public/users/'. Auth::user()->id .'/research/'.$research->id, $filename);
         }
 
-        if ( $record->save() ) {
-            $request->pub_file->storeAs('public/users/'.$record->created_by_id.'/research/'.$record->id, $filename);
+        if ( $research->save() ) {
+            if ( $request->hasFile('pub_file') ) {
+                $request->pub_file->storeAs('public/users/'. Auth::user()->id .'/research/'.$research->id, $filename);
+            }
         }
 
         return redirect('/home');

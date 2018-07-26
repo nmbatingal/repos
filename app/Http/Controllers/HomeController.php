@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\ResearchRecord As Record;
+use App\Researches;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -25,7 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $research = Record::all();
+        $research = Researches::all();
         return view('home', compact('research'));
     }
 }
