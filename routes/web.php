@@ -16,20 +16,12 @@ use Elasticsearch\ClientBuilder;
 |
 */
 
-Route::get('/articles', function() {
-    // Articles::deleteIndex();
-});
-
 Route::get('/researches', function() {
-    // ResearchRecord::deleteIndex();
-    // ResearchRecord::reindex();
-    // Research::createIndex($shards = null, $replicas = null);
     // Research::reindex();
     // Research::rebuildMapping();
 
     // Research::deleteIndex();
-    Research::createIndex($shards = null, $replicas = null);
-    // Research::reindex();
+    // Research::createIndex($shards = null, $replicas = null);
 });
 
 Route::get('/', function () {
@@ -38,7 +30,6 @@ Route::get('/', function () {
 
 Route::get('/search', function() {
 
-    //$articles = Articles::searchByQuery(['match' => ['title' => 'Sed']]);
     $query = [
                 'multi_match' => [
                     'query' => (string) request('q'),
@@ -73,7 +64,7 @@ Route::get('/search', function() {
     //return dd($research);
     //return ResearchRecord::hydrate($sources);
 
-    $client = ClientBuilder::create()->build();
+    /*$client = ClientBuilder::create()->build();
 
     $params = [
         'index' => 'research',
@@ -86,15 +77,13 @@ Route::get('/search', function() {
                 ],
             ]
         ]
-    ];
+    ];*/
 
     // $response = $client->search($params);
     $research = Research::searchByQuery($query);
     // $research = ResearchRecord::hydrateElasticsearchResult( (array) $response );
 
-    // return dd($research);
     return view('home', compact('research'));
-    // return dd($research);
 
 });
 
@@ -111,6 +100,3 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/author', 'ResearchRecordController');
 Route::resource('/research', 'ResearchController');
-
-
-// Route::get('/search', 'HomeController@search')->name('search');
