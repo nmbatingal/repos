@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Storage;
-use App\Researches;
+use App\Research;
 use Illuminate\Http\Request;
 
 class ResearchController extends Controller
@@ -47,28 +47,33 @@ class ResearchController extends Controller
      */
     public function store(Request $request)
     {
-        $research = new Researches;
+        $research = new Research;
         $research->title = $request->title;
         $research->authors = $request->author;
+        $research->project_duration = $request->project_duration;
+        $research->funding_agency = $request->funding_agency;
+        $research->project_cost = $request->project_cost;
         $research->abstract = nl2br($request->abstract);
-        $research->pages = $request->pub_pages ?: Null;
-        $research->created_by_id = Auth::user()->id;
+        $research->keywords = $request->keywords;
+        $research->log_id = Auth::user()->id;
+        $research->status = $request->has('status') ? true : false;
 
-        if ( $request->hasFile('pub_file') ) {
+        if ( $request->hasFile('research_file') ) {
 
-            $filename = $request->pub_file->getClientOriginalName();
-            $filesize = $request->pub_file->getClientSize();
+            $filename = $request->research_file->getClientOriginalName();
+            $filesize = $request->research_file->getClientSize();
             
             $research->filename = $filename;
             $research->filesize = $filesize;
-
-            $request->pub_file->storeAs('public/users/'. Auth::user()->id .'/research/'.$research->id, $filename);
         }
 
         if ( $research->save() ) {
-            if ( $request->hasFile('pub_file') ) {
-                $request->pub_file->storeAs('public/users/'. Auth::user()->id .'/research/'.$research->id, $filename);
+
+            if ( $request->hasFile('research_file') ) {
+                $request->research_file->storeAs('public/users/'. Auth::user()->id .'/research/'.$research->id, $filename);
             }
+
+            $research->addToIndex();
         }
 
         return redirect('/home');

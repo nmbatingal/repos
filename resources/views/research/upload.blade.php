@@ -28,21 +28,21 @@
                         <div class="form-group">
                             <label for="title" class="col-md-3 control-label">Project Duration</label>
                             <div class="col-md-9">
-                                <input id="project_duration" type="text" class="form-control" name="project_duration" value="{{ old('project_duration') }}" required>
+                                <input id="project_duration" type="text" class="form-control" name="project_duration" value="{{ old('project_duration') }}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="title" class="col-md-3 control-label">Funding Agency</label>
                             <div class="col-md-9">
-                                <input id="funding_agency" type="text" class="form-control" name="funding_agency" value="{{ old('funding_agency') }}" required>
+                                <input id="funding_agency" type="text" class="form-control" name="funding_agency" value="{{ old('funding_agency') }}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="title" class="col-md-3 control-label">Project Cost</label>
                             <div class="col-md-9">
-                                <input id="project_cost" type="text" class="form-control" name="project_cost" value="{{ old('project_cost') }}" required>
+                                <input id="project_cost" type="text" class="form-control" name="project_cost" value="{{ old('project_cost') }}">
                             </div>
                         </div>
 
@@ -56,14 +56,14 @@
                         <div class="form-group">
                             <label for="keywords" class="col-md-3 control-label">Keywords</label>
                             <div class="col-md-9">
-                                <textarea id="keywords" class="form-control" name="keywords" rows="2" required>{{ old('keywords') }}</textarea>
+                                <input id="keywords" type="text" class="form-control" name="keywords" value="{{ old('keywords') }}" required>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="author" class="col-md-3 control-label">Author</label>
-                            <div class="col-md-9">
-                                <textarea id="author" class="form-control" name="author" rows="4" required>{{ old('author') }}</textarea>
+                            <label for="keywords" class="col-md-3 control-label">Status</label>
+                            <div class="col-md-1">
+                                <input id="keywords" type="checkbox" class="form-control" name="status">
                             </div>
                         </div>
 

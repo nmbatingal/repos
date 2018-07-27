@@ -30,24 +30,34 @@ class Research extends Model
     protected $mappingProperties = [
         'title' => [
           'type' => 'text',
+          'analyzer' => 'standard',
         ],
         'project_duration' => [
           'type' => 'text',
+          'analyzer' => 'standard',
         ],
         'funding_agency' => [
           'type' => 'text',
+          'analyzer' => 'standard',
         ],
         'project_cost' => [
           'type' => 'text',
+          'analyzer' => 'standard',
         ],
         'abstract' => [
           'type' => 'text',
+          'analyzer' => 'standard',
         ],
         'keywords' => [
           'type' => 'text',
+          'analyzer' => 'standard',
         ],
         'status' => [
           'type' => 'boolean',
+        ],
+        'updated_at' => [
+          'type' => 'date',
+          'format' => "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis",
         ],
     ];
 

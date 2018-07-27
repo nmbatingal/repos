@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Researches;
+use App\Research;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -25,7 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $research = Researches::all();
+        $research = Research::all();
         return view('home', compact('research'));
     }
 }
