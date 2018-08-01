@@ -1,0 +1,4 @@
+[2018-07-13 17:43:31] [info]  [ 6940] Commons Daemon procrun (1.0.15.0 64-bit) started
+[2018-07-13 17:43:31] [info]  [ 6940] Service elasticsearch-service-x64 name Elasticsearch 6.3.0 (elasticsearch-service-x64)
+[2018-07-13 17:43:31] [info]  [ 6940] Service 'elasticsearch-service-x64' installed
+[2018-07-13 17:43:31] [info]  [ 6940] Commons Daemon procrun finished

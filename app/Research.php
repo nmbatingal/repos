@@ -32,6 +32,10 @@ class Research extends Model
           'type' => 'text',
           'analyzer' => 'standard',
         ],
+        'authors' => [
+          'type' => 'text',
+          'analyzer' => 'standard',
+        ],
         'project_duration' => [
           'type' => 'text',
           'analyzer' => 'standard',

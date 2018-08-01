@@ -11,11 +11,15 @@
   },
   "devDependencies": {
     "axios": "^0.16.2",
-    "bootstrap-sass": "^3.3.7",
+    "bootstrap": "^4.0.0-alpha.6",
     "cross-env": "^5.0.1",
-    "jquery": "^3.1.1",
+    "jquery": "^3.2.1",
     "laravel-mix": "^1.0",
     "lodash": "^4.17.4",
+    "tether": "^1.4.0",
     "vue": "^2.1.10"
+  },
+  "dependencies": {
+    "font-awesome": "^4.7.0"
   }
 }

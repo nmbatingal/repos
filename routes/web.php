@@ -15,17 +15,19 @@ use Elasticsearch\ClientBuilder;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/blank', function() {
+    return view('blank');
+});
 
 Route::get('/researches', function() {
+    // Research::createIndex($shards = null, $replicas = null);
     // Research::reindex();
     // Research::rebuildMapping();
-
     // Research::deleteIndex();
-    // Research::createIndex($shards = null, $replicas = null);
 });
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('blank');
 });
 
 Route::get('/search', function() {
@@ -33,7 +35,7 @@ Route::get('/search', function() {
     $query = [
                 'multi_match' => [
                     'query' => (string) request('q'),
-                    'fields' => ['title^3', 'abstract', 'keywords'],                
+                    'fields' => ['title^3', 'authors', 'abstract', 'keywords'],                
                 ],
             ];
 

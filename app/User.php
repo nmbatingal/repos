@@ -9,10 +9,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
-    // use Searchable;
     use Uuids;
 
-    protected $connection    = "user_connection";
     protected $table         = "users";
     public    $incrementing  = false;
     /**

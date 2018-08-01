@@ -1,0 +1,33 @@
+[2018-07-16 16:36:32] [info]  [ 7064] Commons Daemon procrun (1.0.15.0 64-bit) started
+[2018-07-16 16:36:32] [info]  [ 7064] Service elasticsearch-service-x64 name Elasticsearch 6.3.0 (elasticsearch-service-x64)
+[2018-07-16 16:36:32] [error] [ 7064] The specified service already exists.
+[2018-07-16 16:36:32] [error] [ 7064] Failed installing 'elasticsearch-service-x64' service
+[2018-07-16 16:36:32] [error] [ 7064] The specified service already exists.
+[2018-07-16 16:36:32] [error] [ 7064] Commons Daemon procrun failed with exit value: 8 (Failed to install service)
+[2018-07-16 16:36:32] [error] [ 7064] The specified service already exists.
+[2018-07-16 16:36:40] [info]  [ 3096] Commons Daemon procrun (1.0.15.0 64-bit) started
+[2018-07-16 16:36:40] [info]  [ 3096] Service elasticsearch-service-x64 name Elasticsearch 6.3.0 (elasticsearch-service-x64)
+[2018-07-16 16:36:40] [error] [ 3096] The specified service already exists.
+[2018-07-16 16:36:40] [error] [ 3096] Failed installing 'elasticsearch-service-x64' service
+[2018-07-16 16:36:40] [error] [ 3096] The specified service already exists.
+[2018-07-16 16:36:40] [error] [ 3096] Commons Daemon procrun failed with exit value: 8 (Failed to install service)
+[2018-07-16 16:36:40] [error] [ 3096] The specified service already exists.
+[2018-07-16 16:37:02] [info]  [ 1120] Commons Daemon procrun (1.0.15.0 64-bit) started
+[2018-07-16 16:37:02] [info]  [ 1120] Debugging 'elasticsearch-service-x64' service...
+[2018-07-16 16:37:02] [info]  [ 1120] Starting service...
+[2018-07-16 16:37:03] [info]  [ 1120] Service started in 1287 ms.
+[2018-07-16 16:37:03] [info]  [ 1120] Debug service finished with exit code 0
+[2018-07-16 16:37:03] [info]  [ 1120] Commons Daemon procrun finished
+[2018-07-16 16:37:19] [info]  [ 4672] Commons Daemon procrun (1.0.15.0 64-bit) started
+[2018-07-16 16:37:19] [info]  [ 4672] Debugging 'elasticsearch-service-x64' service...
+[2018-07-16 16:37:19] [info]  [ 4672] Starting service...
+[2018-07-16 16:37:20] [info]  [ 4672] Service started in 1266 ms.
+[2018-07-16 16:37:20] [info]  [ 4672] Debug service finished with exit code 0
+[2018-07-16 16:37:20] [info]  [ 4672] Commons Daemon procrun finished
+[2018-07-16 16:37:28] [info]  [ 3448] Commons Daemon procrun (1.0.15.0 64-bit) started
+[2018-07-16 16:37:28] [info]  [ 3448] Service elasticsearch-service-x64 name Elasticsearch 6.3.0 (elasticsearch-service-x64)
+[2018-07-16 16:37:28] [error] [ 3448] The specified service already exists.
+[2018-07-16 16:37:28] [error] [ 3448] Failed installing 'elasticsearch-service-x64' service
+[2018-07-16 16:37:28] [error] [ 3448] The specified service already exists.
+[2018-07-16 16:37:28] [error] [ 3448] Commons Daemon procrun failed with exit value: 8 (Failed to install service)
+[2018-07-16 16:37:28] [error] [ 3448] The specified service already exists.
