@@ -1,10 +1,7 @@
 <?php
 
-use App\Articles;
 use App\Research;
-use App\ResearchRecord;
 use Illuminate\Http\Request;
-use Elasticsearch\ClientBuilder;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,14 +21,10 @@ Route::get('/researches', function() {
     // Research::createIndex();
     // return Research::reindex();
     // Research::rebuildMapping();
-
-    // $research = Research::all();
-    // $research->addToIndex();
-    // return $research;
 });
 
 Route::get('/', function () {
-    return view('blank');
+    return view('welcome');
 });
 
 Route::get('/search', function() {
@@ -43,51 +36,7 @@ Route::get('/search', function() {
                 ],
             ];
 
-    // $result   = ResearchRecord::search('harum');
-    // $research = ResearchRecord::hydrateElasticsearchResult( (array) $result );
-
-    // $hits = array_pluck($research['hits']['hits'], '_source') ?: [];
-
-    /*$sources = array_map(function ($source) {
-            // The hydrate method will try to decode this
-            // field but ES gives us an array already.
-            $source['keywords'] = json_encode($source['keywords']);
-            return $source;
-        }, $hits);*/
-
-
-    // return $result;
-
-    /*$hits = array_pluck($articles['hits']['hits'], '_source') ?: [];
-
-    $sources = array_map(function ($source) {
-    	$source['tags'] = json_encode($source['tags']);
-    	return $source;
-    }, $hits);
-
-    return Articles::hydrate($sources);*/
-
-    //return dd($research);
-    //return ResearchRecord::hydrate($sources);
-
-    /*$client = ClientBuilder::create()->build();
-
-    $params = [
-        'index' => 'research',
-        'type' => 'research_type',
-        'body' => [
-            'query' => [
-                'multi_match' => [
-                    'query' => (string) request('q'),
-                    'fields' => ['title^5', 'abstract', 'keywords'],                
-                ],
-            ]
-        ]
-    ];*/
-
-    // $response = $client->search($params);
     $research = Research::searchByQuery($query);
-    // $research = ResearchRecord::hydrateElasticsearchResult( (array) $response );
 
     return view('search', compact('research'));
 
@@ -104,5 +53,4 @@ Route::get('/search/{searchKey}', function ($searchKey) {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('/author', 'ResearchRecordController');
 Route::resource('/research', 'ResearchController');
