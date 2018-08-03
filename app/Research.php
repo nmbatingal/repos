@@ -13,6 +13,10 @@ class Research extends Model
     public $incrementing = false;
     protected $table = 'researches';
 
+    protected $casts = [
+        'status' => 'boolean',
+    ];
+
     protected $fillable = [
         'title',                
         'authors',
@@ -58,6 +62,10 @@ class Research extends Model
         ],
         'status' => [
           'type' => 'boolean',
+        ],
+        'created_at' => [
+          'type' => 'date',
+          'format' => "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis",
         ],
         'updated_at' => [
           'type' => 'date',

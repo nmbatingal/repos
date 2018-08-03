@@ -20,10 +20,14 @@ Route::get('/blank', function() {
 });
 
 Route::get('/researches', function() {
-    // Research::createIndex($shards = null, $replicas = null);
-    // Research::reindex();
-    // Research::rebuildMapping();
     // Research::deleteIndex();
+    // Research::createIndex();
+    // return Research::reindex();
+    // Research::rebuildMapping();
+
+    // $research = Research::all();
+    // $research->addToIndex();
+    // return $research;
 });
 
 Route::get('/', function () {
@@ -85,7 +89,7 @@ Route::get('/search', function() {
     $research = Research::searchByQuery($query);
     // $research = ResearchRecord::hydrateElasticsearchResult( (array) $response );
 
-    return view('home', compact('research'));
+    return view('search', compact('research'));
 
 });
 
