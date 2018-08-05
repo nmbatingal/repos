@@ -39,7 +39,7 @@ class CreateResearchesTable extends Migration
                 ->onUpdate('cascade');
         });
 
-        Research::createIndex($shards = null, $replicas = null);
+        // Research::createIndex();
     }
 
     /**
@@ -50,6 +50,7 @@ class CreateResearchesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('researches');
-        Research::deleteIndex();
+        
+        // Research::deleteIndex();
     }
 }
