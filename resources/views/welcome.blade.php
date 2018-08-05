@@ -117,7 +117,7 @@
                                         <!-- Login -->
                                         <!-- ============================================================== -->
                                         <li class="nav-item dropdown u-pro bg-red">
-                                            <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="{{ url('/login') }}" aria-haspopup="true" aria-expanded="false">LOGIN</a>
+                                            <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" data-toggle="modal" data-target="#modalLogin" aria-haspopup="true" aria-expanded="false">LOGIN</a>
                                         </li>
                                     </ul>
                                 @endif
@@ -152,10 +152,13 @@
                     <!-- ============================================================== -->
                     <!-- End Bread crumb and right sidebar toggle -->
                     <!-- ============================================================== -->
+
+                    @include('layouts.modallogin')
+
                     <!-- ============================================================== -->
                     <!-- Start Page Content -->
                     <!-- ============================================================== -->
-                    <div class="row">
+                    <div class="row m-b-40">
                         <div class="col-md-6 offset-md-3">
                             <div class="jumbotron">
                                 <h1 class="display-4">Hello, world!</h1>

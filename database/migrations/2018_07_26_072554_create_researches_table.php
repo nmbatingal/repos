@@ -25,8 +25,8 @@ class CreateResearchesTable extends Migration
             $table->text('abstract');
             $table->string('keywords');
 
-            $table->string('filename');
-            $table->integer('filesize');
+            $table->string('filename')->nullable();
+            $table->integer('filesize')->nullable();
 
             $table->boolean('status')->default(0);
             $table->uuid('log_id')->index()->nullable();

@@ -1,6 +1,7 @@
 <?php
 
 use App\Research;
+use App\User;
 use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
@@ -12,19 +13,24 @@ use Illuminate\Http\Request;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/', function () {
+    return view('home');
+});
+
 Route::get('/blank', function() {
     return view('blank');
 });
 
 Route::get('/researches', function() {
-    // Research::deleteIndex();
-    // Research::createIndex();
-    // return Research::reindex();
+    Research::deleteIndex();
+    Research::createIndex();
+    return Research::reindex();
     // Research::rebuildMapping();
 });
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/users', function() {
+    return User::createIndex();
 });
 
 Route::get('/search', function() {

@@ -178,6 +178,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Laravel\Scout\ScoutServiceProvider::class,
         Elasticquent\ElasticquentServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
 
     ],
 

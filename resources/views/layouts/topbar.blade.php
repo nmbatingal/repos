@@ -30,6 +30,28 @@
                 <!-- This is  -->
                 <li class="nav-item"> <a class="nav-link nav-toggler d-block d-md-none waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
                 <li class="nav-item"> <a class="nav-link sidebartoggler d-none waves-effect waves-dark" href="javascript:void(0)"><i class="icon-menu"></i></a> </li>
+                <!-- ============================================================== -->
+                <!-- Search -->
+                <!-- ============================================================== -->
+                @if (!Request::is('/') && !Route::is('register') )
+                    <li class="nav-item">
+                        <form class="app-search d-none d-md-block d-lg-block" action="{{ url('search') }}" method="get">
+                            <div class="input-group">
+                                <input 
+                                    type="text" 
+                                    class="form-control form-control-lg" 
+                                    placeholder="Search..."
+                                    name="q"
+                                    value="{{ request('q') }}"
+                                    required 
+                                >
+                              <div class="input-group-append">
+                                <button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
+                              </div>
+                            </div>
+                        </form>
+                    </li>
+                @endif
             </ul>
             @if (Route::has('login'))
                 <div class="top-right links">
@@ -38,6 +60,12 @@
                         <!-- User profile and search -->
                         <!-- ============================================================== -->
                         <ul class="navbar-nav my-lg-0">
+                            <!-- ============================================================== -->
+                            <!-- User Profile -->
+                            <!-- ============================================================== -->
+                            <li class="nav-item dropdown u-pro bg-red">
+                                <a href="{{ url('/research/upload') }}" class="nav-link waves-effect waves-dark" aria-haspopup="true" aria-expanded="false">Upload</a>
+                            </li>
                             <!-- ============================================================== -->
                             <!-- User Profile -->
                             <!-- ============================================================== -->
@@ -57,7 +85,7 @@
                                     <!-- text-->
                                     <div class="dropdown-divider"></div>
                                     <!-- text-->
-                                    <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault(); 
+                                    <a href="{{ route('logout') }}" class="dropdown-item text-danger" onclick="event.preventDefault(); 
                                         document.getElementById('logout-form').submit();"> <i class="fa fa-power-off"></i> Logout</a>
                                     <!-- text-->
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -78,8 +106,13 @@
                             <!-- Login -->
                             <!-- ============================================================== -->
                             <li class="nav-item dropdown u-pro bg-red">
-                                <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="{{ url('/login') }}" aria-haspopup="true" aria-expanded="false">LOGIN</a>
+                                <a class="nav-link waves-effect waves-dark" data-toggle="modal" data-target="#modalLogin" aria-haspopup="true" aria-expanded="false">Login</a>
                             </li>
+                            @if (!Route::is('register') )
+                                <li class="nav-item dropdown u-pro bg-red">
+                                    <a class="nav-link waves-effect waves-dark" href="{{ route('register') }}" aria-haspopup="true" aria-expanded="false">Register</a>
+                                </li>
+                            @endif
                         </ul>
                     @endif
                 </div>
