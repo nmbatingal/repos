@@ -43,7 +43,7 @@
                                     <h3><a href="javacript:void(0)"><strong>{{ $record->title }}</strong></a></h3>
                                     <a href="javascript:void(0)" class="search-links">{{ url('/') }}</a>
                                     <p>
-                                        {!! $record->abstract !!}
+                                        {!! $abstract !!}
                                     </p>
                                     <p>Author: 
                                         @foreach(explode('|', $record->authors) as $author) 
@@ -56,7 +56,7 @@
                                         </a>
                                     </p>
                                     <p>Tags: 
-                                        @foreach(explode('|', $record->keywords) as $keyword) 
+                                        @foreach(explode(',', $record->keywords) as $keyword) 
                                             <a href="javacript:void(0)" class="badge badge-info text-white">{{ $keyword }}</a>
                                         @endforeach
                                     </p>

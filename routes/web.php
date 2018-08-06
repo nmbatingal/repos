@@ -1,8 +1,9 @@
 <?php
 
-use App\Research;
 use App\User;
+use App\Research;
 use Illuminate\Http\Request;
+use Elasticsearch\ClientBuilder;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,33 +19,61 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/blank', function() {
-    return view('blank');
-});
-
 Route::get('/researches', function() {
     Research::deleteIndex();
-    Research::createIndex();
-    return Research::reindex();
+    return Research::createIndex();
+    // return Research::reindex();
     // Research::rebuildMapping();
 });
 
 Route::get('/users', function() {
-    return User::createIndex();
+    // User::deleteIndex();
+    // User::createIndex();
+    return User::reindex();
 });
 
 Route::get('/search', function() {
-
-    $query = [
+    $abstract = "";
+    $params = [
+        'body' => [
+            'query' => [
                 'multi_match' => [
                     'query' => (string) request('q'),
                     'fields' => ['title^3', 'authors', 'abstract', 'keywords'],                
+                    // 'fields' => ['_all'],                
                 ],
-            ];
+            ],
+            'highlight' => [
+                'pre_tags' => ['<span class="font-weight-bold">'],
+                'post_tags' => ['</span>'],
+                'fields' => [
+                    'abstract' => [
+                        'type' => 'plain'
+                    ]
+                ]
+            ]
+        ]
+    ];
 
-    $research = Research::searchByQuery($query);
+    // $research = Research::searchByQuery($params);
+    $research = Research::complexSearch($params);
 
-    return view('search', compact('research'));
+    if ( $research->getHits()['hits'] != null )
+    {
+        $body = $research->getHits()['hits'][0]['highlight']['abstract'];
+        $abstract = implode("... ", $body);
+    }
+
+    // $client = ClientBuilder::create()->build();
+
+    // $collection = Research::hydrateElasticsearchResult($client->search($params));
+    // $collection = $client->search($params);
+    // return $client->search($params);
+    // return $collection->getHits();
+    // return $research->getHits()['hits'];
+    // return $research->getHits()['hits'][0]['highlight']['abstract'];
+    // return $research->getHits()['hits'];
+    return view('search', compact('research', 'abstract'));
 
 });
 
@@ -58,5 +87,5 @@ Route::get('/search/{searchKey}', function ($searchKey) {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/research', 'ResearchController');

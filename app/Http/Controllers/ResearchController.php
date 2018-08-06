@@ -76,7 +76,7 @@ class ResearchController extends Controller
             $research->addToIndex();
         }
 
-        return redirect('/home');
+        return redirect('/');
     }
 
     /**
