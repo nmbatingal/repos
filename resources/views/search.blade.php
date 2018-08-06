@@ -41,13 +41,13 @@
                             @forelse($research as $record)
                                 <li>
                                     <h3><a href="javacript:void(0)"><strong>{{ $record->title }}</strong></a></h3>
-                                    <a href="javascript:void(0)" class="search-links">{{ url('/') }}</a>
+                                    <a href="javascript:void(0)" class="search-links">{{ url('/research?id='.$record->id) }}</a>
                                     <p>
                                         {!! $abstract !!}
                                     </p>
                                     <p>Author: 
                                         @foreach(explode('|', $record->authors) as $author) 
-                                            <a href="javascript:void(0)" class="search-links"><u>{{ $author }}</u></a>
+                                            <a href="javascript:void(0)" data-q="{{ $author }}" class="search-links"><u>{{ $author }}</u></a>
                                         @endforeach
                                     </p>
                                     <p>Status: 
@@ -57,7 +57,7 @@
                                     </p>
                                     <p>Tags: 
                                         @foreach(explode(',', $record->keywords) as $keyword) 
-                                            <a href="javacript:void(0)" class="badge badge-info text-white">{{ $keyword }}</a>
+                                            <a href="javacript:void(0)" data-q="{{ $keyword }}" class="badge badge-info text-white">{{ $keyword }}</a>
                                         @endforeach
                                     </p>
                                 </li>
@@ -97,4 +97,16 @@
         <!-- End Right sidebar -->
         <!-- ============================================================== -->
     </div>
+@endsection
+
+@section('scripts')
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("a").click(function(){
+            console.log($(this).attr('data-q'));
+            
+            // $("#requestNew").submit();
+        });
+    });
+</script>
 @endsection
