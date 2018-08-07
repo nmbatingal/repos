@@ -87,4 +87,33 @@ class Research extends Model
     {
         return $this->belongsTo('App\User', 'created_by_id', 'id');
     }
+
+    // Get research posted on
+    public function getPostedOnAttribute()
+    {
+        if ( $this->attributes['created_at'] != $this->attributes['updated_at'] ) 
+        {
+            return $this->attributes['updated_at'];
+        }
+
+        return $this->attributes['created_at'];
+    }
+
+    // Beautify posted on date M d, Y
+    public function getDatePostedOnAttribute()
+    {
+        return date("F d, Y", strtotime( $this->posted_on ));
+    }
+
+    // Get research filesize to MB
+    public function getFileSizeAttribute()
+    {
+        return $this->human_filesize($this->attributes['filesize']);
+    }
+
+    public static function human_filesize($size, $precision = 2) {
+        
+        for($i = 0; ($size / 1024) > 0.9; $i++, $size /= 1024) {}
+        return round($size, $precision).['B','kB','MB','GB','TB','PB','EB','ZB','YB'][$i];
+    }
 }

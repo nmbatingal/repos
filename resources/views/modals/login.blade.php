@@ -42,7 +42,7 @@
                         <div class="col-md-8 col-md-offset-2">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
+                                    <input type="checkbox" name="remember" checked > Remember Me
                                 </label>
                             </div>
                             <a class="btn btn-link" href="javascript:void(0)"   data-toggle="modal" data-target="#modalReset">Forgot Your Password?</a>

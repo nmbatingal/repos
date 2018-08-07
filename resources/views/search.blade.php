@@ -26,7 +26,7 @@
         <!-- End Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
 
-        @include('layouts.modallogin')
+        @include('modals.login')
 
         <!-- ============================================================== -->
         <!-- Start Page Content -->
@@ -36,18 +36,24 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Search Result For "{{ request('q') }}"</h4>
-                        <h6 class="card-subtitle">About {{ $research->totalHits() }} result ({{ $research->took() }})</h6>
+                        <h6 class="card-subtitle">About {{ $research->totalHits() }} result ({{ $research->took() / 1000.0 }} seconds)</h6>
                         <ul class="search-listing">
                             @forelse($research as $record)
                                 <li>
-                                    <h3><a href="javacript:void(0)"><strong>{{ $record->title }}</strong></a></h3>
-                                    <a href="javascript:void(0)" class="search-links">{{ url('/research?id='.$record->id) }}</a>
+                                    <h3>
+                                        <a href="{{ route('research.show', ['id' => $record->id]) }}">
+                                            <strong>{{ $record->title }}</strong>
+                                        </a>
+                                    </h3>
+                                    <a href="{{ route('research.show', ['id' => $record->id]) }}" class="search-links">
+                                        {{ route('research.show', ['id' => $record->id]) }}
+                                    </a>
                                     <p>
-                                        {!! $abstract !!}
+                                        {!! str_limit($record->abstract, 700) !!}
                                     </p>
                                     <p>Author: 
                                         @foreach(explode('|', $record->authors) as $author) 
-                                            <a href="javascript:void(0)" data-q="{{ $author }}" class="search-links"><u>{{ $author }}</u></a>
+                                            <a href="#" data-q="{{ $author }}" class="search-links a-links"><u>{!! $author !!}</u></a>
                                         @endforeach
                                     </p>
                                     <p>Status: 
@@ -57,12 +63,12 @@
                                     </p>
                                     <p>Tags: 
                                         @foreach(explode(',', $record->keywords) as $keyword) 
-                                            <a href="javacript:void(0)" data-q="{{ $keyword }}" class="badge badge-info text-white">{{ $keyword }}</a>
+                                            <a href="#" data-q="{{ $keyword }}" class="badge badge-info text-white a-links">{!! $keyword !!}</a>
                                         @endforeach
                                     </p>
                                 </li>
                             @empty
-                                <p>No articles found</p>
+                                <p>No articles found</p>/
                             @endforelse
                         </ul>
 
@@ -101,12 +107,17 @@
 
 @section('scripts')
 <script type="text/javascript">
-    $(document).ready(function(){
-        $("a").click(function(){
-            console.log($(this).attr('data-q'));
-            
-            // $("#requestNew").submit();
+    $(document).ready( function(){
+
+        $("a.a-links").click(function(){
+
+            var search = $(this).attr('data-q');
+            var $input = $('input[name=q]').val(search);
+
+            $("#searchForm").submit();
         });
+
+        
     });
 </script>
 @endsection

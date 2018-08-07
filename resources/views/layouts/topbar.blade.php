@@ -38,9 +38,9 @@
                 <!-- ============================================================== -->
                 <!-- Search -->
                 <!-- ============================================================== -->
-                @if (!Request::is('/') && !Route::is('register') )
+                @if (!Request::is('/') && !Route::is('register') && !Route::is('login'))
                     <li class="nav-item">
-                        <form class="app-search d-none d-md-block d-lg-block" action="{{ url('search') }}" method="get">
+                        <form id="searchForm" class="app-search d-none d-md-block d-lg-block" action="{{ url('search') }}" method="get">
                             <div class="input-group">
                                 <input 
                                     type="text" 
@@ -110,9 +110,11 @@
                             <!-- ============================================================== -->
                             <!-- Login -->
                             <!-- ============================================================== -->
+                            @if (!Route::is('login') )
                             <li class="nav-item dropdown u-pro bg-red">
                                 <a class="nav-link waves-effect waves-dark" data-toggle="modal" data-target="#modalLogin" aria-haspopup="true" aria-expanded="false">Login</a>
                             </li>
+                            @endif
                             @if (!Route::is('register') )
                                 <li class="nav-item dropdown u-pro bg-red">
                                     <a class="nav-link waves-effect waves-dark" href="{{ route('register') }}" aria-haspopup="true" aria-expanded="false">Register</a>

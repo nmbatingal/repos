@@ -33,15 +33,25 @@ Route::get('/users', function() {
 });
 
 Route::get('/search', function() {
-    $abstract = "";
+
     $params = [
         'body' => [
             'query' => [
-                'multi_match' => [
-                    'query' => (string) request('q'),
-                    'fields' => ['title^3', 'authors', 'abstract', 'keywords'],                
-                    // 'fields' => ['_all'],                
-                ],
+                'bool' => [
+                    'must' => [
+                        'multi_match' => [
+                            'query' => (string) request('q'),
+                            'fields' => ['title^2', 'authors', 'abstract', 'keywords'],      
+                        ],
+                    ],
+                    'should' => [
+                        'match' => [
+                            'keywords' => [
+                                'query' => (string) request('q'),
+                            ]
+                        ]
+                    ]
+                ]
             ],
             'highlight' => [
                 'pre_tags' => ['<span class="font-weight-bold">'],
@@ -49,40 +59,46 @@ Route::get('/search', function() {
                 'fields' => [
                     'abstract' => [
                         'type' => 'plain'
+                    ],
+                    'authors' => [
+                        'type' => 'plain'
                     ]
                 ]
             ]
         ]
     ];
 
-    // $research = Research::searchByQuery($params);
     $research = Research::complexSearch($params);
 
     if ( $research->getHits()['hits'] != null )
     {
-        $body = $research->getHits()['hits'][0]['highlight']['abstract'];
-        $abstract = implode("... ", $body);
+        $highlight = $research->getHits()['hits'][0]['highlight'];
+        if ( array_key_exists('abstract', $highlight) )
+        {
+            $abstract = implode("... ", $highlight['abstract']);
+
+            foreach ($research as $key => $value) {
+                $research[$key]['abstract'] = $abstract;
+            }
+
+        }
+
+        if ( array_key_exists('authors', $highlight) )
+        {
+            $authors = $highlight['authors'][0];
+
+            foreach ($research as $key => $value) {
+                $research[$key]['authors'] = $authors;
+            }
+        }
     }
 
-    // $client = ClientBuilder::create()->build();
-
-    // $collection = Research::hydrateElasticsearchResult($client->search($params));
-    // $collection = $client->search($params);
-    // return $client->search($params);
-    // return $collection->getHits();
-    // return $research->getHits()['hits'];
-    // return $research->getHits()['hits'][0]['highlight']['abstract'];
-    // return $research->getHits()['hits'];
-    return view('search', compact('research', 'abstract'));
+    return view('search', compact('research'));
 
 });
 
 Route::get('/research/upload', function () {
     return view('research.upload');
-});
-
-Route::get('/search/{searchKey}', function ($searchKey) {
-    return \App\User::search($searchKey)->get();;
 });
 
 Auth::routes();

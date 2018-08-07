@@ -26,7 +26,7 @@
     <!-- End Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
 
-    @include('layouts.modallogin')
+    @include('modals.login')
 
     <!-- ============================================================== -->
     <!-- Start Page Content -->
