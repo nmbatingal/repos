@@ -22,7 +22,7 @@ class CreateResearchesTable extends Migration
             $table->string('project_duration')->nullable();
             $table->string('funding_agency')->nullable();
             $table->string('project_cost')->nullable();
-            $table->text('abstract');
+            $table->longtext('research_content');
             $table->string('keywords');
 
             $table->string('filename')->nullable();

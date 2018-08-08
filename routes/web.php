@@ -20,15 +20,14 @@ Route::get('/', function () {
 });
 
 Route::get('/researches', function() {
-    Research::deleteIndex();
-    return Research::createIndex();
-    // return Research::reindex();
-    // Research::rebuildMapping();
+    // Research::deleteIndex();
+    // return Research::createIndex();
+    return Research::reindex();
 });
 
 Route::get('/users', function() {
     // User::deleteIndex();
-    // User::createIndex();
+    // return User::createIndex();
     return User::reindex();
 });
 
@@ -41,7 +40,7 @@ Route::get('/search', function() {
                     'must' => [
                         'multi_match' => [
                             'query' => (string) request('q'),
-                            'fields' => ['title^2', 'authors', 'abstract', 'keywords'],      
+                            'fields' => ['title^2', 'authors', 'research_content', 'keywords'],      
                         ],
                     ],
                     'should' => [
@@ -57,7 +56,7 @@ Route::get('/search', function() {
                 'pre_tags' => ['<span class="font-weight-bold">'],
                 'post_tags' => ['</span>'],
                 'fields' => [
-                    'abstract' => [
+                    'research_content' => [
                         'type' => 'plain'
                     ],
                     'authors' => [
@@ -73,12 +72,12 @@ Route::get('/search', function() {
     if ( $research->getHits()['hits'] != null )
     {
         $highlight = $research->getHits()['hits'][0]['highlight'];
-        if ( array_key_exists('abstract', $highlight) )
+        if ( array_key_exists('research_content', $highlight) )
         {
-            $abstract = implode("... ", $highlight['abstract']);
+            $abstract = implode("... ", $highlight['research_content']);
 
             foreach ($research as $key => $value) {
-                $research[$key]['abstract'] = $abstract;
+                $research[$key]['research_content'] = $abstract;
             }
 
         }
@@ -95,10 +94,6 @@ Route::get('/search', function() {
 
     return view('search', compact('research'));
 
-});
-
-Route::get('/research/upload', function () {
-    return view('research.upload');
 });
 
 Auth::routes();

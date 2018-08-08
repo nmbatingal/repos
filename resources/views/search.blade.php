@@ -49,7 +49,7 @@
                                         {{ route('research.show', ['id' => $record->id]) }}
                                     </a>
                                     <p>
-                                        {!! str_limit($record->abstract, 700) !!}
+                                        {!! str_limit($record->research_content, 700) !!}
                                     </p>
                                     <p>Author: 
                                         @foreach(explode('|', $record->authors) as $author) 

@@ -23,7 +23,7 @@ class Research extends Model
         'project_duration',         // nullable         
         'funding_agency',           // nullable
         'project_cost',             // nullable                  
-        'abstract',                  
+        'research_content',                  
         'filename',                 // nullable
         'filesize',                 // nullable
         'keywords',
@@ -52,7 +52,7 @@ class Research extends Model
           'type' => 'text',
           'analyzer' => 'standard',
         ],
-        'abstract' => [
+        'research_content' => [
           'type' => 'text',
           'analyzer' => 'standard',
         ],

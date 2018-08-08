@@ -1,131 +1,132 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link href="{{ asset('dist/css/pages/other-pages.css') }}" rel="stylesheet">
+<link href="{{ asset('dist/css/pages/other-pages.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
-    <div class="container-fluid">
-        <!-- ============================================================== -->
-        <!-- Bread crumb and right sidebar toggle -->
-        <!-- ============================================================== -->
-        <div class="row page-titles">
-            <div class="col-md-5 align-self-center">
-                <h4 class="text-themecolor">Research Article</h4>
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="row page-titles">
+        <div class="col-md-5 align-self-center">
+            <h4 class="text-themecolor">Research Article</h4>
+        </div>
+        <div class="col-md-7 align-self-center text-right">
+            <div class="d-flex justify-content-end align-items-center">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url('/')}}">Home</a></li>
+                    <li class="breadcrumb-item active">Research Article</li>
+                </ol>
+                <button type="button" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New</button>
             </div>
-            <div class="col-md-7 align-self-center text-right">
-                <div class="d-flex justify-content-end align-items-center">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ url('/')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Research Article</li>
-                    </ol>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+
+    @include('modals.login')
+
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-lg-2 col-md-4 hidden-sm-down">
+            <div class="stickyside">
+                <div class="list-group" id="top-menu">
+                    <a href="#abstract" class="list-group-item active">Abstract</a>
+                    <a href="#references" class="list-group-item">References</a>
+                    <a href="#3" class="list-group-item hidden">&nbsp;</a>
+                    <a href="#4" class="list-group-item hidden">&nbsp;</a>
+                    <a href="#5" class="list-group-item hidden">&nbsp;</a>
+                    <a href="#6" class="list-group-item hidden">&nbsp;</a>
+                    <a href="#7" class="list-group-item hidden">&nbsp;</a>
+                    <a href="#8" class="list-group-item hidden">&nbsp;</a>
                 </div>
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- End Bread crumb and right sidebar toggle -->
-        <!-- ============================================================== -->
-
-        @include('modals.login')
-
-        <!-- ============================================================== -->
-        <!-- Start Page Content -->
-        <!-- ============================================================== -->
-        <div class="row">
-            <div class="col-lg-2 col-md-4 hidden-sm-down">
-                <div class="stickyside">
-                    <div class="list-group" id="top-menu">
-                        <a href="#abstract" class="list-group-item active">Abstract</a>
-                        <a href="#references" class="list-group-item">References</a>
-                        <a href="#3" class="list-group-item hidden">&nbsp;</a>
-                        <a href="#4" class="list-group-item hidden">&nbsp;</a>
-                        <a href="#5" class="list-group-item hidden">&nbsp;</a>
-                        <a href="#6" class="list-group-item hidden">&nbsp;</a>
-                        <a href="#7" class="list-group-item hidden">&nbsp;</a>
-                        <a href="#8" class="list-group-item hidden">&nbsp;</a>
-                    </div>
+        <div class="col-lg-6 col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title text-primary">{{ $research->title }}</h3>
+                    <p>
+                        @foreach(explode('|', $research->authors) as $author) 
+                            <a href="#" data-q="{{ $author }}" class="text-muted"><u>{!! $author !!}</u></a>
+                        @endforeach
+                        <br> Posted on: {{ $research->date_posted_on }}
+                    </p>
+                    <hr>
+                    <br><br>
+                    <h4 class="card-title" id="abstract">Abstract</h4>
+                    <p>
+                        {!! $research->research_content !!}
+                    </p>
+                    <h4 class="card-title" id="references">References</h4>
+                    <p>
+                    </p>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-8">
+        </div>
+        <div class="col-lg-4 col-md-4 hidden-sm-down">
+            <div class="stickyside">
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="card-title text-primary">{{ $research->title }}</h3>
+                        <h4 class="card-title text-primary">{{ $research->title }}</h4>
                         <p>
                             @foreach(explode('|', $research->authors) as $author) 
                                 <a href="#" data-q="{{ $author }}" class="text-muted"><u>{!! $author !!}</u></a>
                             @endforeach
                             <br> Posted on: {{ $research->date_posted_on }}
                         </p>
-                        <hr>
-                        <br><br>
-                        <h4 class="card-title" id="abstract">Abstract</h4>
-                        <p>
-                            {!! $research->abstract !!}
-                        </p>
-                        <h4 class="card-title" id="references">References</h4>
-                        <p>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 hidden-sm-down">
-                <div class="stickyside">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title text-primary">{{ $research->title }}</h4>
-                            <p>
-                                @foreach(explode('|', $research->authors) as $author) 
-                                    <a href="#" data-q="{{ $author }}" class="text-muted"><u>{!! $author !!}</u></a>
-                                @endforeach
-                                <br> Posted on: {{ $research->date_posted_on }}
-                            </p>
-                            <button class="btn btn-primary waves-effect waves-light" type="button">
-                                <span class="btn-label"><i class="fa fa-print"></i></span> Print
+                        <button class="btn btn-primary waves-effect waves-light" type="button">
+                            <span class="btn-label"><i class="fa fa-print"></i></span> Print
+                        </button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Share
                             </button>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Share
-                                </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="javascript:void(0)">Action</a>
-                                    <a class="dropdown-item" href="javascript:void(0)">Another action</a>
-                                    <a class="dropdown-item" href="javascript:void(0)">Something else here</a>
-                                </div>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="javascript:void(0)">Action</a>
+                                <a class="dropdown-item" href="javascript:void(0)">Another action</a>
+                                <a class="dropdown-item" href="javascript:void(0)">Something else here</a>
                             </div>
                         </div>
-                        <ul class="list-unstyled m-b-0">
-                            <li class="media m-b-0">
-                                <img class="d-flex mr-3" src="{{ asset('images/save.jpg') }}" width="60" alt="file download image">
-                                <div class="media-body">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">
-                                            <a href="#" class="text-info">
-                                                {{ $research->filename }}
-                                            </a>
-                                        </h5>
-                                        <small><i class="fa fa-lock"></i></small>
-                                    </div>
-                                    <small class="text-muted">Size: {{ $research->file_size }}</small>
-                                </div>
-                            </li>
-                        </ul>
                     </div>
+                    <ul class="list-unstyled m-b-0">
+                        <li class="media m-b-0">
+                            <img class="d-flex mr-3" src="{{ asset('images/save.jpg') }}" width="60" alt="file download image">
+                            <div class="media-body">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">
+                                        <a href="#" class="text-info">
+                                            {{ $research->filename }}
+                                        </a>
+                                    </h5>
+                                    <small><i class="fa fa-lock"></i></small>
+                                </div>
+                                <small class="text-muted">Size: {{ $research->file_size }}</small>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-        
-        <!-- ============================================================== -->
-        <!-- End PAge Content -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Right sidebar -->
-        <!-- ============================================================== -->
-        <!-- .right-sidebar -->
-        @include('layouts.rightbar')
-        <!-- ============================================================== -->
-        <!-- End Right sidebar -->
-        <!-- ============================================================== -->
     </div>
+    
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Right sidebar -->
+    <!-- ============================================================== -->
+    <!-- .right-sidebar -->
+    @include('layouts.rightbar')
+    <!-- ============================================================== -->
+    <!-- End Right sidebar -->
+    <!-- ============================================================== -->
+</div>
 @endsection
 
 @section('scripts')

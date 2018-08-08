@@ -36,7 +36,7 @@ class ResearchController extends Controller
      */
     public function create()
     {
-        //
+        return view('research.create');
     }
 
     /**
@@ -49,11 +49,11 @@ class ResearchController extends Controller
     {
         $research = new Research;
         $research->title = $request->title;
-        $research->authors = $request->author;
+        $research->authors = $request->authors;
         $research->project_duration = $request->project_duration;
         $research->funding_agency = $request->funding_agency;
         $research->project_cost = $request->project_cost;
-        $research->abstract = nl2br($request->abstract);
+        $research->research_content = $request->research_content;
         $research->keywords = $request->keywords;
         $research->log_id = Auth::user()->id;
         $research->status = $request->has('status') ? true : false;

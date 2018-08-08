@@ -68,19 +68,11 @@
                             <!-- ============================================================== -->
                             <!-- User Profile -->
                             <!-- ============================================================== -->
-                            <li class="nav-item dropdown u-pro bg-red">
-                                <a href="{{ url('/research/upload') }}" class="nav-link waves-effect waves-dark" aria-haspopup="true" aria-expanded="false">Upload</a>
-                            </li>
-                            <!-- ============================================================== -->
-                            <!-- User Profile -->
-                            <!-- ============================================================== -->
                             <li class="nav-item dropdown u-pro">
                                 <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/users/1.jpg" alt="user" class=""> <span class="hidden-md-down">{{ Auth::user()->firstname }} &nbsp;<i class="fa fa-angle-down"></i></span> </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <!-- text-->
                                     <a href="javascript:void(0)" class="dropdown-item"><i class="ti-user"></i> My Profile</a>
-                                    <!-- text-->
-                                    <a href="javascript:void(0)" class="dropdown-item"><i class="ti-wallet"></i> My Balance</a>
                                     <!-- text-->
                                     <a href="javascript:void(0)" class="dropdown-item"><i class="ti-email"></i> Inbox</a>
                                     <!-- text-->
@@ -101,6 +93,9 @@
                             <!-- ============================================================== -->
                             <!-- End User Profile -->
                             <!-- ============================================================== -->
+                            <li class="nav-item right-side-toggle"> <a class="nav-link  waves-effect waves-light" href="javascript:void(0)">
+                                <i class="ti-settings"></i></a>
+                            </li>
                         </ul>
                     @else
                         <!-- ============================================================== -->
