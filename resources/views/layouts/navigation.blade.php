@@ -32,7 +32,7 @@
                         <i class="icon-notebook"></i><span class="hide-menu">Research</span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{ url('/') }}">My Research</a></li>
+                        <li><a href="{{ route('research.index') }}">My Research</a></li>
                         <li><a href="{{ route('research.create') }}">New Research</a></li>
                     </ul>
                 </li>

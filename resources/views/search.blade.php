@@ -68,7 +68,7 @@
                                     </p>
                                 </li>
                             @empty
-                                <p>No articles found</p>/
+                                <p>No research articles found</p>
                             @endforelse
                         </ul>
 
@@ -116,8 +116,6 @@
 
             $("#searchForm").submit();
         });
-
-        
     });
 </script>
 @endsection

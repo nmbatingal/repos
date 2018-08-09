@@ -26,7 +26,8 @@ class ResearchController extends Controller
      */
     public function index()
     {
-        //
+        $researches = Research::where('log_id', Auth::user()->id )->get();
+        return view('research.index', compact('researches'));
     }
 
     /**
@@ -73,6 +74,7 @@ class ResearchController extends Controller
                 $request->research_file->storeAs('public/users/'. Auth::user()->id .'/research/'.$research->id, $filename);
             }
 
+            $research->research_content = strip_tags($request->research_content);
             $research->addToIndex();
         }
 
@@ -121,8 +123,19 @@ class ResearchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $research = Research::findOrFail($id);
+
+        if ( $request->ajax() ) {
+            if ( $research->delete( $request->all() ) )
+            {
+                $research->removeFromIndex();
+            }
+
+            return response(['msg' => 'Product deleted', 'status' => 'success']);
+        }
+
+        return response(['msg' => 'Failed deleting the product', 'status' => 'failed']);
     }
 }

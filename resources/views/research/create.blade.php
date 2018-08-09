@@ -20,7 +20,7 @@
             <div class="d-flex justify-content-end align-items-center">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ url('/')}}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ url('/')}}">Research</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('research.index') }}">Research</a></li>
                     <li class="breadcrumb-item active">Create</li>
                 </ol>
                 
@@ -43,7 +43,7 @@
                     <h4 class="card-title">Create a new research article</h4>
                     <h6 class="card-subtitle">A repository contains all the files for your project, including the revision history.</h6>
                     <hr>
-                    <form class="form-horizontal" method="POST" action="{{ route('research.store') }}" enctype="multipart/form-data">
+                    <form id="researchForm" class="form-horizontal" method="POST" action="{{ route('research.store') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="form-body">
                             <div class="row p-t-20">
@@ -181,7 +181,7 @@
             toolbar: [
                 // [groupName, [list of button]]
                 ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
-                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['font', ['fontname', 'color', 'strikethrough', 'superscript', 'subscript']],
                 ['tab', ['table', 'hr']],
                 ['para', ['height', 'ul', 'ol', 'paragraph']],
                 ['more', ['fullscreen', 'codeview', 'help']],
@@ -192,6 +192,19 @@
         $('input.tags-input').tagsinput({
             confirmKeys: [44]
         });
+
+        /*$("#researchForm").submit( function() {
+
+            var $content = $('textarea.summernote').val();
+
+            $('<textarea>').attr('type', 'hidden')
+                .attr('name', "clean_content")
+                .attr('value', $content)
+                .appendTo(this);
+
+            return true;
+
+        });*/
 
     });
 </script>

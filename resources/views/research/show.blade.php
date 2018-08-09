@@ -19,7 +19,6 @@
                     <li class="breadcrumb-item"><a href="{{ url('/')}}">Home</a></li>
                     <li class="breadcrumb-item active">Research Article</li>
                 </ol>
-                <button type="button" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New</button>
             </div>
         </div>
     </div>
@@ -36,8 +35,8 @@
         <div class="col-lg-2 col-md-4 hidden-sm-down">
             <div class="stickyside">
                 <div class="list-group" id="top-menu">
-                    <a href="#abstract" class="list-group-item active">Abstract</a>
-                    <a href="#references" class="list-group-item">References</a>
+                    <a href="#abstract" class="list-group-item active">&nbsp;</a>
+                    <a href="#references" class="list-group-item">&nbsp;</a>
                     <a href="#3" class="list-group-item hidden">&nbsp;</a>
                     <a href="#4" class="list-group-item hidden">&nbsp;</a>
                     <a href="#5" class="list-group-item hidden">&nbsp;</a>
@@ -59,11 +58,11 @@
                     </p>
                     <hr>
                     <br><br>
-                    <h4 class="card-title" id="abstract">Abstract</h4>
+                    <!-- <h4 class="card-title" id="abstract">Abstract</h4> -->
                     <p>
                         {!! $research->research_content !!}
                     </p>
-                    <h4 class="card-title" id="references">References</h4>
+                    <!-- <h4 class="card-title" id="references">References</h4> -->
                     <p>
                     </p>
                 </div>
@@ -138,6 +137,7 @@
     $(".stickyside").stick_in_parent({
         offset_top: 100
     });
+    
     $('.stickyside a').click(function() {
         $('html, body').animate({
             scrollTop: $($(this).attr('href')).offset().top - 100

@@ -21,8 +21,8 @@ Route::get('/', function () {
 
 Route::get('/researches', function() {
     // Research::deleteIndex();
-    // return Research::createIndex();
-    return Research::reindex();
+    // Research::createIndex();
+    // return Research::reindex();
 });
 
 Route::get('/users', function() {
