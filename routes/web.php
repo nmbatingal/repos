@@ -100,3 +100,5 @@ Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/research', 'ResearchController');
+Route::resource('/funding', 'FundingAgencyController');
+Route::resource('/access', 'AccessTypeController');
