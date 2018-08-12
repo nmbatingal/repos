@@ -1,7 +1,7 @@
 <?php
 
 use App\User;
-use App\Research;
+use App\ResearchArticle;
 use Illuminate\Http\Request;
 use Elasticsearch\ClientBuilder;
 /*
@@ -19,10 +19,14 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/admin', function () {
+    return view('admin.home');
+});
+
 Route::get('/researches', function() {
-    // Research::deleteIndex();
-    // Research::createIndex();
-    // return Research::reindex();
+    ResearchArticle::deleteIndex();
+    return ResearchArticle::createIndex();
+    // return ResearchArticle::reindex();
 });
 
 Route::get('/users', function() {
@@ -93,12 +97,15 @@ Route::get('/search', function() {
     }
 
     return view('search', compact('research'));
-
 });
 
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('/research', 'ResearchController');
+Route::resource('/research', 'ResearchArticleController');
 Route::resource('/funding', 'FundingAgencyController');
 Route::resource('/access', 'AccessTypeController');
+Route::resource('/category/field', 'CategoryFieldController');
+Route::resource('/category/domain', 'CategoryDomainController');
+Route::resource('/category/subdomain', 'CategorySubdomainController');
+Route::post('/category/subdomain/import', 'CategorySubdomainController@import')->name('subdomain.import');

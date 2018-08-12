@@ -24,7 +24,8 @@ class FundingAgencyController extends Controller
      */
     public function create()
     {
-        return view('funding.create');
+        $funding_agencies = FundingAgency::orderBy('funding_agency')->get();
+        return view('funding.create', compact('funding_agencies'));
     }
 
     /**

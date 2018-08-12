@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\AccessType;
+use App\CategoryField;
 use Illuminate\Http\Request;
 
-class AccessTypeController extends Controller
+class CategoryFieldController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,8 +24,8 @@ class AccessTypeController extends Controller
      */
     public function create()
     {
-        $access_types = AccessType::orderBy('access_type')->get();
-        return view('access.create', compact('access_types'));
+        $catFields = CategoryField::all();
+        return view('categoryField.create', compact('catFields'));
     }
 
     /**
@@ -36,24 +36,20 @@ class AccessTypeController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'access_type' => 'required|unique:access_types',
-        ]);
+        $catField = new CategoryField;
+        $catField->category_field = $request->category_field;
+        $catField->save();
 
-        $access_type = new AccessType;
-        $access_type->access_type = $request->access_type;
-        $access_type->save();
-
-        return redirect()->route('access.create');
+        return redirect()->route('field.create');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\AccessType  $accessType
+     * @param  \App\CategoryField  $categoryField
      * @return \Illuminate\Http\Response
      */
-    public function show(AccessType $accessType)
+    public function show(CategoryField $categoryField)
     {
         //
     }
@@ -61,10 +57,10 @@ class AccessTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\AccessType  $accessType
+     * @param  \App\CategoryField  $categoryField
      * @return \Illuminate\Http\Response
      */
-    public function edit(AccessType $accessType)
+    public function edit(CategoryField $categoryField)
     {
         //
     }
@@ -73,10 +69,10 @@ class AccessTypeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\AccessType  $accessType
+     * @param  \App\CategoryField  $categoryField
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AccessType $accessType)
+    public function update(Request $request, CategoryField $categoryField)
     {
         //
     }
@@ -84,10 +80,10 @@ class AccessTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\AccessType  $accessType
+     * @param  \App\CategoryField  $categoryField
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AccessType $accessType)
+    public function destroy(CategoryField $categoryField)
     {
         //
     }

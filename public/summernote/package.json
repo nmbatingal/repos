@@ -1,19 +1,19 @@
 {
-  "_from": "summernote@^0.8.10",
+  "_from": "summernote@0.8.10",
   "_id": "summernote@0.8.10",
   "_inBundle": false,
   "_integrity": "sha512-1b4ESCiY9HW+12HYXCntjbThVgeYNaYKfKL7pC4Jqjo/WDS4G4mMtd2kPuCw56HxeRT67d+zlehopaE+M4o6aQ==",
   "_location": "/summernote",
   "_phantomChildren": {},
   "_requested": {
-    "type": "range",
+    "type": "version",
     "registry": true,
-    "raw": "summernote@^0.8.10",
+    "raw": "summernote@0.8.10",
     "name": "summernote",
     "escapedName": "summernote",
-    "rawSpec": "^0.8.10",
+    "rawSpec": "0.8.10",
     "saveSpec": null,
-    "fetchSpec": "^0.8.10"
+    "fetchSpec": "0.8.10"
   },
   "_requiredBy": [
     "#USER",
@@ -21,7 +21,7 @@
   ],
   "_resolved": "https://registry.npmjs.org/summernote/-/summernote-0.8.10.tgz",
   "_shasum": "21a5d7f18a3b07500b58b60d5907417a54897520",
-  "_spec": "summernote@^0.8.10",
+  "_spec": "summernote@0.8.10",
   "_where": "C:\\xampp\\htdocs\\repos",
   "author": {
     "name": "hackerwins",

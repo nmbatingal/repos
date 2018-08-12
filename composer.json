@@ -15,7 +15,6 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4.0",
         "spatie/laravel-permission": "^2.13",
-        "summernote/summernote": "^0.8.8",
         "symfony/process": "^3.4",
         "webpatser/laravel-uuid": "^2.2",
         "maatwebsite/excel": "~2.1.0"

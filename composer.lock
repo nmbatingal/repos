@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a5ff7b60e945f8306cf8b2682405a928",
+    "content-hash": "737cc2b89a061e5a066be314816c1c92",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -1822,20 +1822,22 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.9.6",
+            "version": "v0.9.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "4a2ce86f199d51b6e2524214dc06835e872f4fce"
+                "reference": "4f5b6c090948773a8bfeea6a0f07ab7d0b24e932"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/4a2ce86f199d51b6e2524214dc06835e872f4fce",
-                "reference": "4a2ce86f199d51b6e2524214dc06835e872f4fce",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/4f5b6c090948773a8bfeea6a0f07ab7d0b24e932",
+                "reference": "4f5b6c090948773a8bfeea6a0f07ab7d0b24e932",
                 "shasum": ""
             },
             "require": {
                 "dnoegel/php-xdg-base-dir": "0.1",
+                "ext-json": "*",
+                "ext-tokenizer": "*",
                 "jakub-onderka/php-console-highlighter": "0.3.*",
                 "nikic/php-parser": "~1.3|~2.0|~3.0|~4.0",
                 "php": ">=5.4.0",
@@ -1890,7 +1892,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2018-06-10T17:57:20+00:00"
+            "time": "2018-08-11T15:54:43+00:00"
         },
         {
             "name": "ramsey/uuid",
@@ -2083,39 +2085,6 @@
                 "spatie"
             ],
             "time": "2018-08-02T20:20:03+00:00"
-        },
-        {
-            "name": "summernote/summernote",
-            "version": "v0.8.8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/summernote/summernote.git",
-                "reference": "28b5be6cd5e1c422cdb15aae6ef237b6c2f3f16c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/summernote/summernote/zipball/28b5be6cd5e1c422cdb15aae6ef237b6c2f3f16c",
-                "reference": "28b5be6cd5e1c422cdb15aae6ef237b6c2f3f16c",
-                "shasum": ""
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Alan",
-                    "email": "susukang98@gmail.com",
-                    "role": "lead"
-                }
-            ],
-            "description": "Super Simple WYSIWYG Editor on Bootstrap(3.0 and 2.x).",
-            "homepage": "http://summernote.org/",
-            "keywords": [
-                "wysiwyg"
-            ],
-            "time": "2017-09-09T11:08:25+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\AccessType;
+use App\CategoryField;
+use App\CategoryDomain;
 use Illuminate\Http\Request;
 
-class AccessTypeController extends Controller
+class CategoryDomainController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,8 +25,9 @@ class AccessTypeController extends Controller
      */
     public function create()
     {
-        $access_types = AccessType::orderBy('access_type')->get();
-        return view('access.create', compact('access_types'));
+        $catFields = CategoryField::all();
+        $catDomains = CategoryDomain::all();
+        return view('categoryDomain.create', compact('catFields', 'catDomains'));
     }
 
     /**
@@ -36,24 +38,21 @@ class AccessTypeController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'access_type' => 'required|unique:access_types',
-        ]);
+        $catDomain = new CategoryDomain;
+        $catDomain->category_field_id = $request->category_field;
+        $catDomain->category_domain = $request->category_domain;
+        $catDomain->save();
 
-        $access_type = new AccessType;
-        $access_type->access_type = $request->access_type;
-        $access_type->save();
-
-        return redirect()->route('access.create');
+        return redirect()->route('domain.create');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\AccessType  $accessType
+     * @param  \App\CategoryDomain  $categoryDomain
      * @return \Illuminate\Http\Response
      */
-    public function show(AccessType $accessType)
+    public function show(CategoryDomain $categoryDomain)
     {
         //
     }
@@ -61,10 +60,10 @@ class AccessTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\AccessType  $accessType
+     * @param  \App\CategoryDomain  $categoryDomain
      * @return \Illuminate\Http\Response
      */
-    public function edit(AccessType $accessType)
+    public function edit(CategoryDomain $categoryDomain)
     {
         //
     }
@@ -73,10 +72,10 @@ class AccessTypeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\AccessType  $accessType
+     * @param  \App\CategoryDomain  $categoryDomain
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AccessType $accessType)
+    public function update(Request $request, CategoryDomain $categoryDomain)
     {
         //
     }
@@ -84,10 +83,10 @@ class AccessTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\AccessType  $accessType
+     * @param  \App\CategoryDomain  $categoryDomain
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AccessType $accessType)
+    public function destroy(CategoryDomain $categoryDomain)
     {
         //
     }

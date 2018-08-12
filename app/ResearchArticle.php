@@ -31,6 +31,65 @@ class ResearchArticle extends Model
         'status',
         'log_id',
     ];
+
+    protected $mappingProperties = [
+        'publication_title' => [
+          'type' => 'text',
+          'analyzer' => 'standard',
+        ],
+        'authors' => [
+          'type' => 'text',
+          'analyzer' => 'standard',
+        ],
+        'research_content' => [
+          'type' => 'text',
+          'analyzer' => 'standard',
+        ],
+        'keywords' => [
+          'type' => 'text',
+          'analyzer' => 'standard',
+        ],
+        'category_field' => [
+          'type' => 'text',
+          'analyzer' => 'standard',
+        ],
+        'category_domain' => [
+          'type' => 'text',
+          'analyzer' => 'standard',
+        ],
+        'category_subdomain' => [
+          'type' => 'text',
+          'analyzer' => 'standard',
+        ],
+        'project_duration_start' => [
+          'type' => 'date',
+        ],
+        'project_duration_end' => [
+          'type' => 'date',
+        ],
+        'funding_agency_id' => [
+          'type' => 'text',
+          'analyzer' => 'standard',
+        ],
+        'project_cost' => [
+          'type' => 'text',
+          'analyzer' => 'standard',
+        ],
+        'access_type_id' => [
+          'type' => 'text',
+          'analyzer' => 'standard',
+        ],
+        'status' => [
+          'type' => 'text',
+          'analyzer' => 'standard',
+        ],
+        'created_at' => [
+          'type' => 'date',
+        ],
+        'updated_at' => [
+          'type' => 'date',
+        ],
+    ];
     
     /**
      * Elasticsearch
