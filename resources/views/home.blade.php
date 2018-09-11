@@ -1,57 +1,75 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link href="{{ asset('dist/css/pages/other-pages.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
-
-                <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
+    <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="row page-titles">
+            <div class="col-md-5 align-self-center">
+                <h4 class="text-themecolor"></h4>
+            </div>
+            <div class="col-md-7 align-self-center text-right">
+                <div class="d-flex justify-content-end align-items-center">
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Records List</div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
 
-                <div class="panel-body"><table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">First</th>
-                      <th scope="col">Last</th>
-                      <th scope="col">Handle</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($records as $record)
-                        <tr>
-                          <th scope="row"></th>
-                          <td>{{ $record->title }}</td>
-                          <td>
-                            <a href="{{ asset('storage/users/'.$record->created_by_id.'/research/'.$record->id.'/'.$record->filename) }}">
-                              {{ $record->filename }}
-                            </a>
-                            
-                          </td>
-                          <td></td>
-                        </tr>
-                    @endforeach
-                  </tbody>
-                </table>
+        @include('modals.login')
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <div class="row m-b-20">
+            <div class="col-md-6 offset-md-3">
+                <div class="jumbotron">
+                    <h1 class="display-4">Hello, researchers!</h1>
+                    <p class="lead">
+                        
+                    </p>
+                    <hr class="my-4">
+                    <p>
+                        Start searching for research articles by typing keywords in the search box and press enter.
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{{ url('search') }}" method="get">
+                            <div class="input-group">
+                                <input 
+                                    type="text" 
+                                    class="form-control form-control-lg" 
+                                    placeholder="Search..."
+                                    name="q"
+                                    value="{{ request('q') }}"
+                                    required 
+                                >
+                              <div class="input-group-append">
+                                <button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
+                              </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- ============================================================== -->
+        <!-- End PAge Content -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Right sidebar -->
+        <!-- ============================================================== -->
+        <!-- .right-sidebar -->
+        @include('layouts.rightbar')
+        <!-- ============================================================== -->
+        <!-- End Right sidebar -->
+        <!-- ============================================================== -->
     </div>
-</div>
 @endsection

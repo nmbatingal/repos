@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -15,12 +16,19 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
+            $table->string('username');
+            $table->string('firstname');
+            $table->string('middlename')->nullable();
+            $table->string('lastname');
             $table->string('email')->unique();
+            $table->char('mobile', 15)->nullable();
             $table->string('password');
+            $table->integer('isactive')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
+
+        User::createIndex();
     }
 
     /**
@@ -31,5 +39,6 @@ class CreateUsersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('users');
+        User::deleteIndex();
     }
 }

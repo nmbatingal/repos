@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -39,11 +39,6 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    /**
-     * Override login to enable email and username on user login
-     * Login only if user account is active
-     *
-     */
     public function login(Request $request)
     {
         $this->validate($request, [
@@ -63,7 +58,7 @@ class LoginController extends Controller
             return redirect()->intended($this->redirectPath());
         }
  
-        return redirect()->back()
+        return redirect($this->redirectPath())
             ->withInput()
             ->withErrors([
                 'login' => 'These credentials do not match our records.',
