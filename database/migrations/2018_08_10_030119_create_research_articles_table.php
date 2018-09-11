@@ -1,5 +1,6 @@
 <?php
 
+use App\ResearchArticle;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -35,6 +36,8 @@ class CreateResearchArticlesTable extends Migration
 
             $table->foreign('log_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
         });
+
+        ResearchArticle::createIndex();
     }
 
     /**
@@ -45,5 +48,6 @@ class CreateResearchArticlesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('research_articles');
+        ResearchArticle::deleteIndex();
     }
 }
