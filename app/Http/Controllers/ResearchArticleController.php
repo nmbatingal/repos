@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Storage;
+use App\CategoryField;
 use App\ResearchArticle;
 use Illuminate\Http\Request;
 
@@ -37,7 +38,8 @@ class ResearchArticleController extends Controller
      */
     public function create()
     {
-        return view('research.create');
+        $fields = CategoryField::with('categoryDomains')->get();
+        return view('research.create', compact('fields'));
     }
 
     /**

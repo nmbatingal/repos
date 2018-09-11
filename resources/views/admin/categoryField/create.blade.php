@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layouts.app')
 
 @section('styles')
 @endsection
@@ -43,24 +43,15 @@
             @endif
             
             <div class="card card-body">
-                <h3 class="box-title m-b-0">Create Category Domain</h3>
+                <h3 class="box-title m-b-0">Create Category Field</h3>
                 <p class="text-muted m-b-30 font-13">Create new research article access type.</p>
                 <div class="row">
                     <div class="col-sm-12 col-xs-12">
-                        <form action="{{ route('domain.store') }}" method="post">
+                        <form action="{{ route('field.store') }}" method="post">
                             {{ csrf_field() }}
                             <div class="form-group">
-                                <label for="category_field">Category Field</label>
-                                <select class="custom-select col-12" id="category_field" name="category_field" required="">
-                                    <option selected="">Choose...</option>
-                                    @foreach($catFields as $field)
-                                        <option value="{{ $field->id }}">{{ $field->category_field }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="category_domain">Category Domain</label>
-                                <input type="text" class="form-control" id="category_domain" name="category_domain" placeholder="Enter category domain name" value="{{ old('category_domain') }}" required>
+                                <label for="category_field">Access Type</label>
+                                <input type="text" class="form-control" id="category_field" name="category_field" placeholder="Enter access type" value="{{ old('category_field') }}" required>
                             </div>
                             <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Submit</button>
                             <button type="submit" class="btn btn-inverse waves-effect waves-light">Cancel</button>
@@ -72,26 +63,24 @@
         <div class="col-md-7">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Category Domain List</h4>
+                    <h4 class="card-title">Access Type List</h4>
                     <h6 class="card-subtitle">View access types to control research article for user usage.</h6>
                     <div class="table-responsive">
                         <table class="table table-hover">
-                            @if ($catDomains->count() > 0 )
+                            @if ($catFields->count() > 0 )
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Field</th>
-                                        <th>Domain</th>
+                                        <th>Category Field</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                             @endif
                             <tbody>
-                                @forelse($catDomains as $domain)
+                                @forelse($catFields as $catField)
                                     <tr>
-                                        <td>{{ $domain->id }}</td>
-                                        <td>{{ $domain->categoryField->category_field }}</td>
-                                        <td>{{ $domain->category_domain }}</td>
+                                        <td>{{ $catField->id }}</td>
+                                        <td>{{ $catField->category_field }}</td>
                                         <td>
                                             <button></button>
                                         </td>
@@ -113,7 +102,7 @@
     <!-- Right sidebar -->
     <!-- ============================================================== -->
     <!-- .right-sidebar -->
-    @include('layouts.rightbar')
+    @include('admin.layouts.rightbar')
     <!-- ============================================================== -->
     <!-- End Right sidebar -->
     <!-- ============================================================== -->

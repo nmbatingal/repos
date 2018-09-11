@@ -27,7 +27,7 @@ class CategoryDomainController extends Controller
     {
         $catFields = CategoryField::all();
         $catDomains = CategoryDomain::all();
-        return view('categoryDomain.create', compact('catFields', 'catDomains'));
+        return view('admin.categoryDomain.create', compact('catFields', 'catDomains'));
     }
 
     /**
@@ -89,5 +89,17 @@ class CategoryDomainController extends Controller
     public function destroy(CategoryDomain $categoryDomain)
     {
         //
+    }
+
+    /*** JS ***/
+    public function showDomain(Request $request)
+    {
+        $domains = CategoryDomain::all();
+        $data    = view('admin.categoryDomain.domainlist', compact('domains'))->render();
+
+        if($request->ajax())
+        {
+            return response()->json(['options' => $data]);
+        } 
     }
 }

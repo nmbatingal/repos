@@ -37,7 +37,7 @@
     <!-- Start Page Content -->
     <!-- ============================================================== -->
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-10 offset-md-1">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Create a new research article</h4>
@@ -46,97 +46,120 @@
                     <form id="researchForm" class="form-horizontal" method="POST" action="{{ route('research.store') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="form-body">
-                            <div class="row p-t-20">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Research Title</label>
-                                        <input type="text" name="title" class="form-control" placeholder="Title here..." required>
-                                    </div>
+                            <div class="form-group row p-t-20">
+                                <label class="control-label text-right col-md-3">Research Title</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="title" class="form-control" placeholder="Title here..." required>
+                                    <!-- <small class="form-control-feedback"> This is inline help </small>  -->
                                 </div>
-                                <!--/span-->
                             </div>
                             <!--/row-->
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Author</label>
-
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <input type="text" name="authors" class="form-control tags-input" data-role="tagsinput" placeholder="add author" required />
-                                            </div>
-                                        </div>
-
-                                        <small class="form-control-feedback">Press enter to add. </small> 
-                                    </div>
+                            <div class="form-group row p-b-20">
+                                <label class="control-label text-right col-md-3">Author</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="authors" class="form-control tags-input" data-role="tagsinput" placeholder="add author" required />
+                                    <small class="form-control-feedback">Press enter to add. </small>
                                 </div>
-                                <!--/span-->
                             </div>
                             <!--/row-->
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Keywords</label>
 
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <input type="text" name="keywords" class="form-control tags-input" data-role="tagsinput" placeholder="add keyword" required />
-                                            </div>
-                                        </div>
-
-                                        <small class="form-control-feedback">Press enter to add. </small> 
-                                    </div>
-                                </div>
-                                <!--/span-->
-                            </div>
-                            <!--/row-->
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Upload File</label>
-                                        <input id="research_file" type="file" class="form-control" name="research_file" value="{{ old('research_file') }}" required>
-                                    </div>
-                                </div>
-                                <!--/span-->
-                            </div>
                             <hr>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Project Duration</label>
-                                        <input id="project_duration" type="text" class="form-control" name="project_duration" value="{{ old('project_duration') }}" placeholder="project duration...">
-                                    </div>
+
+                            <div class="form-group row p-t-20">
+                                <label class="control-label text-right col-md-3">Category</label>
+                                <div class="col-md-4">
+                                    <select class="form-control custom-select" name="categoryDomain" required>
+                                        <option>Select Domain...</option>
+                                        @if(!empty($fields))
+                                            @foreach( $fields as $value )
+                                            <optgroup label="{{ $value->category_field }}">
+                                                @foreach( $value->categoryDomains as $domain )
+                                                    <option value="{{ $domain->id }}">{{ $domain->category_domain }}</option>
+                                                @endforeach
+                                            </optgroup>
+                                            @endforeach
+                                        @endif
+                                    </select>
                                 </div>
-                                <!--/span-->
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Funding Agency</label>
-                                        <input id="funding_agency" type="text" class="form-control" name="funding_agency" value="{{ old('funding_agency') }}" placeholder="funding agency...">
-                                    </div>
+                                <div class="col-md-5">
+                                    <select class="form-control custom-select" name="categorySubdomain" disabled required>
+                                        <option>Select Subdomain...</option>
+                                    </select>
                                 </div>
-                                <!--/span-->
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Project Cost</label>
-                                        <input id="project_cost" type="text" class="form-control" name="project_cost" value="{{ old('project_cost') }}" placeholder="project cost...">
-                                    </div>
+                            <!--/row-->
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3">Keywords</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="keywords" class="form-control tags-input" data-role="tagsinput" placeholder="add keyword" required />
+                                    <small class="form-control-feedback">Press enter to add. </small>
                                 </div>
-                                <!--/span-->
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Project Status Completed</label>
-                                            <input id="status" type="checkbox" class="form-control" name="status">
-                                    </div>
-                                </div>
-                                <!--/span-->
                             </div>
-                            <h3 class="card-subtitle">Research Content</h3>
+                            <!--/row-->
+                            <div class="form-group row p-b-20">
+                                <label class="control-label text-right col-md-3">Upload PDF</label>
+                                <div class="col-md-9">
+                                    <input id="research_file" type="file" class="form-control" name="research_file" value="{{ old('research_file') }}" accept="application/pdf" required>
+                                    <!-- <small class="form-control-feedback">Press enter to add. </small> -->
+                                </div>
+                            </div>
+                            <!--/row-->
+
+                            <hr>
+
+                            <div class="form-group row p-t-20">
+                                <label class="control-label text-right col-md-3">Project Duration</label>
+                                <div class="col-md-9">
+                                    <input id="project_duration" type="text" class="form-control" name="project_duration" value="{{ old('project_duration') }}" placeholder="project duration...">
+                                    <!-- <small class="form-control-feedback">Press enter to add. </small> -->
+                                </div>
+                            </div>
+                            <!--/row-->
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3">Funding Agency</label>
+                                <div class="col-md-9">
+                                    <input id="funding_agency" type="text" class="form-control" name="funding_agency" value="{{ old('funding_agency') }}" placeholder="funding agency...">
+                                    <!-- <small class="form-control-feedback">Press enter to add. </small> -->
+                                </div>
+                            </div>
+                            <!--/row-->
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3">Project Cost</label>
+                                <div class="col-md-9">
+                                    <input id="project_cost" type="text" class="form-control" name="project_cost" value="{{ old('project_cost') }}" placeholder="project cost...">
+                                    <!-- <small class="form-control-feedback">Press enter to add. </small> -->
+                                </div>
+                            </div>
+                            <!--/row-->
+
+                            <hr>
+
+                            <div class="form-group row p-20">
+                                <label class="control-label text-right col-md-3">Completion Status</label>
+                                <div class="col-md-9">
+                                    <div class="radio-list">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="statusOngoing" name="status" value="Ongoing" class="custom-control-input">
+                                            <label class="custom-control-label" for="statusOngoing">Ongoing</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="statusCompleted" name="status" value="Completed" class="custom-control-input">
+                                            <label class="custom-control-label" for="statusCompleted">Completed</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/row-->
+
+                            <hr>
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <textarea name="research_content" class="summernote" id="abstract" title="Contents" required>{{ old('research_content') }}</textarea>
+                                        <textarea name="research_content" class="summernote" id="abstract" title="Contents" required>
+                                            <h3>Abstract</h3><br>
+                                            write here...
+                                        </textarea>
                                     </div>
                                 </div>
                             </div>
@@ -169,6 +192,26 @@
 <!-- summernote texteditor js -->
 <script src="{{ asset('summernote/dist/summernote-bs4.min.js') }}"></script>
 <script src="{{ asset('bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
+
+<script type="text/javascript">
+    $("select[name='categoryDomain']").change(function(){
+        
+        var id_domain = $(this).val();
+        var token = $("input[name='_token']").val();
+
+        $.ajax({
+            method: 'POST',
+            url: "{{ route('subdomain.list') }}",
+            data: { id_domain:id_domain, _token:token},
+            success: function(data) {
+                $("select[name='categorySubdomain'").attr('disabled', false);
+                $("select[name='categorySubdomain'").html('');
+                $("select[name='categorySubdomain'").html(data.options);
+            }
+        });
+    });
+</script>
+
 <script>
     $(function() {
 

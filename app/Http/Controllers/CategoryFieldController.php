@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CategoryField;
+use App\CategorySubdomain;
 use Illuminate\Http\Request;
 
 class CategoryFieldController extends Controller
@@ -25,7 +26,7 @@ class CategoryFieldController extends Controller
     public function create()
     {
         $catFields = CategoryField::all();
-        return view('categoryField.create', compact('catFields'));
+        return view('admin.categoryField.create', compact('catFields'));
     }
 
     /**
@@ -86,5 +87,17 @@ class CategoryFieldController extends Controller
     public function destroy(CategoryField $categoryField)
     {
         //
+    }
+
+    /*** JS ***/
+    public function showField(Request $request)
+    {
+        $fields  = CategoryField::with('categoryDomains')->get();
+        $data    = view('admin.categoryField.fieldlist', compact('fields'))->render();
+
+        if($request->ajax())
+        {
+            return response()->json(['options' => $data]);
+        } 
     }
 }

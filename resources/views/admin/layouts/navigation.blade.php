@@ -36,6 +36,15 @@
                         <li><a href="{{ route('research.create') }}">New Research</a></li>
                     </ul>
                 </li>
+                <li> 
+                    <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                        <i class="icon-notebook"></i><span class="hide-menu">Category</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="{{ route('research.index') }}">My Research</a></li>
+                        <li><a href="{{ route('research.create') }}">New Research</a></li>
+                    </ul>
+                </li>
 
                 <!-- <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Apps</span></a>
                     <ul aria-expanded="false" class="collapse">

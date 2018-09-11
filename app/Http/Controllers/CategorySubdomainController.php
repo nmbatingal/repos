@@ -34,7 +34,7 @@ class CategorySubdomainController extends Controller
         $catDomains = CategoryDomain::all();
         $catSubdomains = CategorySubdomain::with('categoryDomain')->get();
 
-        return view('categorySubdomain.create', compact('catFields', 'catDomains', 'catSubdomains'));
+        return view('admin.categorySubdomain.create', compact('catFields', 'catDomains', 'catSubdomains'));
     }
 
     /**
@@ -134,5 +134,17 @@ class CategorySubdomainController extends Controller
     public function destroy(CategorySubdomain $categorySubdomain)
     {
         //
+    }
+
+    /*** JS ***/
+    public function showSubdomain(Request $request)
+    {
+        $subdomains = CategorySubdomain::where('category_domain_id', $request->id_domain)->get();
+        $data       = view('admin.categorySubdomain.subdomainlist', compact('subdomains'))->render();
+
+        if($request->ajax())
+        {
+            return response()->json(['options' => $data]);
+        } 
     }
 }

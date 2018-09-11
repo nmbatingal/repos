@@ -103,9 +103,24 @@ Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/research', 'ResearchArticleController');
-Route::resource('/funding', 'FundingAgencyController');
-Route::resource('/access', 'AccessTypeController');
-Route::resource('/category/field', 'CategoryFieldController');
-Route::resource('/category/domain', 'CategoryDomainController');
-Route::resource('/category/subdomain', 'CategorySubdomainController');
-Route::post('/category/subdomain/import', 'CategorySubdomainController@import')->name('subdomain.import');
+
+Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function()
+{
+
+    Route::resource('/funding', 'FundingAgencyController');
+    Route::resource('/access', 'AccessTypeController');
+
+    /*** CATEGORY FIELD ***/
+    Route::get('/category/field/fieldlist', 'CategoryFieldController@showField')->name('field.list');
+    Route::resource('/category/field', 'CategoryFieldController');
+
+    /*** CATEGORY DOMAIN ***/
+    Route::get('/category/domain/domainlist', 'CategoryDomainController@showDomain')->name('domain.list');
+    Route::resource('/category/domain', 'CategoryDomainController');
+
+    /*** CATEGORY SUBDOMAIN ***/
+    Route::resource('/category/subdomain', 'CategorySubdomainController');
+    Route::post('/category/subdomain/subdomainlist', 'CategorySubdomainController@showSubdomain')->name('subdomain.list');
+    Route::post('/category/subdomain/import', 'CategorySubdomainController@import')->name('subdomain.import');
+
+});
