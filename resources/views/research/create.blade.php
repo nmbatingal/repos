@@ -107,13 +107,35 @@
 
                             <hr>
 
+                            <!-- CHANGE SELECT MONTHS AND YEAR / DATABASE ALSO--CHANGE COLUMNS -->
                             <div class="form-group row p-t-20">
                                 <label class="control-label text-right col-md-3">Project Duration</label>
-                                <div class="col-md-9">
-                                    <input id="project_duration" type="text" class="form-control" name="project_duration" value="{{ old('project_duration') }}" placeholder="project duration...">
+                                <div class="col-md-2">
+                                    <input id="project_duration" type="text" class="form-control" name="project_duration" value="{{ old('project_duration') }}" placeholder="Select Month">
+
+                                    <select class="form-control custom-select" name="categoryDomain" required>
+                                        <option>Select Month...</option>
+                                    </select>
+
+                                </div>
+                                <div class="col-md-2">
+                                    <input id="project_duration" type="text" class="form-control" name="project_duration" value="{{ old('project_duration') }}" placeholder="Select Year">
+                                    <!-- <small class="form-control-feedback">Press enter to add. </small> -->
+                                </div>
+                                <div class="col-md-1 text-center">
+                                    to
+                                </div>
+                                <div class="col-md-2">
+                                    <input id="project_duration" type="text" class="form-control" name="project_duration" value="{{ old('project_duration') }}" placeholder="Select Month">
+                                    <!-- <small class="form-control-feedback">Press enter to add. </small> -->
+                                </div>
+                                <div class="col-md-2">
+                                    <input id="project_duration" type="text" class="form-control" name="project_duration" value="{{ old('project_duration') }}" placeholder="Select Year">
                                     <!-- <small class="form-control-feedback">Press enter to add. </small> -->
                                 </div>
                             </div>
+                            <!-- CHANGE SELECT MONTHS AND YEAR / DATABASE ALSO--CHANGE COLUMNS -->
+
                             <!--/row-->
                             <div class="form-group row">
                                 <label class="control-label text-right col-md-3">Funding Agency</label>
