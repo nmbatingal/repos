@@ -41,8 +41,9 @@
                         <i class="icon-notebook"></i><span class="hide-menu">Category</span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{ route('research.index') }}">My Research</a></li>
-                        <li><a href="{{ route('research.create') }}">New Research</a></li>
+                        <li><a href="{{ route('field.create') }}">Create Field</a></li>
+                        <li><a href="{{ route('domain.create') }}">Create Domain</a></li>
+                        <li><a href="{{ route('subdomain.create') }}">Create Subdomain</a></li>
                     </ul>
                 </li>
 

@@ -50,24 +50,21 @@ class ResearchArticleController extends Controller
      */
     public function store(Request $request)
     {
-        /*$research = new ResearchArticle;
+        $research = new ResearchArticle;
+        $category_id = explode(',', $request->categoryDomain);
 
-        $research->publication_title = $request->publication_title;
+        $research->publication_title = $request->title;
         $research->authors = $request->authors;
         $research->research_content = $request->research_content;
         $research->keywords = $request->keywords;
-
-        $research->category_field
-        $research->category_domain
-        $research->category_subdomain
-
-        $research->project_duration_start = $request->project_duration_start;
-        $research->project_duration_end = $request->project_duration_end;
-
-        $research->funding_agency_id = $request->funding_agency;
-
+        $research->category_field_id = $category_id[0];
+        $research->category_domain_id = $category_id[1];
+        $research->category_subdomain_id = $request->categorySubdomain;
+        $research->project_duration_start = $request->project_duration_start.'-01';
+        $research->project_duration_end = $request->project_duration_end.'-01';
+        $research->funding_agency = $request->funding_agency;
         $research->project_cost = $request->project_cost;
-        $research->access_type_id
+        $research->access_type = $request->access_type;
 
         if ( $request->hasFile('research_file') ) {
 
@@ -78,7 +75,7 @@ class ResearchArticleController extends Controller
             $research->filesize = $filesize;
         }
 
-        $research->status;
+        $research->status = $request->status;
         $research->log_id = Auth::user()->id;
 
         if ( $research->save() ) {
@@ -87,12 +84,14 @@ class ResearchArticleController extends Controller
                 $request->research_file->storeAs('public/users/'. Auth::user()->id .'/research/'.$research->id, $filename);
             }
 
+            $research->category_field_id = $research->categoryField->category_field;
+            $research->category_domain_id = $research->categoryDomain->category_domain;
+            $research->category_subdomain_id = $research->categorySubdomain->category_subdomain;
             $research->research_content = strip_tags($request->research_content);
             $research->addToIndex();
         }
 
-        return redirect()->route('research.index');*/
-        return dd($request);
+        return redirect()->route('research.index');
     }
 
     /**

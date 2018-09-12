@@ -13,7 +13,7 @@ class CreateAccessTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('access_types', function (Blueprint $table) {
+        /*Schema::create('access_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('access_type')->unique();
             // $table->timestamps();
@@ -21,8 +21,8 @@ class CreateAccessTypesTable extends Migration
 
         Schema::table('research_articles', function($table)
         {
-            $table->foreign('access_type_id')->references('id')->on('access_types')->onDelete('set null')->onUpdate('cascade');
-        });
+            $table->foreign('access_type')->references('id')->on('access_types')->onDelete('set null')->onUpdate('cascade');
+        });*/
     }
 
     /**
@@ -32,11 +32,11 @@ class CreateAccessTypesTable extends Migration
      */
     public function down()
     {
-        Schema::table('research_articles', function($table)
+        /*Schema::table('research_articles', function($table)
         {
-            $table->dropForeign('research_articles_access_type_id_foreign');
+            $table->dropForeign('research_articles_access_type_foreign');
         });
 
-        Schema::dropIfExists('access_types');
+        Schema::dropIfExists('access_types');*/
     }
 }

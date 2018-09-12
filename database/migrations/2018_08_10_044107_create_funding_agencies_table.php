@@ -13,7 +13,7 @@ class CreateFundingAgenciesTable extends Migration
      */
     public function up()
     {
-        Schema::create('funding_agencies', function (Blueprint $table) {
+        /*Schema::create('funding_agencies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('funding_agency')->unique();
             // $table->timestamps();
@@ -21,8 +21,8 @@ class CreateFundingAgenciesTable extends Migration
 
         Schema::table('research_articles', function($table)
         {
-            $table->foreign('funding_agency_id')->references('id')->on('funding_agencies')->onDelete('set null')->onUpdate('cascade');
-        });
+            $table->foreign('funding_agency')->references('id')->on('funding_agencies')->onDelete('set null')->onUpdate('cascade');
+        });*/
     }
 
     /**
@@ -32,11 +32,11 @@ class CreateFundingAgenciesTable extends Migration
      */
     public function down()
     {
-        Schema::table('research_articles', function($table)
+        /*Schema::table('research_articles', function($table)
         {
-            $table->dropForeign('research_articles_funding_agency_id_foreign');
+            $table->dropForeign('research_articles_funding_agency_foreign');
         });
 
-        Schema::dropIfExists('funding_agencies');
+        Schema::dropIfExists('funding_agencies');*/
     }
 }

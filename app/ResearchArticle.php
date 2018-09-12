@@ -18,14 +18,14 @@ class ResearchArticle extends Model
         'authors', 
         'research_content',
         'keywords',
-        'category_field',
-        'category_domain',
-        'category_subdomain',
+        'category_field_id',
+        'category_domain_id',
+        'category_subdomain_id',
         'project_duration_start',
         'project_duration_end',
-        'funding_agency_id',
+        'funding_agency',
         'project_cost',
-        'access_type_id',
+        'access_type',
         'filename',
         'filesize',
         'status',
@@ -49,15 +49,15 @@ class ResearchArticle extends Model
           'type' => 'text',
           'analyzer' => 'standard',
         ],
-        'category_field' => [
+        'category_field_id' => [
           'type' => 'text',
           'analyzer' => 'standard',
         ],
-        'category_domain' => [
+        'category_domain_id' => [
           'type' => 'text',
           'analyzer' => 'standard',
         ],
-        'category_subdomain' => [
+        'category_subdomain_id' => [
           'type' => 'text',
           'analyzer' => 'standard',
         ],
@@ -67,7 +67,7 @@ class ResearchArticle extends Model
         'project_duration_end' => [
           'type' => 'date',
         ],
-        'funding_agency_id' => [
+        'funding_agency' => [
           'type' => 'text',
           'analyzer' => 'standard',
         ],
@@ -75,7 +75,7 @@ class ResearchArticle extends Model
           'type' => 'text',
           'analyzer' => 'standard',
         ],
-        'access_type_id' => [
+        'access_type' => [
           'type' => 'text',
           'analyzer' => 'standard',
         ],
@@ -112,13 +112,43 @@ class ResearchArticle extends Model
     }
 
     /**
+     * Model App\CategoryField
+     *
+     * @var
+     */
+    public function categoryField()
+    {
+        return $this->belongsTo('App\CategoryField', 'category_field_id');
+    }
+
+    /**
+     * Model App\categoryDomain
+     *
+     * @var
+     */
+    public function categoryDomain()
+    {
+        return $this->belongsTo('App\CategoryDomain', 'category_domain_id');
+    }
+
+    /**
+     * Model App\categoryDomain
+     *
+     * @var
+     */
+    public function categorySubdomain()
+    {
+        return $this->belongsTo('App\CategorySubdomain', 'category_subdomain_id');
+    }
+
+    /**
      * Model App\FundingAgency
      *
      * @var
      */
     public function fundingAgency()
     {
-        return $this->hasOne('App\FundingAgency', 'funding_agency_id');
+        return $this->hasOne('App\FundingAgency', 'funding_agency', 'funding_agency');
     }
 
     /**
@@ -128,6 +158,6 @@ class ResearchArticle extends Model
      */
     public function accessType()
     {
-        return $this->hasOne('App\AccessType', 'access_type_id');
+        return $this->hasOne('App\AccessType', 'access_type', 'access_type');
     }
 }

@@ -24,7 +24,7 @@ class CreateCategorySubdomainsTable extends Migration
 
         Schema::table('research_articles', function($table)
         {
-            $table->foreign('category_subdomain')->references('id')->on('category_subdomains')->onDelete('set null')->onUpdate('cascade');
+            $table->foreign('category_subdomain_id')->references('id')->on('category_subdomains')->onDelete('set null')->onUpdate('cascade');
         });
     }
 
@@ -37,7 +37,7 @@ class CreateCategorySubdomainsTable extends Migration
     {
         Schema::table('research_articles', function($table)
         {
-            $table->dropForeign('research_articles_category_subdomain_foreign');
+            $table->dropForeign('research_articles_category_subdomain_id_foreign');
         });
 
         Schema::dropIfExists('category_subdomains');

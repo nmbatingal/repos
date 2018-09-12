@@ -45,16 +45,16 @@ class LoginController extends Controller
             'login'    => 'required',
             'password' => 'required',
         ]);
-     
+
+        $remember = $request->has('remember') ? true : false;
         $login_type = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL ) 
             ? 'email' 
             : 'username';
-     
         $request->merge([
             $login_type => $request->input('login')
         ]);
      
-        if ( Auth::attempt( array_merge($request->only($login_type, 'password'), ['isactive' => 1]) )) {
+        if ( Auth::attempt( array_merge($request->only($login_type, 'password'), ['isactive' => 1]), $remember )) {
             return redirect()->intended($this->redirectPath());
         }
  
@@ -63,6 +63,8 @@ class LoginController extends Controller
             ->withErrors([
                 'login' => 'These credentials do not match our records.',
             ]);
+
+        return dd($request);
     
     }
 }

@@ -74,7 +74,7 @@
                                             @foreach( $fields as $value )
                                             <optgroup label="{{ $value->category_field }}">
                                                 @foreach( $value->categoryDomains as $domain )
-                                                    <option value="{{ $domain->id }}">{{ $domain->category_domain }}</option>
+                                                    <option value="{{ $value->id .','. $domain->id }}">{{ $domain->category_domain }}</option>
                                                 @endforeach
                                             </optgroup>
                                             @endforeach
@@ -96,11 +96,30 @@
                                 </div>
                             </div>
                             <!--/row-->
-                            <div class="form-group row p-b-20">
+                            
+                            <hr>
+
+                            <div class="form-group row p-t-20">
                                 <label class="control-label text-right col-md-3">Upload PDF</label>
                                 <div class="col-md-9">
                                     <input id="research_file" type="file" class="form-control" name="research_file" value="{{ old('research_file') }}" accept="application/pdf" required>
                                     <!-- <small class="form-control-feedback">Press enter to add. </small> -->
+                                </div>
+                            </div>
+                            <!--/row-->
+                            <div class="form-group row p-b-20">
+                                <label class="control-label text-right col-md-3">Document Access Type</label>
+                                <div class="col-md-9">
+                                    <div class="radio-list">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="accessOpen" name="access_type" value="Open Access" class="custom-control-input">
+                                            <label class="custom-control-label" for="accessOpen">Open Access</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="accessSubscribe" name="access_type" value="Subscribe" class="custom-control-input">
+                                            <label class="custom-control-label" for="accessSubscribe">Subscribe</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <!--/row-->
@@ -110,28 +129,16 @@
                             <!-- CHANGE SELECT MONTHS AND YEAR / DATABASE ALSO--CHANGE COLUMNS -->
                             <div class="form-group row p-t-20">
                                 <label class="control-label text-right col-md-3">Project Duration</label>
-                                <div class="col-md-2">
-                                    <input id="project_duration" type="text" class="form-control" name="project_duration" value="{{ old('project_duration') }}" placeholder="Select Month">
-
-                                    <select class="form-control custom-select" name="categoryDomain" required>
-                                        <option>Select Month...</option>
-                                    </select>
-
-                                </div>
-                                <div class="col-md-2">
-                                    <input id="project_duration" type="text" class="form-control" name="project_duration" value="{{ old('project_duration') }}" placeholder="Select Year">
-                                    <!-- <small class="form-control-feedback">Press enter to add. </small> -->
+                                <div class="col-md-3">
+                                    <input id="project_duration_start" type="month" class="form-control" name="project_duration_start" value="{{ date('Y-m') }}" placeholder="Select Month">
+                                    <small class="form-control-feedback">Select beginning date.</small>
                                 </div>
                                 <div class="col-md-1 text-center">
                                     to
                                 </div>
-                                <div class="col-md-2">
-                                    <input id="project_duration" type="text" class="form-control" name="project_duration" value="{{ old('project_duration') }}" placeholder="Select Month">
-                                    <!-- <small class="form-control-feedback">Press enter to add. </small> -->
-                                </div>
-                                <div class="col-md-2">
-                                    <input id="project_duration" type="text" class="form-control" name="project_duration" value="{{ old('project_duration') }}" placeholder="Select Year">
-                                    <!-- <small class="form-control-feedback">Press enter to add. </small> -->
+                                <div class="col-md-3">
+                                    <input id="project_duration_end" type="month" class="form-control" name="project_duration_end" value="{{ date('Y-m') }}" placeholder="Select Month">
+                                    <small class="form-control-feedback">Select end date.</small>
                                 </div>
                             </div>
                             <!-- CHANGE SELECT MONTHS AND YEAR / DATABASE ALSO--CHANGE COLUMNS -->
@@ -148,7 +155,7 @@
                             <div class="form-group row">
                                 <label class="control-label text-right col-md-3">Project Cost</label>
                                 <div class="col-md-9">
-                                    <input id="project_cost" type="text" class="form-control" name="project_cost" value="{{ old('project_cost') }}" placeholder="project cost...">
+                                    <input id="project_cost" type="number" class="form-control" name="project_cost" value="{{ old('project_cost') }}" placeholder="project cost...">
                                     <!-- <small class="form-control-feedback">Press enter to add. </small> -->
                                 </div>
                             </div>

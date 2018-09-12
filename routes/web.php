@@ -23,17 +23,17 @@ Route::get('/admin', function () {
     return view('admin.home');
 });
 
-Route::get('/researches', function() {
-    ResearchArticle::deleteIndex();
-    return ResearchArticle::createIndex();
+/*Route::get('/researches', function() {
+    return ResearchArticle::deleteIndex();
+    // return ResearchArticle::createIndex();
     // return ResearchArticle::reindex();
-});
+});*/
 
-Route::get('/users', function() {
+/*Route::get('/users', function() {
     // User::deleteIndex();
     // return User::createIndex();
     return User::reindex();
-});
+});*/
 
 Route::get('/search', function() {
 
