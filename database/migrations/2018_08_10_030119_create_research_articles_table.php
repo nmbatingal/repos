@@ -17,7 +17,7 @@ class CreateResearchArticlesTable extends Migration
         Schema::create('research_articles', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->text('publication_title');
-            $table->string('authors');
+            $table->text('authors');
             $table->longtext('research_content');
             $table->text('keywords');
             $table->integer('category_field_id')->unsigned()->nullable();
@@ -27,10 +27,10 @@ class CreateResearchArticlesTable extends Migration
             $table->date('project_duration_end')->nullable();
             $table->string('funding_agency')->nullable();
             $table->string('project_cost')->nullable();
-            $table->string('access_type')->nullable();
             $table->string('filename')->nullable();
             $table->integer('filesize')->nullable();
-            $table->string('status');
+            $table->boolean('access_type')->default(0);
+            $table->boolean('status')->default(0);
             $table->uuid('log_id')->index()->nullable();
             $table->timestamps();
 

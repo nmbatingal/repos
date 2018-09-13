@@ -2,6 +2,16 @@
 
 @section('styles')
 <link href="{{ asset('dist/css/pages/other-pages.css') }}" rel="stylesheet">
+<style type="text/css">
+    body {
+        font-size: 20px;
+    }
+
+    footer {
+        font-size: 14px;
+    }
+
+</style>
 @endsection
 
 @section('content')
@@ -9,7 +19,7 @@
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
-    <div class="row page-titles">
+    <!-- <div class="row page-titles">
         <div class="col-md-5 align-self-center">
             <h4 class="text-themecolor">Research Article</h4>
         </div>
@@ -21,7 +31,7 @@
                 </ol>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- ============================================================== -->
     <!-- End Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
@@ -32,7 +42,7 @@
     <!-- Start Page Content -->
     <!-- ============================================================== -->
     <div class="row">
-        <div class="col-lg-2 col-md-4 hidden-sm-down">
+        <!-- <div class="col-lg-2 col-md-4 hidden-sm-down">
             <div class="stickyside">
                 <div class="list-group" id="top-menu">
                     <a href="#abstract" class="list-group-item active">&nbsp;</a>
@@ -45,39 +55,98 @@
                     <a href="#8" class="list-group-item hidden">&nbsp;</a>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-6 col-md-8">
+        </div> -->
+        <div class="col-lg-10 col-md-12 offset-lg-1">
             <div class="card">
                 <div class="card-body">
-                    <h3 class="card-title text-primary">{{ $research->title }}</h3>
-                    <p>
-                        @foreach(explode('|', $research->authors) as $author) 
-                            <a href="#" data-q="{{ $author }}" class="text-muted"><u>{!! $author !!}</u></a>
-                        @endforeach
-                        <br> Posted on: {{ $research->date_posted_on }}
-                    </p>
+                    <h2 class="card-title text-primary">{{ $research->publication_title }}</h2>
+                    <h5> Posted on: {{ $research->posted_on }}</h5>
                     <hr>
-                    <br><br>
-                    <!-- <h4 class="card-title" id="abstract">Abstract</h4> -->
-                    <p>
-                        {!! $research->research_content !!}
-                    </p>
-                    <!-- <h4 class="card-title" id="references">References</h4> -->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="stickyside m-t-20">
+                                <p>Outline</p>
+                                <ul>
+                                    <li>&nbsp;</li>
+                                    <li>&nbsp;</li>
+                                    <li>&nbsp;</li>
+                                </ul>
+                                <hr>
+                                <!-- DOWNLOADS ACCESS TYPE VARY -->
+                                @if( !$research->access_type )
+                                    <a id="pdfHref" href="{{ asset('storage/research_file/'.$research->id.'/'.$research->filename) }}" class="text-info">
+                                        <img src="{{ asset('images/logo/adobe-pdf-icon.png') }}" height="40px" class="p-r-10"> Download PDF file
+                                    </a>
+                                @else
+                                    <a href="javascript:void(0)" class="text-info">
+                                        <img src="{{ asset('images/logo/adobe-pdf-icon.png') }}" height="40px" class="p-r-10"> Download PDF file (subscribe)
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="m-t-20">
+                                        Author:<br>
+                                        @foreach(json_decode($research->authors) as $key => $author) 
+                                            <a href="#" data-q="{{ $author->name }}" class="text-muted text-underline"><u>{!! $author->name !!}</u></a><br>
+                                        @endforeach
+                                        
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="m-t-20">
+                                        Access Type:<br>
+                                        <span class="text-primary"><i>{{ $research->access_type ? 'Subscribed and Complimentary' : 'Open Access' }}</i></span>
+                                    </p>
+                                    <p class="m-t-20">
+                                        Project Completion:<br>
+                                        <a href="javacript:void(0)" class="badge {{ $research->status ? 'badge-success' : 'badge-primary' }} text-white">
+                                        {!! $research->status ? 'Completed' : 'Ongoing' !!}
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                            <hr class="m-t-40 m-b-40">
+                            <!-- <h4 class="card-title" id="abstract">Abstract</h4> -->
+                            <p>
+                                {!! $research->research_content !!}
+                            </p>
+                            <!-- <h4 class="card-title" id="references">References</h4> -->
+                            <p class="m-t-20">
+                                Keywords:<br>
+                                @foreach(explode(',', $research->keywords) as $keyword) 
+                                    <a href="javascript:void(0)" data-q="{{ $keyword }}" class="badge badge-info text-white a-links">
+                                        {!! $keyword !!}
+                                    </a>
+                                @endforeach
+                            </p>
+                            <hr class="m-t-40 m-b-40">
+                            <div id="pdfViewer">
+                            </div>
+                            @if( !$research->access_type )
+                                <a id="pdfHref" href="{{ asset('storage/research_file/'.$research->id.'/'.$research->filename) }}" class="text-info">
+                                    <img src="{{ asset('images/logo/adobe-pdf-icon.png') }}" height="40px" class="p-r-10"> Download PDF file
+                                </a>
+                            @endif
+                        </div>
+                    </div>
                     <p>
                     </p>
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-md-4 hidden-sm-down">
+        <!-- <div class="col-lg-2 col-md-4 hidden-sm-down">
             <div class="stickyside">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title text-primary">{{ $research->title }}</h4>
+                        <h4 class="card-title text-primary">{{ $research->publication_title }}</h4>
                         <p>
-                            @foreach(explode('|', $research->authors) as $author) 
-                                <a href="#" data-q="{{ $author }}" class="text-muted"><u>{!! $author !!}</u></a>
+                            @foreach(json_decode($research->authors) as $key => $author) 
+                                <a href="#" data-q="{{ $author->name }}" class="text-muted text-underline"><u>{!! $author->name !!}</u></a>
                             @endforeach
-                            <br> Posted on: {{ $research->date_posted_on }}
+                            <br> Posted on: {{ $research->created_at }}
                         </p>
                         <button class="btn btn-primary waves-effect waves-light" type="button">
                             <span class="btn-label"><i class="fa fa-print"></i></span> Print
@@ -111,7 +180,7 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
     
     <!-- ============================================================== -->
@@ -132,6 +201,25 @@
 <!--stickey kit -->
 <script src="{{ asset('assets/node_modules/sticky-kit-master/dist/sticky-kit.min.js') }}"></script>
 <script src="{{ asset('assets/node_modules/sparkline/jquery.sparkline.min.js') }}"></script>
+<!-- PDF Viewer -->
+<script src="{{ asset('pdfobject-master/pdfobject.js') }}"></script>
+
+@if( !$research->access_type )
+<script>
+    var options = {
+        height: '800px',
+        pdfOpenParams: {
+            toolbar: true,
+            statusbar: true,
+            view: "FitH"
+        }
+    };
+
+    PDFObject.embed("{{ asset('storage/research_file/'.$research->id.'/'.$research->filename) }}", "#pdfViewer", options);
+</script>
+@endif
+
+
 <script>
     // This is for the sticky sidebar    
     $(".stickyside").stick_in_parent({
@@ -144,6 +232,7 @@
         }, 500);
         return false;
     });
+
     // This is auto select left sidebar
     // Cache selectors
     // Cache selectors

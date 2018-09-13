@@ -15,9 +15,7 @@ use Elasticsearch\ClientBuilder;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/admin', function () {
     return view('admin.home');
@@ -35,16 +33,16 @@ Route::get('/admin', function () {
     return User::reindex();
 });*/
 
-Route::get('/search', function() {
+Route::get('/search', function(Request $request) {
 
-    $params = [
+    /*$params = [
         'body' => [
             'query' => [
                 'bool' => [
                     'must' => [
                         'multi_match' => [
-                            'query' => (string) request('q'),
-                            'fields' => ['title^2', 'authors', 'research_content', 'keywords'],      
+                            'query' => $request->get('q'),
+                            'fields' => ['publication_title^2', 'authors', 'research_content', 'keywords'],      
                         ],
                     ],
                     'should' => [
@@ -59,19 +57,78 @@ Route::get('/search', function() {
             'highlight' => [
                 'pre_tags' => ['<span class="font-weight-bold">'],
                 'post_tags' => ['</span>'],
+                "number_of_fragments" => 3,
                 'fields' => [
-                    'research_content' => [
-                        'type' => 'plain'
-                    ],
-                    'authors' => [
-                        'type' => 'plain'
+                    'publication_title' => new \stdClass(),
+                    'research_content' => new \stdClass(),
+                    'authors' => new \stdClass(),
+                    'keywords' => new \stdClass(),
+                ]
+            ]
+        ]
+    ];*/
+
+    /*if($request->has('title'))
+    {
+        $params = [
+            'body' => [
+                'query' => [
+                    'bool' => [
+                        'should' => [
+                            [ 'match' =>  [ 'publication_title' => $request->get('title') ]],
+                        ],
                     ]
+                ],
+                'highlight' => [
+                    'pre_tags' => ['<span class="font-weight-bold">'],
+                    'post_tags' => ['</span>'],
+                    "number_of_fragments" => 3,
+                    'fields' => [
+                        'publication_title' => new \stdClass(),
+                        'research_content' => new \stdClass(),
+                        'authors' => new \stdClass(),
+                        'keywords' => new \stdClass(),
+                    ]
+                ]
+            ]
+        ];
+    }*/
+
+    $publication_title = $request->get('title');
+    $category_field_id = $request->get('domain');
+    $category_domain_id = $request->get('domain');
+    $category_subdomain_id = $request->get('subdomain');
+
+    $params = [
+        'body' => [
+            'query' => [
+                'bool' => [
+                    'should' => [
+                        [ 'match' =>  [ 'publication_title' => '' ]],
+                        [ 'match_phrase' =>  [ 'category_field_id' => $category_field_id ]],
+                        [ 'match_phrase' =>  [ 'category_domain_id' => $category_field_id ]],
+                        [ 'match_phrase' =>  [ 'category_subdomain_id' => '' ]],
+                        [ 'match' =>  [ 'keywords' => '' ]],
+                    ],
+                ]
+            ],
+            'highlight' => [
+                'pre_tags' => ['<span class="font-weight-bold">'],
+                'post_tags' => ['</span>'],
+                "number_of_fragments" => 3,
+                'fields' => [
+                    'publication_title' => new \stdClass(),
+                    'category_field_id' => new \stdClass(),
+                    'category_domain_id' => new \stdClass(),
+                    'category_subdomain_id' => new \stdClass(),
+                    'keywords' => new \stdClass(),
                 ]
             ]
         ]
     ];
 
-    $research = Research::complexSearch($params);
+
+    $research = ResearchArticle::complexSearch($params);
 
     if ( $research->getHits()['hits'] != null )
     {
@@ -86,14 +143,14 @@ Route::get('/search', function() {
 
         }
 
-        if ( array_key_exists('authors', $highlight) )
+        /*if ( array_key_exists('authors', $highlight) )
         {
             $authors = $highlight['authors'][0];
 
             foreach ($research as $key => $value) {
                 $research[$key]['authors'] = $authors;
             }
-        }
+        }*/
     }
 
     return view('search', compact('research'));
@@ -124,3 +181,17 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function()
     Route::post('/category/subdomain/import', 'CategorySubdomainController@import')->name('subdomain.import');
 
 });
+
+/*Route::get('/array', function(){
+    $data_authors = explode(',', "amante,gogo,lababa,adante");
+    $authors = array();
+
+    foreach ($data_authors as $key => $value) {
+        $authors[$key] = [
+            'id'   => null,
+            'name' => $value,
+        ];
+    }
+
+    return json_encode($authors);
+});*/

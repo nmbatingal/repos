@@ -112,11 +112,11 @@
                                 <div class="col-md-9">
                                     <div class="radio-list">
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" id="accessOpen" name="access_type" value="Open Access" class="custom-control-input">
+                                            <input type="radio" id="accessOpen" name="access_type" value="0" class="custom-control-input">
                                             <label class="custom-control-label" for="accessOpen">Open Access</label>
                                         </div>
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" id="accessSubscribe" name="access_type" value="Subscribe" class="custom-control-input">
+                                            <input type="radio" id="accessSubscribe" name="access_type" value="1" class="custom-control-input">
                                             <label class="custom-control-label" for="accessSubscribe">Subscribe</label>
                                         </div>
                                     </div>
@@ -168,11 +168,11 @@
                                 <div class="col-md-9">
                                     <div class="radio-list">
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" id="statusOngoing" name="status" value="Ongoing" class="custom-control-input">
+                                            <input type="radio" id="statusOngoing" name="status" value="0" class="custom-control-input">
                                             <label class="custom-control-label" for="statusOngoing">Ongoing</label>
                                         </div>
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" id="statusCompleted" name="status" value="Completed" class="custom-control-input">
+                                            <input type="radio" id="statusCompleted" name="status" value="1" class="custom-control-input">
                                             <label class="custom-control-label" for="statusCompleted">Completed</label>
                                         </div>
                                     </div>
@@ -253,12 +253,13 @@
             toolbar: [
                 // [groupName, [list of button]]
                 ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
-                ['font', ['fontname', 'color', 'strikethrough', 'superscript', 'subscript']],
+                ['font', ['color', 'strikethrough', 'superscript', 'subscript']],
                 ['tab', ['table', 'hr']],
                 ['para', ['height', 'ul', 'ol', 'paragraph']],
                 ['more', ['fullscreen', 'codeview', 'help']],
             ],
-            disableDragAndDrop: true
+            disableDragAndDrop: true,
+            fontNames: ['Poppins']
         });
 
         $('input.tags-input').tagsinput({

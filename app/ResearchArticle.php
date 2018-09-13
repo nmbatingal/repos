@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Elasticquent\ElasticquentTrait;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +13,11 @@ class ResearchArticle extends Model
 
     public $incrementing = false;
     protected $table = 'research_articles';
+    protected $casts = [
+        'authors' => 'array',
+        'access_type' => 'boolean',
+        'status' => 'boolean',
+    ];
 
     protected $fillable = [
         'publication_title', 
@@ -35,31 +41,24 @@ class ResearchArticle extends Model
     protected $mappingProperties = [
         'publication_title' => [
           'type' => 'text',
-          'analyzer' => 'standard',
         ],
         'authors' => [
           'type' => 'text',
-          'analyzer' => 'standard',
         ],
         'research_content' => [
           'type' => 'text',
-          'analyzer' => 'standard',
         ],
         'keywords' => [
           'type' => 'text',
-          'analyzer' => 'standard',
         ],
         'category_field_id' => [
           'type' => 'text',
-          'analyzer' => 'standard',
         ],
         'category_domain_id' => [
           'type' => 'text',
-          'analyzer' => 'standard',
         ],
         'category_subdomain_id' => [
           'type' => 'text',
-          'analyzer' => 'standard',
         ],
         'project_duration_start' => [
           'type' => 'date',
@@ -69,25 +68,23 @@ class ResearchArticle extends Model
         ],
         'funding_agency' => [
           'type' => 'text',
-          'analyzer' => 'standard',
         ],
         'project_cost' => [
           'type' => 'text',
-          'analyzer' => 'standard',
         ],
         'access_type' => [
-          'type' => 'text',
-          'analyzer' => 'standard',
+          'type' => 'keyword',
         ],
         'status' => [
-          'type' => 'text',
-          'analyzer' => 'standard',
+          'type' => 'keyword',
         ],
         'created_at' => [
           'type' => 'date',
+          "format"=> "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis",
         ],
         'updated_at' => [
           'type' => 'date',
+          "format"=> "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis",
         ],
     ];
     
@@ -159,5 +156,17 @@ class ResearchArticle extends Model
     public function accessType()
     {
         return $this->hasOne('App\AccessType', 'access_type', 'access_type');
+    }
+
+    // Get research posted on
+    public function getPostedOnAttribute()
+    {
+        if ( $this->attributes['created_at'] != $this->attributes['updated_at'] ) 
+        {
+            // return $this->updated_at;
+        }
+
+        $date = date("F Y", strtotime( $this->attributes['created_at'] ));
+        return $date;
     }
 }

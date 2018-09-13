@@ -39,7 +39,7 @@
                 <!-- Search -->
                 <!-- ============================================================== -->
                 @if (!Request::is('/') && !Route::is('register') && !Route::is('login'))
-                    <li class="nav-item">
+                    <li class="nav-item" style="display: none">
                         <form id="searchForm" class="app-search d-none d-md-block d-lg-block" action="{{ url('search') }}" method="get">
                             <div class="input-group">
                                 <input 

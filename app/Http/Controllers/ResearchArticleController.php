@@ -53,8 +53,18 @@ class ResearchArticleController extends Controller
         $research = new ResearchArticle;
         $category_id = explode(',', $request->categoryDomain);
 
+        /*** AUTHORS ARRAY SETUP ***/
+        $data_authors = explode(',', $request->authors);
+        $authors = array();
+        foreach ($data_authors as $key => $value) {
+            $authors[$key] = [
+                'id'   => $key,
+                'name' => $value,
+            ];
+        }
+
         $research->publication_title = $request->title;
-        $research->authors = $request->authors;
+        $research->authors = json_encode($authors);
         $research->research_content = $request->research_content;
         $research->keywords = $request->keywords;
         $research->category_field_id = $category_id[0];
@@ -81,7 +91,7 @@ class ResearchArticleController extends Controller
         if ( $research->save() ) {
 
             if ( $request->hasFile('research_file') ) {
-                $request->research_file->storeAs('public/users/'. Auth::user()->id .'/research/'.$research->id, $filename);
+                $request->research_file->storeAs('public/research_file/'.$research->id, $filename);
             }
 
             $research->category_field_id = $research->categoryField->category_field;
@@ -100,9 +110,13 @@ class ResearchArticleController extends Controller
      * @param  \App\ResearchArticle  $researchArticle
      * @return \Illuminate\Http\Response
      */
-    public function show(ResearchArticle $researchArticle)
+    public function show(ResearchArticle $research)
     {
-        //
+        // $research = ResearchArticle::findOrFail($id);
+        // $research = $researchArticle;
+        return view('research.show', compact('research'));
+
+        // return $research;
     }
 
     /**

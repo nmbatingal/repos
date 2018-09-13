@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Research;
+use App\ResearchArticle;
+use App\CategoryField;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -25,7 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $research = Research::all();
-        return view('home', compact('research'));
+        $research = ResearchArticle::all();
+        $fields = CategoryField::with('categoryDomains')->get();
+        return view('home', compact('research', 'fields'));
     }
 }
