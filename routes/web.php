@@ -95,20 +95,28 @@ Route::get('/search', function(Request $request) {
     }*/
 
     $publication_title = $request->get('title');
-    $category_field_id = $request->get('domain');
-    $category_domain_id = $request->get('domain');
-    $category_subdomain_id = $request->get('subdomain');
 
-    $params = [
+    $category = explode(',', $request->get('domain'));
+    $category_field  = $category[0];
+    $category_domain =  $category[1] > 0 ? $category[1] : '';
+    $category_subdomain = $request->get('subdomain');
+
+    /*$params = [
         'body' => [
             'query' => [
                 'bool' => [
                     'should' => [
-                        [ 'match' =>  [ 'publication_title' => '' ]],
-                        [ 'match_phrase' =>  [ 'category_field_id' => $category_field_id ]],
-                        [ 'match_phrase' =>  [ 'category_domain_id' => $category_field_id ]],
-                        [ 'match_phrase' =>  [ 'category_subdomain_id' => '' ]],
-                        [ 'match' =>  [ 'keywords' => '' ]],
+                        [ 'match' =>  [ 'publication_title' => '' ] ],
+                        [ 'bool' => [
+                            'should' => [
+                                [ 'match' =>  [ 'category_field.id' => $category_field ] ],
+                            ]
+                          ]
+                        ],
+                        // [ 'match_phrase' =>  [ 'category_field.id' => $category_field ] ],
+                        // [ 'match_phrase' =>  [ 'category_domain.id' => '' ] ],
+                        // [ 'match' =>  [ 'category_subdomain.id' => $category_subdomain ]],
+                        // [ 'match' =>  [ 'keywords' => '' ]],
                     ],
                 ]
             ],
@@ -118,9 +126,98 @@ Route::get('/search', function(Request $request) {
                 "number_of_fragments" => 3,
                 'fields' => [
                     'publication_title' => new \stdClass(),
-                    'category_field_id' => new \stdClass(),
-                    'category_domain_id' => new \stdClass(),
-                    'category_subdomain_id' => new \stdClass(),
+                    //'category_field.id' => new \stdClass(),
+                    //'category_domain.id' => new \stdClass(),
+                    //'category_subdomain.id' => new \stdClass(),
+                    'keywords' => new \stdClass(),
+                ]
+            ]
+        ]
+    ];*/
+
+    /*$params = [
+        'body' => [
+            'query' => [
+                'bool' => [
+                    /*'filter' => [
+                        'bool' => [
+                            'should' => [
+                                [ 'match' => [ 'publication_title' => 'dominant' ] ],
+                            ],
+                        ],
+                    ],
+                    'should' => [
+                        [ 'term' =>  [ 'category_field.id' => 2 ] ],
+                        [ 'term' =>  [ 'category_domain.id' =>  12 ] ],
+                    ],
+                ],
+
+
+                /*'bool' => [
+                    'should' => [
+                        [ 'match' =>  [ 'publication_title' => '' ] ],
+                        [ 'bool' => [
+                            'should' => [
+                                [ 'match' =>  [ 'category_field.id' => $category_field ] ],
+                            ]
+                          ]
+                        ],
+                        // [ 'match_phrase' =>  [ 'category_field.id' => $category_field ] ],
+                        // [ 'match_phrase' =>  [ 'category_domain.id' => '' ] ],
+                        // [ 'match' =>  [ 'category_subdomain.id' => $category_subdomain ]],
+                        // [ 'match' =>  [ 'keywords' => '' ]],
+                    ],
+                ]
+            ],
+        ]
+    ];*/
+
+    $keywords = '"term" : { "keywords" : "population" }';
+    $title = '""';
+
+    $json = '{
+        "query" : {
+            "bool" : {
+                "filter" : {
+                    '.$keywords.',
+                    '.$title.'
+                }
+            }
+        },
+        "highlight" : {
+            "fields" : {
+                "keywords" : {}
+            }
+        }
+    }';
+
+    /*$params = [
+        'body' => $json,
+    ];*/
+
+    $params = [
+        "body" => [
+            "query" => [
+                "bool" => [
+                    "filter" => [
+                        // "term" => [ "publication_title" => "Dominant Small" ],
+                        // "term" => [ "keywords" => "{}" ],
+                        "bool" => [
+                            "should" => [
+                                [ "match" =>  [ 'publication_title' => "" ] ],
+                                // [ "match" => [ "category_field.category_field" => "Life Science" ] ],
+                                // [ "match" => [ "category_domain.category_domain" => "Environmental Science" ] ],
+                                // [ "match" => [ "category_subdomain.category_subdomain" => "Environmental Science (General)" ] ],
+                                // [ "term" => [ "keywords" => "" ] ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'highlight' => [
+                "number_of_fragments" => 3,
+                'fields' => [
+                    'publication_title' => new \stdClass(),
                     'keywords' => new \stdClass(),
                 ]
             ]
@@ -132,7 +229,7 @@ Route::get('/search', function(Request $request) {
 
     if ( $research->getHits()['hits'] != null )
     {
-        $highlight = $research->getHits()['hits'][0]['highlight'];
+        /*$highlight = $research->getHits()['hits'][0]['highlight'];
         if ( array_key_exists('research_content', $highlight) )
         {
             $abstract = implode("... ", $highlight['research_content']);
@@ -141,7 +238,7 @@ Route::get('/search', function(Request $request) {
                 $research[$key]['research_content'] = $abstract;
             }
 
-        }
+        }*/
 
         /*if ( array_key_exists('authors', $highlight) )
         {
@@ -153,7 +250,8 @@ Route::get('/search', function(Request $request) {
         }*/
     }
 
-    return view('search', compact('research'));
+    // return view('search', compact('research'));
+    return dd($research);
 });
 
 Auth::routes();

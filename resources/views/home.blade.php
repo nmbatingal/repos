@@ -59,7 +59,7 @@
                                                     <option></option>
                                                     @if(!empty($fields))
                                                         @foreach( $fields as $value )
-                                                            <option class="font-bold">{{ $value->category_field }}</option>
+                                                            <option class="font-bold" value="{{ $value->id .',0' }}">{{ $value->category_field }}</option>
                                                             @foreach( $value->categoryDomains as $domain )
                                                                 <option value="{{ $value->id .','. $domain->id }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $domain->category_domain }}</option>
                                                             @endforeach
