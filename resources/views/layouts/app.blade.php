@@ -18,6 +18,30 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="{{ asset('dist/css/style.min.css') }}" rel="stylesheet">
+    <style>
+        .skin-megna .topbar {
+            background: #fb9678;
+        }
+
+        .skin-megna .topbar a ,
+        .skin-megna .topbar .toplink {
+            color: #000000;
+        }
+
+        .topbar .top-navbar .navbar-header {
+            background: none;
+        }
+
+        .topbar .top-navbar .profile-pic span {
+            font-size: 18px;
+            color: #000000;
+        }
+
+        footer {
+            border-top-color: #fb9678 !important;
+        }
+
+    </style>
     @yield('styles')
 </head>
 <body class="horizontal-nav skin-megna fixed-layout">
@@ -34,7 +58,7 @@
         <!-- ============================================================== -->
         <!-- Main wrapper - style you can find in pages.scss -->
         <!-- ============================================================== -->
-        <div id="main-wrapper">
+        <div id="main-wrapper" style="background-color: #fff;">
             <!-- ============================================================== -->
             <!-- Topbar header - style you can find in pages.scss -->
             <!-- ============================================================== -->
@@ -54,7 +78,7 @@
             <!-- ============================================================== -->
             <!-- Page wrapper  -->
             <!-- ============================================================== -->
-            <div class="page-wrapper m-b-40">
+            <div class="page-wrapper" style="background-color: #fff;">
                 <!-- ============================================================== -->
                 <!-- Container fluid  -->
                 <!-- ============================================================== -->

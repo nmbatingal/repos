@@ -94,13 +94,6 @@ Route::get('/search', function(Request $request) {
         ];
     }*/
 
-    $publication_title = $request->get('title');
-
-    $category = explode(',', $request->get('domain'));
-    $category_field  = $category[0];
-    $category_domain =  $category[1] > 0 ? $category[1] : '';
-    $category_subdomain = $request->get('subdomain');
-
     /*$params = [
         'body' => [
             'query' => [
@@ -172,43 +165,23 @@ Route::get('/search', function(Request $request) {
         ]
     ];*/
 
-    $keywords = '"term" : { "keywords" : "population" }';
+    $keywords = $request->has('keywords') ? $request->get('keywords') : "";
     $title = '""';
-
-    $json = '{
-        "query" : {
-            "bool" : {
-                "filter" : {
-                    '.$keywords.',
-                    '.$title.'
-                }
-            }
-        },
-        "highlight" : {
-            "fields" : {
-                "keywords" : {}
-            }
-        }
-    }';
-
-    /*$params = [
-        'body' => $json,
-    ];*/
 
     $params = [
         "body" => [
+            "from" => 0, 
+            "size" => 10,
             "query" => [
                 "bool" => [
                     "filter" => [
-                        // "term" => [ "publication_title" => "Dominant Small" ],
-                        // "term" => [ "keywords" => "{}" ],
                         "bool" => [
                             "should" => [
-                                [ "match" =>  [ 'publication_title' => "" ] ],
+                                // [ "match" =>  [ 'publication_title' => "" ] ],
                                 // [ "match" => [ "category_field.category_field" => "Life Science" ] ],
                                 // [ "match" => [ "category_domain.category_domain" => "Environmental Science" ] ],
                                 // [ "match" => [ "category_subdomain.category_subdomain" => "Environmental Science (General)" ] ],
-                                // [ "term" => [ "keywords" => "" ] ],
+                                [ "term" => [ "keywords" => $keywords ] ],
                             ],
                         ],
                     ],
@@ -250,8 +223,8 @@ Route::get('/search', function(Request $request) {
         }*/
     }
 
-    // return view('search', compact('research'));
-    return dd($research);
+    return view('search', compact('research'));
+    // return dd($research);
 });
 
 Auth::routes();
@@ -275,10 +248,10 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function()
 
     /*** CATEGORY SUBDOMAIN ***/
     Route::resource('/category/subdomain', 'CategorySubdomainController');
+});
+
     Route::post('/category/subdomain/subdomainlist', 'CategorySubdomainController@showSubdomain')->name('subdomain.list');
     Route::post('/category/subdomain/import', 'CategorySubdomainController@import')->name('subdomain.import');
-
-});
 
 /*Route::get('/array', function(){
     $data_authors = explode(',', "amante,gogo,lababa,adante");

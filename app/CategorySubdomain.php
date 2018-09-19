@@ -24,6 +24,12 @@ class CategorySubdomain extends Model
         return $this->belongsTo('App\CategoryDomain', 'category_domain_id');
     }
 
+    // relates to ResearchArticle
+    public function researcharticles()
+    {
+        return $this->hasMany('App\ResearchArticle', 'category_subdomain_id');
+    }
+
     public function scopeOfCategory($query)
     {
         return $query->with('categoryDomain.categoryField');

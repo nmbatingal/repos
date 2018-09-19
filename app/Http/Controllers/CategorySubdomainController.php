@@ -139,9 +139,16 @@ class CategorySubdomainController extends Controller
     /*** JS ***/
     public function showSubdomain(Request $request)
     {
-        $domain_id  = explode( ',', $request->id_domain );
-        $subdomains = CategorySubdomain::where('category_domain_id', $domain_id[1])->get();
-        $data       = view('admin.categorySubdomain.subdomainlist', compact('subdomains'))->render();
+        $data = false; 
+
+        if ( $request->has('id_domain') ) {
+            $domain_id  = explode( ',', $request->id_domain );
+            $subdomains = CategorySubdomain::where('category_domain_id', $domain_id[1])->get();
+
+            if ( count($subdomains) > 0) { 
+                $data = view('admin.categorySubdomain.subdomainlist', compact('subdomains'))->render();
+            }
+        }
 
         if($request->ajax())
         {

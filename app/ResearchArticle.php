@@ -115,7 +115,7 @@ class ResearchArticle extends Model
      */
     public function categoryField()
     {
-        return $this->belongsTo('App\CategoryField', 'category_field_id');
+        return $this->belongsTo('App\CategoryField', 'category_field_id', 'id');
     }
 
     /**
@@ -125,7 +125,7 @@ class ResearchArticle extends Model
      */
     public function categoryDomain()
     {
-        return $this->belongsTo('App\CategoryDomain', 'category_domain_id');
+        return $this->belongsTo('App\CategoryDomain', 'category_domain_id', 'id');
     }
 
     /**
@@ -135,7 +135,7 @@ class ResearchArticle extends Model
      */
     public function categorySubdomain()
     {
-        return $this->belongsTo('App\CategorySubdomain', 'category_subdomain_id');
+        return $this->belongsTo('App\CategorySubdomain', 'category_subdomain_id', 'id');
     }
 
     /**
@@ -168,5 +168,17 @@ class ResearchArticle extends Model
 
         $date = date("F Y", strtotime( $this->attributes['created_at'] ));
         return $date;
+    }
+
+    // Get research filesize to MB
+    public function getFileSizeAttribute()
+    {
+        return $this->human_filesize($this->attributes['filesize']);
+    }
+
+    public static function human_filesize($size, $precision = 2) {
+        
+        for($i = 0; ($size / 1024) > 0.9; $i++, $size /= 1024) {}
+        return round($size, $precision).['B','kB','MB','GB','TB','PB','EB','ZB','YB'][$i];
     }
 }

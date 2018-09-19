@@ -32,89 +32,106 @@
         <!-- Start Page Content -->
         <!-- ============================================================== -->
         <div class="row">
-            <!-- <div class="col-md-3">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                    </div>
-                </div>
-            </div> -->
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-body">
-                        <form action="{{ url('search') }}" method="get" class="form-horizontal p-b-40">
-                            <div class="input-group">
-                                <input 
-                                    type="text" 
-                                    class="form-control form-control-lg" 
-                                    placeholder="Search for research title"
-                                    name="title"
-                                    value="{{ request('title') }}"
-                                    required 
-                                >
-                              <div class="input-group-append">
-                                <button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
-                              </div>
+                        <form role="form" action="{{ url('search') }}" method="GET" class="form-horizontal row m-t-0 p-0">
+                            <div class="col-12">
+                                <div class="form-group row">
+                                    <div class="col-md-1 offset-md-1">
+                                        <input type="text" name="keywords" class="form-control" placeholder="Keywords" value="{{ request('keywords') }}">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <input type="text" name="author" class="form-control" placeholder="Author name">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" name="title" class="form-control" placeholder="Research title">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select class="form-control p-0" name="domain" id="domain" placeholder="Domain">
+                                            <option value="">All Domain</option>
+                                            @if(!empty($fields))
+                                                @foreach( $fields as $value )
+                                                    <option class="font-bold" value="{{ $value->category_field }}" data-subject="{{ $value->id .',0' }}">{{ $value->category_field }}</option>
+                                                    @foreach( $value->categoryDomains as $domain )
+                                                        <option value="{{ $domain->category_domain }}" data-subject="{{ $value->id .','. $domain->id }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $domain->category_domain }}</option>
+                                                    @endforeach
+                                                </optgroup>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select class="form-control p-0" name="subdomain" id="subdomain" disabled>
+                                            <option value="">All Subdomain</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button class="btn btn-info btn-block"><i class="fa fa-search"></i> search</button>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <a href="javascript:void(0)">Advanced search</a>
+                                    </div>
+                                </div>
                             </div>
                         </form>
-
-                        <h4 class="card-title">Search Result For "{{ request('title') }} {{ request('q') }}"</h4>
-                        <h6 class="card-subtitle">About {{ $research->totalHits() }} result ({{ $research->took() / 1000.0 }} seconds)</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <div class="row">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-9">
                         <ul class="search-listing">
                             @forelse($research as $record)
                                 <li>
+                                    <span>Research Article
+                                        <span class="p-l-10 p-r-10">
+                                            @if( $record->status )
+                                                <i class="wi wi-moon-alt-new text-success"></i>
+                                            @else
+                                                <i class="wi wi-moon-alt-full"></i>
+                                            @endif
+                                        </span>
+                                        <i>{!! $record->status ? 'Completed' : 'Ongoing' !!}</i>
+                                    </span>
                                     <h3>
-                                        <a href="{{ route('research.show', ['id' => $record->id]) }}">
+                                        <a href="{{ route('research.show', ['id' => $record->id]) }}" class="text-primary">
                                             <strong>{{ $record->publication_title }}</strong>
                                         </a>
                                     </h3>
-                                    <a href="{{ route('research.show', ['id' => $record->id]) }}" class="search-links">
-                                        {{ route('research.show', ['id' => $record->id]) }}
-                                    </a>
-                                    <br>
-                                        <img src="{{ asset('images/logo/adobe-pdf-icon.png') }}" height="20px" class="p-r-10">
-                                        <span class="text-info">
-                                            <i>{{ $record->access_type ? 'Subscribed and Complimentary' : 'Open Access' }}</i>
-                                        </span>
+                                    <span>
+                                        <a href="javascript:void(0)">{{ $record->category_subdomain_id }}</a>,
+                                        ss
+                                    </span>
                                     <p class="m-t-10">
                                         {!! str_limit($record->research_content, 700) !!}
                                     </p>
-                                    <br>Author: 
+                                    <br>
+                                        <?php $prefix = ''; ?>
                                         @foreach($record->authors as $author) 
-                                            <a href="#" data-q="{{ $author['name'] }}" class="search-links a-links"><u>{!! $author['name'] !!}</u></a>
+                                            <a href="javascript:void(0)" class="text-muted">{{ $prefix }}{!! $author['name'] !!}</a>
+                                            <?php $prefix = ', '; ?>
                                         @endforeach
-                                    <br>Project Status: 
-                                        <a href="javacript:void(0)" class="badge {{ $record->status ? 'badge-success' : 'badge-primary' }} text-white">
-                                        {!! $record->status ? 'Completed' : 'Ongoing' !!}
+                                    <br>
+                                    <div class="p-t-10">
+                                        <img src="{{ asset('images/logo/adobe-pdf-icon.png') }}" height="20px" class="p-r-10">
+                                        <a href="javascript:void(0)" class="text-info">
+                                            PDF file ({{ $record->file_size }})
                                         </a>
-                                    <br>Keywords: 
-                                        @foreach(explode(',', $record->keywords) as $keyword) 
-                                            <a href="#" data-q="{{ $keyword }}" class="badge badge-info text-white a-links">{!! $keyword !!}</a>
-                                        @endforeach
+                                    </div>
                                 </li>
                             @empty
                                 <p>No research articles found</p>
                             @endforelse
                         </ul>
-
-                        <!-- <nav aria-label="Page navigation example" class="m-t-40">
-                            <ul class="pagination">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="javascript:void(0)" tabindex="-1">Previous</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0)">1</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="javascript:void(0)">Next</a>
-                                </li>
-                            </ul>
-                        </nav> -->
-
                     </div>
                 </div>
             </div>
         </div>
-        
         <!-- ============================================================== -->
         <!-- End PAge Content -->
         <!-- ============================================================== -->

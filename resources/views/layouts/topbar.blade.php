@@ -20,7 +20,7 @@
                     <!-- <img src="../assets/images/logo-text.png" alt="homepage" class="dark-logo" /> -->
                     <!-- Light Logo text -->    
                     <!-- <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage" /> -->
-                    <b>RDIC>>></b>
+                    <strong>RDIC>>></strong>
                 </span>
             </a>
         </div>
@@ -60,63 +60,64 @@
             </ul>
             @if (Route::has('login'))
                 <div class="top-right links">
-                    @if (Auth::check())
+                    <!-- ============================================================== -->
+                    <!-- User profile and search -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav my-lg-0">
                         <!-- ============================================================== -->
-                        <!-- User profile and search -->
+                        <!-- Login -->
                         <!-- ============================================================== -->
-                        <ul class="navbar-nav my-lg-0">
+                        <li class="nav-item dropdown u-pro bg-red">
+                            <a class="nav-link waves-effect waves-dark toplink" data-toggle="modal" data-target="#modalLogin" aria-haspopup="true" aria-expanded="false">Researches</a>
+                        </li>
+
+                        @if (Auth::check())
                             <!-- ============================================================== -->
-                            <!-- User Profile -->
+                            <!-- User profile and search -->
                             <!-- ============================================================== -->
-                            <li class="nav-item dropdown u-pro">
-                                <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/users/1.jpg" alt="user" class=""> <span class="hidden-md-down">{{ Auth::user()->firstname }} &nbsp;<i class="fa fa-angle-down"></i></span> </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <!-- text-->
-                                    <a href="javascript:void(0)" class="dropdown-item"><i class="ti-user"></i> My Profile</a>
-                                    <!-- text-->
-                                    <a href="javascript:void(0)" class="dropdown-item"><i class="ti-email"></i> Inbox</a>
-                                    <!-- text-->
-                                    <div class="dropdown-divider"></div>
-                                    <!-- text-->
-                                    <a href="javascript:void(0)" class="dropdown-item"><i class="ti-settings"></i> Account Setting</a>
-                                    <!-- text-->
-                                    <div class="dropdown-divider"></div>
-                                    <!-- text-->
-                                    <a href="{{ route('logout') }}" class="dropdown-item text-danger" onclick="event.preventDefault(); 
-                                        document.getElementById('logout-form').submit();"> <i class="fa fa-power-off"></i> Logout</a>
-                                    <!-- text-->
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        {{ csrf_field() }}
-                                    </form>
-                                </div>
-                            </li>
-                            <!-- ============================================================== -->
-                            <!-- End User Profile -->
-                            <!-- ============================================================== -->
-                            <li class="nav-item right-side-toggle"> <a class="nav-link  waves-effect waves-light" href="javascript:void(0)">
-                                <i class="ti-settings"></i></a>
-                            </li>
-                        </ul>
-                    @else
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
-                        <ul class="navbar-nav my-lg-0">
-                            <!-- ============================================================== -->
-                            <!-- Login -->
-                            <!-- ============================================================== -->
-                            @if (!Route::is('login') )
-                            <li class="nav-item dropdown u-pro bg-red">
-                                <a class="nav-link waves-effect waves-dark" data-toggle="modal" data-target="#modalLogin" aria-haspopup="true" aria-expanded="false">Login</a>
-                            </li>
-                            @endif
+                            <ul class="navbar-nav my-lg-0">
+                                <!-- ============================================================== -->
+                                <!-- User Profile -->
+                                <!-- ============================================================== -->
+                                <li class="nav-item dropdown u-pro">
+                                    <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/users/1.jpg" alt="user" class=""> <span class="hidden-md-down">{{ Auth::user()->firstname }} &nbsp;<i class="fa fa-angle-down"></i></span> </a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <!-- text-->
+                                        <a href="javascript:void(0)" class="dropdown-item"><i class="ti-user"></i> My Profile</a>
+                                        <!-- text-->
+                                        <a href="javascript:void(0)" class="dropdown-item"><i class="ti-email"></i> Inbox</a>
+                                        <!-- text-->
+                                        <div class="dropdown-divider"></div>
+                                        <!-- text-->
+                                        <a href="javascript:void(0)" class="dropdown-item"><i class="ti-settings"></i> Account Setting</a>
+                                        <!-- text-->
+                                        <div class="dropdown-divider"></div>
+                                        <!-- text-->
+                                        <a href="{{ route('logout') }}" class="dropdown-item text-danger" onclick="event.preventDefault(); 
+                                            document.getElementById('logout-form').submit();"> <i class="fa fa-power-off"></i> Logout</a>
+                                        <!-- text-->
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+                                    </div>
+                                </li>
+                                <!-- ============================================================== -->
+                                <!-- End User Profile -->
+                                <!-- ============================================================== -->
+                            </ul>
+                        @else
                             @if (!Route::is('register') )
                                 <li class="nav-item dropdown u-pro bg-red">
-                                    <a class="nav-link waves-effect waves-dark" href="{{ route('register') }}" aria-haspopup="true" aria-expanded="false">Register</a>
+                                    <a class="nav-link waves-effect waves-dark toplink" href="{{ route('register') }}" aria-haspopup="true" aria-expanded="false">Register</a>
                                 </li>
                             @endif
-                        </ul>
-                    @endif
+                            @if (!Route::is('login') )
+                            <li class="nav-item dropdown u-pro bg-red">
+                                <a class="nav-link waves-effect waves-dark toplink" data-toggle="modal" data-target="#modalLogin" aria-haspopup="true" aria-expanded="false">Sign in</a>
+                            </li>
+                            @endif
+                        @endif
+                    </ul>
                 </div>
             @endif
         </div>
