@@ -66,7 +66,7 @@
                                             <div class="card-body">
                                                 <!-- DOWNLOADS ACCESS TYPE VARY -->
                                                 @if( $research->access_type )
-                                                    <a id="pdfHref" href="{{ asset('storage/research_file/'.$research->id.'/'.$research->filename) }}" class="text-info">
+                                                    <a href="{{ asset('storage/research_file/'.$research->id.'/'.$research->filename) }}" class="text-info">
                                                         <img src="{{ asset('images/logo/adobe-pdf-icon.png') }}" height="35px" class="p-r-10"> PDF file ({{ $research->file_size }})
                                                     </a>
                                                 @else
@@ -77,7 +77,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <hr>
                                 </div>
                             </div>
                         </div>
@@ -162,6 +161,7 @@
 
 @if( !$research->access_type )
 <script>
+    var href = $("#pdfHref").attr('href');
     var options = {
         height: '800px',
         pdfOpenParams: {
@@ -171,7 +171,7 @@
         }
     };
 
-    PDFObject.embed("{{ asset('storage/research_file/'.$research->id.'/'.$research->filename) }}", "#pdfViewer", options);
+    PDFObject.embed(href, "#pdfViewer", options);
 </script>
 @endif
 

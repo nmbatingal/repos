@@ -70,7 +70,7 @@
             <!-- Left Sidebar - style you can find in sidebar.scss  -->
             <!-- ============================================================== -->
             @if (Auth::check())
-                @include('layouts.navigation')
+                <!-- include('layouts.navigation') -->
             @endif
             <!-- ============================================================== -->
             <!-- End Left Sidebar - style you can find in sidebar.scss  -->

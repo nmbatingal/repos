@@ -67,9 +67,9 @@
                         <!-- ============================================================== -->
                         <!-- Login -->
                         <!-- ============================================================== -->
-                        <li class="nav-item dropdown u-pro bg-red">
+                        <!-- <li class="nav-item dropdown u-pro bg-red">
                             <a class="nav-link waves-effect waves-dark toplink" data-toggle="modal" data-target="#modalLogin" aria-haspopup="true" aria-expanded="false">Researches</a>
-                        </li>
+                        </li> -->
 
                         @if (Auth::check())
                             <!-- ============================================================== -->
