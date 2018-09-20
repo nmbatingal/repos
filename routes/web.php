@@ -33,7 +33,9 @@ Route::get('/admin', function () {
     return User::reindex();
 });*/
 
-Route::get('/search', function(Request $request) {
+Route::get('/search', 'SearchController@search')->name('search');
+
+Route::get('/search2', function(Request $request) {
 
     /*$params = [
         'body' => [
@@ -166,7 +168,7 @@ Route::get('/search', function(Request $request) {
     ];*/
 
     $keywords = $request->has('keywords') ? $request->get('keywords') : "";
-    $title = '""';
+    $title    = $request->has('title') ? $request->get('title') : "";
 
     $params = [
         "body" => [
@@ -177,7 +179,7 @@ Route::get('/search', function(Request $request) {
                     "filter" => [
                         "bool" => [
                             "should" => [
-                                // [ "match" =>  [ 'publication_title' => "" ] ],
+                                [ "match" =>  [ 'publication_title' => $title ] ],
                                 // [ "match" => [ "category_field.category_field" => "Life Science" ] ],
                                 // [ "match" => [ "category_domain.category_domain" => "Environmental Science" ] ],
                                 // [ "match" => [ "category_subdomain.category_subdomain" => "Environmental Science (General)" ] ],

@@ -85,7 +85,7 @@
                                         <!-- text-->
                                         <a href="javascript:void(0)" class="dropdown-item"><i class="ti-user"></i> My Profile</a>
                                         <!-- text-->
-                                        <a href="javascript:void(0)" class="dropdown-item"><i class="ti-email"></i> Inbox</a>
+                                        <a href="{{ route('research.index') }}" class="dropdown-item"><i class="ti-email"></i> My Researches</a>
                                         <!-- text-->
                                         <div class="dropdown-divider"></div>
                                         <!-- text-->

@@ -31,6 +31,7 @@
         <!-- ============================================================== -->
         <!-- Start Page Content -->
         <!-- ============================================================== -->
+        <!-- search row -->
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -45,20 +46,30 @@
                                         <input type="text" name="author" class="form-control" placeholder="Author name">
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="text" name="title" class="form-control" placeholder="Research title">
+                                        <input type="text" name="title" class="form-control" placeholder="Research title" value="{{ request('title') }}">
                                     </div>
                                     <div class="col-md-2">
                                         <select class="form-control p-0" name="domain" id="domain" placeholder="Domain">
                                             <option value="">All Domain</option>
+
                                             @if(!empty($fields))
+
                                                 @foreach( $fields as $value )
-                                                    <option class="font-bold" value="{{ $value->category_field }}" data-subject="{{ $value->id .',0' }}">{{ $value->category_field }}</option>
+
+                                                    <option class="font-bold" value="{{ $value->category_field }}" data-subject="{{ $value->id .',0' }}">
+                                                        {{ $value->category_field }}
+                                                    </option>
+
                                                     @foreach( $value->categoryDomains as $domain )
+
                                                         <option value="{{ $domain->category_domain }}" data-subject="{{ $value->id .','. $domain->id }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $domain->category_domain }}</option>
+
                                                     @endforeach
                                                 </optgroup>
+
                                                 @endforeach
                                             @endif
+
                                         </select>
                                     </div>
                                     <div class="col-md-2">
@@ -79,12 +90,26 @@
                 </div>
             </div>
         </div>
+
+        <!-- search results row -->
         <div class="row">
             <div class="col-md-10 offset-md-1">
                 <div class="row">
                     <div class="col-md-3">
+                        <div class="card stickyside">
+                            <div class="card-body collapse show">
+                                <h3 class="card-title">{{ $research->count() }} results</h3>
+                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span class="pull-right">sorted by</span>
+                            </div>
+                        </div>
+                        <hr>
                         <ul class="search-listing">
                             @forelse($research as $record)
                                 <li>
@@ -100,32 +125,40 @@
                                     </span>
                                     <h3>
                                         <a href="{{ route('research.show', ['id' => $record->id]) }}" class="text-primary">
-                                            <strong>{{ $record->publication_title }}</strong>
+                                            <strong>{!! $record->publication_title !!}</strong>
                                         </a>
                                     </h3>
                                     <span>
-                                        <a href="javascript:void(0)">{{ $record->category_subdomain_id }}</a>,
-                                        ss
+                                        <a href="javascript:void(0)">{{ $record->category_subdomain['category_subdomain'] }}</a>,
+                                        {{ $record->funding_agency ? $record->funding_agency.' funded, ': '' }}
+                                        {{ $record->project_duration }}
                                     </span>
                                     <p class="m-t-10">
                                         {!! str_limit($record->research_content, 700) !!}
                                     </p>
-                                    <br>
-                                        <?php $prefix = ''; ?>
-                                        @foreach($record->authors as $author) 
-                                            <a href="javascript:void(0)" class="text-muted">{{ $prefix }}{!! $author['name'] !!}</a>
-                                            <?php $prefix = ', '; ?>
+                                    <?php $prefix = ''; ?>
+                                    @foreach($record->authors as $author) 
+                                        <a href="javascript:void(0)" class="text-muted">{{ $prefix }}<u>{!! $author['name'] !!}</u></a>
+                                        <?php $prefix = ', '; ?>
+                                    @endforeach
+                                    <p class="m-b-10">
+                                        @foreach($record->key_word as $keyword)
+                                            <button class="btn btn-xs">{{ $keyword }}</button>
                                         @endforeach
-                                    <br>
-                                    <div class="p-t-10">
+                                    </p>
+                                    <div class="">
                                         <img src="{{ asset('images/logo/adobe-pdf-icon.png') }}" height="20px" class="p-r-10">
                                         <a href="javascript:void(0)" class="text-info">
-                                            PDF file ({{ $record->file_size }})
+                                            Download PDF file ({{ $record->file_size }})
+                                        </a>
+                                        | <a href="javascript:void(0)" class="text-muted">
+                                            {!! $record->access_type ? 'Open Access':'<i class="icon-lock"></i>' !!}
                                         </a>
                                     </div>
                                 </li>
                             @empty
-                                <p>No research articles found</p>
+                                <h4>No research articles found</h4>
+                                <p>Please enter your search terms and run search.</p>
                             @endforelse
                         </ul>
                     </div>
@@ -147,15 +180,40 @@
 @endsection
 
 @section('scripts')
-<script type="text/javascript">
-    $(document).ready( function(){
+<script>
+    // This is for the sticky sidebar    
+    $(".stickyside").stick_in_parent({
+        offset_top: 100
+    });
+    
+    $('.stickyside a').click(function() {
+        $('html, body').animate({
+            scrollTop: $($(this).attr('href')).offset().top - 100
+        }, 500);
+        return false;
+    });
 
-        $("a.a-links").click(function(){
+    $("select[name='domain']").change(function(){
+        
+        var id_domain = $('option:selected', this).data('subject');
+        var token = $("input[name='_token']").val();
 
-            var search = $(this).attr('data-q');
-            var $input = $('input[name=q]').val(search);
+        $.ajax({
+            method: 'POST',
+            url: "{{ route('subdomain.list') }}",
+            data: { id_domain:id_domain, _token:token},
+            success: function(data) {
 
-            $("#searchForm").submit();
+                if ( data.options != false )
+                { 
+                    $("select[name='subdomain'").html('');
+                    $("select[name='subdomain'").html(data.options);
+                    $("select[name='subdomain'").attr('disabled', false);
+                } else {
+                    $("select[name='subdomain'").html('<option>All Subdomain</option>');
+                    $("select[name='subdomain'").attr('disabled', true);
+                }
+            }
         });
     });
 </script>

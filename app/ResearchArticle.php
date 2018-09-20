@@ -159,14 +159,30 @@ class ResearchArticle extends Model
     }
 
     // Get research posted on
+    public function getProjectDurationAttribute()
+    {
+        if ( $this->attributes['project_duration_start'] != null ) 
+        {
+            $start_date = date("F Y", strtotime( $this->attributes['project_duration_start'] ));
+            $end_date   = date("F Y", strtotime( $this->attributes['project_duration_end'] ));
+
+            $duration   = $start_date ." - ". $end_date;
+            return $duration;
+        } else {
+            return "";
+        }
+    }
+
+    // Get research posted on
     public function getPostedOnAttribute()
     {
+        $date = date("F Y", strtotime( $this->attributes['created_at'] ));
+
         if ( $this->attributes['created_at'] != $this->attributes['updated_at'] ) 
         {
-            // return $this->updated_at;
+            $date = date("F Y", strtotime( $this->attributes['updated_at'] ));
         }
 
-        $date = date("F Y", strtotime( $this->attributes['created_at'] ));
         return $date;
     }
 
@@ -180,5 +196,11 @@ class ResearchArticle extends Model
         
         for($i = 0; ($size / 1024) > 0.9; $i++, $size /= 1024) {}
         return round($size, $precision).['B','kB','MB','GB','TB','PB','EB','ZB','YB'][$i];
+    }
+
+    public function getKeyWordAttribute()
+    {
+        $keywords = explode(',', $this->attributes['keywords']);
+        return $keywords;
     }
 }
