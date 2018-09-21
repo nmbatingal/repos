@@ -20,7 +20,8 @@
     <link href="{{ asset('dist/css/style.min.css') }}" rel="stylesheet">
     <style>
         .skin-megna .topbar {
-            background: #fb9678;
+            /* background: #fb9678; */
+            background: #ffffff;
         }
 
         .skin-megna .topbar a ,

@@ -159,16 +159,18 @@
 <!-- PDF Viewer -->
 <script src="{{ asset('pdfobject-master/pdfobject.js') }}"></script>
 
-@if( !$research->access_type )
+@if( $research->access_type )
 <script>
     var href = $("#pdfHref").attr('href');
     var options = {
         height: '800px',
         pdfOpenParams: {
-            toolbar: true,
-            statusbar: true,
+            toolbar: false,
+            statusbar: false,
             view: "FitH"
-        }
+        },
+        fallbackLink: "<p>Your browser doesn't support inline PDFs.</p>",
+        forcePDFJS: true
     };
 
     PDFObject.embed(href, "#pdfViewer", options);
@@ -180,55 +182,6 @@
     // This is for the sticky sidebar    
     $(".stickyside").stick_in_parent({
         offset_top: 100
-    });
-    
-    $('.stickyside a').click(function() {
-        $('html, body').animate({
-            scrollTop: $($(this).attr('href')).offset().top - 100
-        }, 500);
-        return false;
-    });
-
-    // This is auto select left sidebar
-    // Cache selectors
-    // Cache selectors
-    var lastId,
-        topMenu = $(".stickyside"),
-        topMenuHeight = topMenu.outerHeight(),
-        // All list items
-        menuItems = topMenu.find("a"),
-        // Anchors corresponding to menu items
-        scrollItems = menuItems.map(function() {
-            var item = $($(this).attr("href"));
-            if (item.length) {
-                return item;
-            }
-        });
-
-    // Bind click handler to menu items
-
-
-    // Bind to scroll
-    $(window).scroll(function() {
-        // Get container scroll position
-        var fromTop = $(this).scrollTop() + topMenuHeight - 250;
-
-        // Get id of current scroll item
-        var cur = scrollItems.map(function() {
-            if ($(this).offset().top < fromTop)
-                return this;
-        });
-        // Get the id of the current element
-        cur = cur[cur.length - 1];
-        var id = cur && cur.length ? cur[0].id : "";
-
-        if (lastId !== id) {
-            lastId = id;
-            // Set/remove active class
-            menuItems
-                .removeClass("active")
-                .filter("[href='#" + id + "']").addClass("active");
-        }
     });
 </script>
 @endsection

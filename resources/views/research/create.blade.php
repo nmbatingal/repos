@@ -113,11 +113,11 @@
                                     <div class="radio-list">
                                         <div class="custom-control custom-radio">
                                             <input type="radio" id="accessOpen" name="access_type" value="0" class="custom-control-input">
-                                            <label class="custom-control-label" for="accessOpen">Open Access</label>
+                                            <label class="custom-control-label" for="accessOpen">Subscription</label>
                                         </div>
                                         <div class="custom-control custom-radio">
                                             <input type="radio" id="accessSubscribe" name="access_type" value="1" class="custom-control-input">
-                                            <label class="custom-control-label" for="accessSubscribe">Subscribe</label>
+                                            <label class="custom-control-label" for="accessSubscribe">Open Access</label>
                                         </div>
                                     </div>
                                 </div>
@@ -265,19 +265,6 @@
         $('input.tags-input').tagsinput({
             confirmKeys: [44]
         });
-
-        /*$("#researchForm").submit( function() {
-
-            var $content = $('textarea.summernote').val();
-
-            $('<textarea>').attr('type', 'hidden')
-                .attr('name', "clean_content")
-                .attr('value', $content)
-                .appendTo(this);
-
-            return true;
-
-        });*/
 
     });
 </script>

@@ -35,6 +35,37 @@ Route::get('/admin', function () {
 
 Route::get('/search', 'SearchController@search')->name('search');
 
+/*
+ *
+ *
+    // Create folder for elasticsearch snapshot data
+    // Configure elasticsearch.yml
+    // add path.repo: ["/rdic/elasticsearch-6.4.0/backups"]
+    // restart elasticsearch.bat
+
+    PUT /_snapshot/research_backup
+    {
+        "type": "fs",
+        "settings": {
+            "location": "research_backup",
+            "compress": true
+        }
+    }
+
+    // Create snapshot (backup) for elasticsearch data
+    PUT /_snapshot/research_backup/snapshot_1?wait_for_completion=true
+
+    // Get snapshot_* information
+    GET /_snapshot/research_backup/snapshot_1
+
+    // Get all snapshots saved
+    GET /_snapshot/research_backup/_all
+    
+    // Restore snapshot
+    POST /_snapshot/research_backup/snapshot_1/_restore
+ *
+ */
+
 Route::get('/search2', function(Request $request) {
 
     /*$params = [
