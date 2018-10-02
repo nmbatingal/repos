@@ -4,6 +4,7 @@ use App\User;
 use App\ResearchArticle;
 use Illuminate\Http\Request;
 use Elasticsearch\ClientBuilder;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,6 +17,8 @@ use Elasticsearch\ClientBuilder;
 */
 
 Route::get('/', 'HomeController@index')->name('home');
+
+Auth::routes();
 
 Route::get('/admin', function () {
     return view('admin.home');
@@ -260,8 +263,6 @@ Route::get('/search2', function(Request $request) {
     // return dd($research);
 });
 
-Auth::routes();
-
 // Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/research', 'ResearchArticleController');
 
@@ -283,8 +284,8 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function()
     Route::resource('/category/subdomain', 'CategorySubdomainController');
 });
 
-    Route::post('/category/subdomain/subdomainlist', 'CategorySubdomainController@showSubdomain')->name('subdomain.list');
-    Route::post('/category/subdomain/import', 'CategorySubdomainController@import')->name('subdomain.import');
+Route::post('/category/subdomain/subdomainlist', 'CategorySubdomainController@showSubdomain')->name('subdomain.list');
+Route::post('/category/subdomain/import', 'CategorySubdomainController@import')->name('subdomain.import');
 
 /*Route::get('/array', function(){
     $data_authors = explode(',', "amante,gogo,lababa,adante");
@@ -299,3 +300,18 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function()
 
     return json_encode($authors);
 });*/
+
+Route::get('/mail', function() {
+
+    $data = array('name'=>"Sam Jose", "body" => "Test mail");
+    
+    Mail::send('emails.mail', $data, function($message) {
+        $message->to('batingalnarz11@gmail.com', 'Artisans Web')
+                ->subject('Login Verification Key');
+        $message->from('rdic.dostcaraga@gmail.com','Caraga RDIC');
+    });
+
+});
+
+// Route::get('user/activation/{token}', 'Auth\RegisterController@activateUser')->name('user.activate');
+Route::get('user/activation/{token}', 'Auth\LoginController@activateUser')->name('user.activate');
