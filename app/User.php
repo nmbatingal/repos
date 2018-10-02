@@ -90,4 +90,9 @@ class User extends Authenticatable
     {
         return 'users';
     }
+
+    public function verifyUser()
+    {
+        return $this->belongsTo('App\VerifyUser', 'user_id', 'id');
+    }
 }

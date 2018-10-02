@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\AuthActivate\ActivationService;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -28,15 +29,17 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
+    protected $activationService;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(ActivationService $activationService)
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest', ['except' => 'logout']);
+        $this->activationService = $activationService;
     }
 
     public function login(Request $request)
@@ -54,17 +57,44 @@ class LoginController extends Controller
             $login_type => $request->input('login')
         ]);
      
-        if ( Auth::attempt( array_merge($request->only($login_type, 'password'), ['isactive' => 1]), $remember )) {
-            return redirect()->intended($this->redirectPath());
+        if ( Auth::attempt( array_merge($request->only($login_type, 'password')), $remember )) {
+            
+            return $this->authenticated($request, $this->guard()->user());
         }
  
-        return redirect($this->redirectPath())
-            ->withInput()
-            ->withErrors([
-                'login' => 'These credentials do not match our records.',
-            ]);
-
-        return dd($request);
-    
+        return redirect('/login')->with('warning', 'These credentials do not match our records.');
     }
+
+
+
+    public function activateUser($token)
+    {
+        if ($user = $this->activationService->activateUser($token)) {
+            auth()->login($user);
+            return redirect($this->redirectPath());
+        }
+
+        abort(404);
+    }
+
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        if (!$user->isactive) {
+
+            // $this->activationService->sendActivationMail($user);
+            auth()->logout();
+
+            return redirect('/login')->with('warning', 'You need to confirm your account. We have sent you an activation code, please check your email.');
+        }
+
+        return redirect()->intended($this->redirectPath());
+    }
+
 }
