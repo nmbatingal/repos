@@ -31,6 +31,7 @@ class ResearchArticle extends Model
         'project_duration_end',
         'funding_agency',
         'project_cost',
+        'project_location',
         'access_type',
         'filename',
         'filesize',
@@ -70,6 +71,9 @@ class ResearchArticle extends Model
           'type' => 'text',
         ],
         'project_cost' => [
+          'type' => 'text',
+        ],
+        'project_location' => [
           'type' => 'text',
         ],
         'access_type' => [

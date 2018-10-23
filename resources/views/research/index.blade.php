@@ -42,7 +42,7 @@
                             @if ($researches->count() > 0 )
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th>Research ID</th>
                                         <th>Title</th>
                                         <th>Action</th>
                                     </tr>
@@ -52,10 +52,10 @@
                                 @forelse($researches as $research)
                                     <tr>
                                         <td>{{ $research->id }}</td>
-                                        <td>{{ $research->title }}</td>
+                                        <td><h5 class="text-primary">{{ $research->publication_title }}</h5></td>
                                         <td>
                                             <a href="{{ url('/research/'. $research->id ) }}" class="btn btn-sm btn-info"><i class="fa fa-search"></i> View</a>
-                                            <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $research->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-trash"></i> Delete</button>
+                                            <!-- <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $research->id }}" data-token="{{ csrf_token() }}"><i class="fa fa-trash"></i> Delete</button> -->
                                         </td>
                                     </tr>
                                 @empty

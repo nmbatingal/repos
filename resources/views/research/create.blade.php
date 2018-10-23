@@ -163,6 +163,17 @@
 
                             <hr>
 
+                            <!--/row-->
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3">Project Location</label>
+                                <div class="col-md-9">
+                                    <input id="project_location" type="text" class="form-control" name="project_location" value="{{ old('project_location') }}" placeholder="project location...">
+                                    <!-- <small class="form-control-feedback">Press enter to add. </small> -->
+                                </div>
+                            </div>
+
+                            <hr>
+
                             <div class="form-group row p-20">
                                 <label class="control-label text-right col-md-3">Completion Status</label>
                                 <div class="col-md-9">

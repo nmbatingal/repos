@@ -70,6 +70,11 @@
                         <!-- <li class="nav-item dropdown u-pro bg-red">
                             <a class="nav-link waves-effect waves-dark toplink" data-toggle="modal" data-target="#modalLogin" aria-haspopup="true" aria-expanded="false">Researches</a>
                         </li> -->
+                        <li class="nav-item dropdown u-pro bg-red">
+                            <a href="{{ route('browse.index') }}" class="nav-link waves-effect waves-dark toplink">
+                                Research Articles
+                            </a>
+                        </li>
 
                         @if (Auth::check())
                             <!-- ============================================================== -->

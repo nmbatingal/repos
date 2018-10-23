@@ -177,7 +177,6 @@
 </script>
 @endif
 
-
 <script>
     // This is for the sticky sidebar    
     $(".stickyside").stick_in_parent({

@@ -50,7 +50,7 @@
                                     </div>
                                     <div class="col-md-2">
                                         <select class="form-control p-0" name="domain" id="domain" placeholder="Domain">
-                                            <option value="">All Domain</option>
+                                            <option value="">Select Domain</option>
 
                                             @if(!empty($fields))
 

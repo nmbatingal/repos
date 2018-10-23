@@ -265,6 +265,7 @@ Route::get('/search2', function(Request $request) {
 
 // Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/research', 'ResearchArticleController');
+Route::resource('/browse', 'BrowseResearchController');
 
 Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function()
 {
