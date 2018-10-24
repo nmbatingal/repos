@@ -74,6 +74,7 @@ class ResearchArticleController extends Controller
         $research->project_duration_end = $request->project_duration_end.'-01';
         $research->funding_agency = $request->funding_agency;
         $research->project_cost = $request->project_cost;
+        $research->project_location = $request->project_location;
         $research->access_type = $request->access_type;
 
         if ( $request->hasFile('research_file') ) {
