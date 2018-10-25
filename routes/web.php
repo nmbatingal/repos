@@ -316,3 +316,42 @@ Route::get('/mail', function() {
 
 // Route::get('user/activation/{token}', 'Auth\RegisterController@activateUser')->name('user.activate');
 Route::get('user/activation/{token}', 'Auth\LoginController@activateUser')->name('user.activate');
+
+// Geocoder Tutorial
+Route::get('/api/v1/hotels/{id?}', 'HotelController@index');
+Route::post('/api/v1/hotels', 'HotelController@store');
+Route::post('/api/v1/hotels/{id}', 'HotelController@update');
+Route::delete('/api/v1/hotels/{id}', 'HotelController@destroy');
+
+Route::get('/api/v1/coordinates/{name}', function($name) {
+    try {
+        $geocode = Geocoder::geocode("$name, Tanzania")->get();
+
+        return dd($geocode);
+        /*$arrResult = [
+            "latitude" => $geocode->first()->getLatitude(),
+            "longitude" => $geocode->first()->getLongitude(),
+            "bounds" => array(
+                "south" => $geocode->first()->getBounds()->getSouth(),
+                "west" => $geocode->first()->getBounds()->getWest(),
+                "north" => $geocode->first()->getBounds()->getNorth(),
+                "east" => $geocode->first()->getBounds()->getEast()
+            ),
+            "streetNumber" => $geocode->first()->getStreetNumber(),
+            "streetName" => $geocode->first()->getStreetName(),
+            "zipcode" => $geocode->first()->getPostalCode(),
+            "city" => $geocode->first()->getLocality(),
+            "cityDistrict" => $geocode->first()->getSubLocality(),
+            "county" => "",
+            "countyCode" => "",
+            "region" => "",
+            "regionCode" => "",
+            "country" => $geocode->first()->getCountry(),
+            "countryCode" => $geocode->first()->getCountryCode(),
+            "timezone" => $geocode->first()->getTimezone()
+        ];*/
+        // return Response::json($arrResult);
+    } catch (\Exception $e) {
+        echo $e->getMessage();
+    }
+});

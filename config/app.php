@@ -181,6 +181,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Geocoder\Laravel\Providers\GeocoderService::class,
 
     ],
 
@@ -235,7 +236,7 @@ return [
         'Uuid' => Webpatser\Uuid\Uuid::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'Geocoder' => Geocoder\Laravel\Facades\Geocoder::class,
     ],
 
 ];
