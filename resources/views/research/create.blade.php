@@ -171,6 +171,22 @@
                                     <!-- <small class="form-control-feedback">Press enter to add. </small> -->
                                 </div>
                             </div>
+                            <!--/row-->
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3">Latitude</label>
+                                <div class="col-md-9">
+                                    <input id="location_latitude" type="text" class="form-control" name="location_latitude" value="{{ old('location_latitude') }}" placeholder="location latitude...">
+                                    <!-- <small class="form-control-feedback">Press enter to add. </small> -->
+                                </div>
+                            </div>
+                            <!--/row-->
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3">Longitude</label>
+                                <div class="col-md-9">
+                                    <input id="location_longitude" type="text" class="form-control" name="location_longitude" value="{{ old('location_longitude') }}" placeholder="location longtitude...">
+                                    <!-- <small class="form-control-feedback">Press enter to add. </small> -->
+                                </div>
+                            </div>
 
                             <hr>
 

@@ -32,6 +32,8 @@ class ResearchArticle extends Model
         'funding_agency',
         'project_cost',
         'project_location',
+        'location_latitude',
+        'location_longitude',
         'access_type',
         'filename',
         'filesize',
@@ -74,6 +76,12 @@ class ResearchArticle extends Model
           'type' => 'text',
         ],
         'project_location' => [
+          'type' => 'text',
+        ],
+        'location_latitude' => [
+          'type' => 'text',
+        ],
+        'location_longitude' => [
           'type' => 'text',
         ],
         'access_type' => [
@@ -204,7 +212,7 @@ class ResearchArticle extends Model
 
     public function getKeyWordAttribute()
     {
-        $keywords = explode(',', $this->attributes['keywords']);
+        $keywords = explode(',', $this->attribute['keywords']);
         return $keywords;
     }
 }
