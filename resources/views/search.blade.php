@@ -183,6 +183,9 @@
 
 @section('scripts')
 <script>
+    
+    $('.page-wrapper').css({ 'background' : '#ffffff'});
+
     // This is for the sticky sidebar    
     $(".stickyside").stick_in_parent({
         offset_top: 100

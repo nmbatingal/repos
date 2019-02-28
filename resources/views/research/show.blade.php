@@ -161,6 +161,7 @@
 
 @if( $research->access_type )
 <script>
+
     var href = $("#pdfHref").attr('href');
     var options = {
         height: '800px',
@@ -178,6 +179,8 @@
 @endif
 
 <script>
+    $('.page-wrapper').css({ 'background' : '#ffffff'});
+
     // This is for the sticky sidebar    
     $(".stickyside").stick_in_parent({
         offset_top: 100

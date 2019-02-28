@@ -250,6 +250,9 @@
 <script src="{{ asset('bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
 
 <script type="text/javascript">
+    
+    $('.page-wrapper').css({ 'background' : '#ffffff'});
+
     $("select[name='categoryDomain']").change(function(){
         
         var id_domain = $(this).val();

@@ -117,6 +117,8 @@
 </script>
 <script type="text/javascript">
 
+    $('.page-wrapper').css({ 'background' : '#ffffff'});
+    
     $("button.btn-delete").click( function(){
         var token = $(this).data('token');
         var id = $(this).data('id');

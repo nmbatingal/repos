@@ -99,6 +99,9 @@
 <script src="{{ asset('dist/js/custom.min.js') }}"></script>
 <script src="{{ asset('dist/js/pages/jasny-bootstrap.js') }}"></script>
 <script>
+
+    $('.page-wrapper').css({ 'background' : '#ffffff'});
+
     $("select[name='domain']").change(function(){
         
         var id_domain = $('option:selected', this).data('subject');

@@ -215,4 +215,28 @@ class ResearchArticle extends Model
         $keywords = explode(',', $this->attribute['keywords']);
         return $keywords;
     }
+
+    // Get research posted on
+    public function getProjectStartedAttribute()
+    {
+        if ( $this->attributes['project_duration_start'] != null ) 
+        {
+            $start_date = date("Y-F", strtotime( $this->attributes['project_duration_start'] ));
+            return $start_date;
+        } else {
+            return "";
+        }
+    }
+
+    // Get research posted on
+    public function getProjectEndedAttribute()
+    {
+        if ( $this->attributes['project_duration_end'] != null ) 
+        {
+            $start_date = date("Y-F", strtotime( $this->attributes['project_duration_end'] ));
+            return $start_date;
+        } else {
+            return "";
+        }
+    }
 }
