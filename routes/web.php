@@ -16,7 +16,13 @@ use Elasticsearch\ClientBuilder;
 |
 */
 
-Route::get('/', 'HomeController@index')->name('home');
+// Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', function() {
+
+    return view('home2');
+
+})->name('home');
+
 
 Auth::routes();
 
@@ -37,7 +43,6 @@ Route::get('/admin', function () {
 });*/
 
 Route::get('/search', 'SearchController@search')->name('search');
-
 /*
  *
  *
