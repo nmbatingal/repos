@@ -68,8 +68,12 @@ class SearchController extends Controller
         ]);
         */
 
-        // return view('search', compact('research', 'fields'));
-        return json_encode( json_decode( $research[0]->authors ) );
+        foreach ($research as $record) {
+            $record->authors = json_decode($record->authors);
+        }
+
+        return view('search', compact('research', 'fields'));
+        // return json_encode( json_decode( $research[0]->authors ) );
         
         /*
         $params = [
@@ -137,5 +141,16 @@ class SearchController extends Controller
 
         // return view('search', compact('research', 'fields'));
         // return dd($research);
+    }
+
+    public function investments()
+    {
+        $researches = ResearchArticle::all();
+
+        foreach ($researches as $record) {
+            $record->authors = json_decode($record->authors);
+        }
+        
+        return view('rd-table', compact('researches'));
     }
 }

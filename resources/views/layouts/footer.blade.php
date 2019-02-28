@@ -1,3 +1,3 @@
 <footer class="footer">
-    © 2018 Eliteadmin by themedesigner.in
+    © {{ date('Y') }} Curios by ICT-DOST Caraga
 </footer>

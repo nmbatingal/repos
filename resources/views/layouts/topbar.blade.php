@@ -20,7 +20,7 @@
                     <!-- <img src="../assets/images/logo-text.png" alt="homepage" class="dark-logo" /> -->
                     <!-- Light Logo text -->    
                     <!-- <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage" /> -->
-                    <strong>RDIC>>></strong>
+                    <strong>CURIOS</strong>
                 </span>
             </a>
         </div>
@@ -73,6 +73,11 @@
                         <li class="nav-item dropdown u-pro bg-red">
                             <a href="{{ route('browse.index') }}" class="nav-link waves-effect waves-dark toplink">
                                 Research Articles
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown u-pro bg-red">
+                            <a href="{{ route('investments') }}" class="nav-link waves-effect waves-dark toplink">
+                                R&D Investments
                             </a>
                         </li>
 
