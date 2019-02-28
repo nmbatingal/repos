@@ -68,7 +68,8 @@ class SearchController extends Controller
         ]);
         */
 
-        return view('search', compact('research', 'fields'));
+        // return view('search', compact('research', 'fields'));
+        return json_encode( json_decode( $research[0]->authors ) );
         
         /*
         $params = [

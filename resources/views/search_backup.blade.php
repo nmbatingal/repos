@@ -136,13 +136,11 @@
                                     <p class="m-t-10">
                                         {!! str_limit($record->research_content, 700) !!}
                                     </p>
-                                    
                                     <?php $prefix = ''; ?>
                                     @foreach($record->authors as $author) 
                                         <a href="javascript:void(0)" class="text-muted">{{ $prefix }}<u>{!! $author['name'] !!}</u></a>
                                         <?php $prefix = ', '; ?>
                                     @endforeach
-
                                     <p class="m-b-10">
                                         @foreach($record->key_word as $keyword)
                                             <button class="btn btn-xs">{{ $keyword }}</button>

@@ -16,12 +16,12 @@ use Elasticsearch\ClientBuilder;
 |
 */
 
-// Route::get('/', 'HomeController@index')->name('home');
-Route::get('/', function() {
+Route::get('/', 'HomeController@index')->name('home');
+// Route::get('/', function() {
 
-    return view('home2');
+//     return view('home2');
 
-})->name('home');
+// })->name('home');
 
 
 Auth::routes();
