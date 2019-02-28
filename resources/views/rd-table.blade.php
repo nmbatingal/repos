@@ -43,7 +43,8 @@ R&D Investments -
         <!-- ============================================================== -->
         <div class="row page-titles">
             <div class="col-md-5 align-self-center">
-                <h3 class="text-themecolor">Dashboard</h3>
+                <h3 class="text-themecolor font-weight-bold m-b-0">Dashboard</h3>
+                <h5 class="text-themecolor">R&D Investments for {{ request('year') }}</h5>
             </div>
             <div class="col-md-7 align-self-center text-right">
                 <form class="form-horizontal" method="get" action="{{ route('investments') }}">
@@ -84,8 +85,8 @@ R&D Investments -
                         <div class="d-flex flex-row">
                             <div class="round align-self-center round-success"><i class="ti-wallet"></i></div>
                             <div class="m-l-10 align-self-center">
-                                <h3 class="m-b-0">$18090</h3>
-                                <h5 class="text-muted m-b-0">Income</h5></div>
+                                <h3 class="m-b-0">&#x20b1; {{ number_format( $researches->sum('project_cost'), 2 ) }}</h3>
+                                <h5 class="text-muted m-b-0">Total Investments</h5></div>
                         </div>
                     </div>
                 </div>
@@ -98,8 +99,8 @@ R&D Investments -
                         <div class="d-flex flex-row">
                             <div class="round align-self-center round-info"><i class="ti-user"></i></div>
                             <div class="m-l-10 align-self-center">
-                                <h3 class="m-b-0">2690</h3>
-                                <h5 class="text-muted m-b-0">Users</h5></div>
+                                <h3 class="m-b-0">{{ $researches->count() }}</h3>
+                                <h5 class="text-muted m-b-0">Total No. of Projects</h5></div>
                         </div>
                     </div>
                 </div>
@@ -110,10 +111,11 @@ R&D Investments -
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-row">
-                            <div class="round align-self-center round-danger"><i class="ti-calendar"></i></div>
+                            <div class="round align-self-center round-primary"><i class="ti-settings"></i></div>
                             <div class="m-l-10 align-self-center">
-                                <h3 class="m-b-0">20 march</h3>
-                                <h5 class="text-muted m-b-0">My birthday</h5></div>
+                                <h3 class="m-b-0">{{ $researches->groupBy('funding_agency')->count() }}
+                                </h3>
+                                <h5 class="text-muted m-b-0">Total No. of Funding Agencies</h5></div>
                         </div>
                     </div>
                 </div>
@@ -124,10 +126,13 @@ R&D Investments -
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-row">
-                            <div class="round align-self-center round-success"><i class="ti-settings"></i></div>
+                            <div class="round align-self-center round-success"><i class="ti-calendar"></i></div>
                             <div class="m-l-10 align-self-center">
-                                <h3 class="m-b-0">6540</h3>
-                                <h5 class="text-muted m-b-0">pending</h5></div>
+                                <h3 class="m-b-0">{{ $researches->filter(function ($value, $key) 
+                                                        { return $value->status == true ; })->count()
+                                                   }}
+                                </h3>
+                                <h5 class="text-muted m-b-0">Total No. of Projects Completed</h5></div>
                         </div>
                     </div>
                 </div>
@@ -137,66 +142,65 @@ R&D Investments -
         <!-- ============================================================== -->
         <!-- End Info box -->
         <!-- ============================================================== -->
-
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 align-self-center">
+                            <div class="card-body">
+                                <h3>Total Amount of Project Invested</h3>
+                                <div id="totalInvestments" class="chartist-chart" style="height: 450px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- ============================================================== -->
         <!-- TOTAL PROJECT STATUS -->
         <!-- ============================================================== -->
         <div class="row">
-            <div class="col-lg-12 col-md-12">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="row">
-                        <!-- Column -->
-                        <div class="col-lg-5 col-xlg-3 col-md-6">
+                        <div class="col-md-6">
+                            <div class="card-body p-0">
+                                <h4 class="card-title p-10">PROJECT FUNDS</h4>
+                                <div class="table-responsive">
+                                    <table class="table table-striped m-b-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Funding Agency</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $fundingAgencies = $researches->groupBy('funding_agency');
+                                            @endphp
+                                            @forelse ( $fundingAgencies as $research )
+                                            <tr>
+                                                <td>{{ $research[0]->funding_agency }}</td>
+                                                <td><i class="text-muted mdi mdi-briefcase"></i> {{ $research->count() }} project/s</td>
+                                                <td>&#x20b1; {{ number_format( $research->sum('project_cost'), 2 ) }}</td>
+                                            </tr>
+                                            @empty
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                             <div class="card-body">
-                                <h4 class="card-title">Visit source</h4>
-                                <div id="m-piechart" style="width: 100%; height: 278px; -webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;" _echarts_instance_="1551352550065"><div style="position: relative; overflow: hidden; width: 561px; height: 278px;"><div data-zr-dom-id="bg" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 561px; height: 278px; user-select: none;"></div><canvas width="701" height="347" data-zr-dom-id="0" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 561px; height: 278px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="701" height="347" data-zr-dom-id="1" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 561px; height: 278px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas><canvas width="701" height="347" data-zr-dom-id="_zrender_hover_" class="zr-element" style="position: absolute; left: 0px; top: 0px; width: 561px; height: 278px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas></div></div>
-                                <center>
-                                    <ul class="list-inline m-t-20">
-                                        <li>
-                                            <h6 class="text-muted"><i class="fa fa-circle m-r-5 text-success"></i>Mobile</h6> </li>
-                                        <li>
-                                            <h6 class="text-muted"><i class="fa fa-circle m-r-5 text-primary"></i>Desktop</h6> </li>
-                                        <li>
-                                            <h6 class="text-muted"><i class="fa fa-circle m-r-5 text-danger"></i>Tablet</h6> </li>
-                                        <li>
-                                            <h6 class="text-muted"><i class="fa fa-circle m-r-5 text-muted"></i>Other</h6> </li>
-                                    </ul>
-                                </center>
+                                <h4>TOTAL &#x20b1; {{ number_format( $researches->sum('project_cost'), 2 ) }}</h4>
                             </div>
                         </div>
-                        <!-- Column -->
-                        <div class="col-lg-7 col-xlg-9 col-md-6 b-l p-l-0">
-                            <ul class="product-review">
-                                <li>
-                                    <font class="text-muted display-5"><i class="mdi mdi-emoticon-cool"></i></font> <span>
-                                        <h3 class="card-title">Positive Reviews</h3>
-                                        <h6 class="card-subtitle">25547 Reviews</h6> 
-                                    </span>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 65%; height:6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <font class="text-muted display-5"><i class="mdi mdi-emoticon-sad"></i></font> <span>
-                                        <h3 class="card-title">Negative Reviews</h3>
-                                        <h6 class="card-subtitle">5478 Reviews</h6> 
-                                    </span>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 15%; height:6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <font class="text-muted display-5"><i class="mdi mdi-emoticon-neutral"></i></font> <span>
-                                        <h3 class="card-title">Neutral Reviews</h3>
-                                        <h6 class="card-subtitle">457 Reviews</h6> 
-                                    </span>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 35%; height:6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </li>
-                            </ul>
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                <h4 class="card-title p-10">PROJECTS PER YEAR</h4>
+                                <div id="yearlyProjects" class="chartist-chart" style="height: 300px;"></div>
+                            </div>
                         </div>
-                        <!-- Column -->
                     </div>
                 </div>
             </div>
@@ -307,12 +311,101 @@ R&D Investments -
     });
 </script>
 
+<script>
+    $(function () {
+
+        var summaryYears = ({!! $summaryYears !!}),
+            fundingAgencies = ({!! $funding_agencies !!}),
+            labelYears = [],
+            projectCount = [],
+            seriesCost = [];
+
+        console.log(summaryYears);
+
+        $.each (summaryYears, function(index, value) {
+            
+            labelYears.push(value.year.substring(0, 4));
+            projectCount.push(value.project_count);
+            seriesCost.push(value.project_cost);
+            //console.log ("INDEX:  "  +  index  + "VALUE:  "  +  value.year) ;
+        });
+
+        // ============================================================== 
+        // User analytics
+        // ============================================================== 
+        new Chartist.Line('#totalInvestments', {
+            labels: labelYears, 
+            series: [
+                seriesCost,
+                // projectCount
+            ]
+            }, {
+            high: Math.max(seriesCost), 
+            low: 0, 
+            showArea: true,
+            lineSmooth: Chartist.Interpolation.simple({
+                divisor: 10
+            }), 
+            fullWidth: true, 
+            chartPadding: 0, 
+            plugins: [
+                Chartist.plugins.tooltip()
+              ], // As this is axis specific we need to tell Chartist to use whole numbers only on the concerned axis
+            axisY: {
+                onlyInteger: true
+                , offset: 100
+                , labelInterpolationFnc: function (value) {
+                    return value;
+                    // return (value / 1000) + 'k';
+                    // return (value / 1000) + 'k';
+                }
+            },
+        });
+
+        new Chartist.Line('#yearlyProjects', {
+            labels: labelYears, 
+            series: [
+                projectCount
+            ]
+            }, {
+            high: Math.max(seriesCost), 
+            low: 0, 
+            showArea: true,
+            lineSmooth: Chartist.Interpolation.simple({
+                divisor: 10
+            }), 
+            fullWidth: true, 
+            chartPadding: 0, 
+            plugins: [
+                Chartist.plugins.tooltip()
+              ], // As this is axis specific we need to tell Chartist to use whole numbers only on the concerned axis
+            axisY: {
+                onlyInteger: true
+                , offset: 100
+                , labelInterpolationFnc: function (value) {
+                    return value;
+                    // return (value / 1000) + 'k';
+                    // return (value / 1000) + 'k';
+                }
+            },
+        });
+    });
+</script>
+
 <script type="text/javascript">
     var start = 2000;
     var end = new Date().getFullYear();
     var options = "";
-    for(var year = end ; year >= start ; year--){
-      options += "<option>"+ year +"</option>";
+    for(var year = end ; year >= start ; year--)
+    {
+        if ( {{ request('year') }} == year ) 
+        {
+            $option = "<option selected>";
+        } else {
+            $option = "<option>";
+        }
+
+        options += $option + year +"</option>";
     }
     document.getElementById("project_year").innerHTML = options;
 </script>

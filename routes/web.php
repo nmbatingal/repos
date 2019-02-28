@@ -17,8 +17,7 @@ use Elasticsearch\ClientBuilder;
 */
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/investments', 'SearchController@investments')->name('investments');
-Route::get('/investments', 'SearchController@investments')->name('investments');
+Route::get('/investments', 'SearchController@researchDataSummary')->name('investments');
 // Route::get('/', function() {
 
 //     return view('home2');

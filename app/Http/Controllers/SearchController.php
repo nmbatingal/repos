@@ -143,8 +143,10 @@ class SearchController extends Controller
         // return dd($research);
     }
 
-    public function researchDataSummary()
+    public function researchDataSummary(Request $request)
     {
+        $year_id = $request->has('year') ? $request->year : date('Y');
+
         /**
          * PER YEAR SUMMARY
          */
@@ -156,6 +158,7 @@ class SearchController extends Controller
             SUM(project_cost) AS project_cost
         FROM research_articles
         GROUP BY YEAR(project_duration_start)
+        ORDER BY year ASC
 HEREDOC;
         $summaryYears = DB::select($perYearQuery);
 
@@ -169,12 +172,26 @@ HEREDOC;
 HEREDOC;
         $funding_agencies = ResearchArticle::
             select(DB::raw($selectQuery))
-            ->groupBy('funding_agency')
+            // ->where( 'project_duration_start', '=', $year_id )
+            ->groupBy( 'funding_agency' )
             ->get();
 
-        return response()->json([
-            'funding agencies' => $funding_agencies,
-            'summary years' => $summaryYears,
-        ]);
+        // return response()->json([
+        //     'funding agencies' => $funding_agencies,
+        //     'summary years' => $summaryYears,
+        // ]);
+//         $researchesQuery = <<< HEREDOC
+//             SELECT * 
+//             FROM research_articles
+//             WHERE YEAR(project_duration_start) = $year_id
+// HEREDOC;
+
+        $researches = ResearchArticle::whereYear('project_duration_start','=' , $year_id)->get();
+
+        return view('rd-table', [
+                        'researches'       => $researches,
+                        'funding_agencies' => json_encode($funding_agencies),
+                        'summaryYears'     => json_encode($summaryYears),
+                    ]);
     }
 }
