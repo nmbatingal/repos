@@ -148,17 +148,16 @@ class SearchController extends Controller
         /**
          * PER YEAR SUMMARY
          */
-        
-         /*
+
         $perYearQuery = <<< HEREDOC
-        SELECT 
+        SELECT
             project_duration_start AS year,
-            COUNT(*) AS project_count
+            COUNT(*) AS project_count,
+            SUM(project_cost) AS project_cost
         FROM research_articles
         GROUP BY YEAR(project_duration_start)
 HEREDOC;
         $summaryYears = DB::select($perYearQuery);
-        */
 
         /**
          * FUNDING AGENCIES
@@ -175,7 +174,7 @@ HEREDOC;
 
         return response()->json([
             'funding agencies' => $funding_agencies,
-            // 'summary years' => $summaryYears,
+            'summary years' => $summaryYears,
         ]);
     }
 }
