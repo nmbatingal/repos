@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\ResearchArticle;
 use App\CategoryField;
+
+use App\CategoryDomain;
+use App\CategorySubdomain;
+
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -19,9 +23,54 @@ class SearchController extends Controller
 
         $keywords = $request->has('keywords') ? $request->get('keywords') : "";
         $title    = $request->has('title') ? $request->get('title') : "";
-        $domain   = $request->has('domain') ? $request->get('domain') : "";
-        $subdomain   = $request->has('subdomain') ? $request->get('subdomain') : "";
+        $authors = $request->has('author') ? $request->get('author') : "";
 
+        $domainIds = [];
+        $subDomainIds = [];
+
+        if($request->has('domain')) {
+            
+            $domainName = $request->get('domain');
+            $domainIds = CategoryDomain::
+                where('category_domain', 'like', '%'.$domainName.'%')->pluck('id');
+
+        } else if($request->has('subdomain')) {
+
+            $subDomainName = $request->get('subdomain');
+            $subDomainIds = CategorySubdomain::
+                where('category_subdomain', 'like', '%'.$subDomainName.'%')->pluck('id'); 
+        }
+
+        // 'categoryField.categoryDomains.categorySubdomains'
+
+        $research = ResearchArticle::
+            where([
+                ['keywords', 'like', "%".$keywords."%"],
+                ['publication_title', 'like', "%".$title."%"],
+                ['authors', 'like', "%".$authors."%"],
+            ])
+            ->when($domainIds, function($query, $domainIds){
+                return $query->whereIn('category_domain_id', $domainIds);
+            })
+            ->when($subDomainIds, function($query, $subDomainIds){
+                return $query->whereIn('category_subdomain_id', $subDomainIds);
+            })
+            ->get();
+        
+
+        // Uncomment to test filtered Research Articles output in JSON.
+        /*
+        return response()->json([
+            'articles' => $researchArticles,
+            'article count' => count($researchArticles),
+            'domainIds' => $domainIds,
+            'subDomainIds' => $subDomainIds,
+        ]);
+        */
+
+        return view('search', compact('research', 'fields'));
+        
+        /*
         $params = [
             "body" => [
                 "from" => 0, 
@@ -83,8 +132,9 @@ class SearchController extends Controller
 
             }
         }
+        */
 
-        return view('search', compact('research', 'fields'));
+        // return view('search', compact('research', 'fields'));
         // return dd($research);
     }
 }
