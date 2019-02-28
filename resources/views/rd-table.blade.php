@@ -398,15 +398,10 @@ R&D Investments -
     var options = "";
     for(var year = end ; year >= start ; year--)
     {
-        if ( {{ request('year') }} == year ) 
-        {
-            $option = "<option selected>";
-        } else {
-            $option = "<option>";
-        }
-
-        options += $option + year +"</option>";
+        options += "<option>" + year +"</option>";
     }
     document.getElementById("project_year").innerHTML = options;
+
+    $('#project_year option:contains("{!! request("year") !!}")').prop('selected', true);
 </script>
 @endsection
