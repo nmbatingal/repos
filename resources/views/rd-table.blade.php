@@ -46,7 +46,7 @@ R&D Investments -
                 <h3 class="text-themecolor">Dashboard</h3>
             </div>
             <div class="col-md-7 align-self-center text-right">
-                <form class="form-horizontal" method="get">
+                <form class="form-horizontal" method="get" action="{{ route('investments') }}">
                     <div class="row">
                         <div class="offset-md-7 col-md-3 p-r-0">
                             <select id="project_year" class="form-control" name="year">
