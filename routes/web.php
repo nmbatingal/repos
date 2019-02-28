@@ -45,6 +45,7 @@ Route::get('/admin', function () {
 });*/
 
 Route::get('/search', 'SearchController@search')->name('search');
+Route::get('/research_summary', 'SearchController@researchDataSummary')->name('research_data_summary');
 /*
  *
  *

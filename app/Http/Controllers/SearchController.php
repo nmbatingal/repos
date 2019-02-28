@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\ResearchArticle;
 use App\CategoryField;
-
 use App\CategoryDomain;
 use App\CategorySubdomain;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -143,14 +143,38 @@ class SearchController extends Controller
         // return dd($research);
     }
 
-    public function investments()
+    public function researchDataSummary()
     {
-        $researches = ResearchArticle::all();
+        /**
+         * PER YEAR SUMMARY
+         */
 
-        foreach ($researches as $record) {
-            $record->authors = json_decode($record->authors);
-        }
-        
-        return view('rd-table', compact('researches'));
+        $perYearQuery = <<< HEREDOC
+        SELECT
+            project_duration_start AS year,
+            COUNT(*) AS project_count,
+            SUM(project_cost) AS project_cost
+        FROM research_articles
+        GROUP BY YEAR(project_duration_start)
+HEREDOC;
+        $summaryYears = DB::select($perYearQuery);
+
+        /**
+         * FUNDING AGENCIES
+         *  */
+        $selectQuery = <<< HEREDOC
+            funding_agency AS name, 
+            COUNT(*) AS research_count, 
+            SUM(project_cost) as project_costs
+HEREDOC;
+        $funding_agencies = ResearchArticle::
+            select(DB::raw($selectQuery))
+            ->groupBy('funding_agency')
+            ->get();
+
+        return response()->json([
+            'funding agencies' => $funding_agencies,
+            'summary years' => $summaryYears,
+        ]);
     }
 }
