@@ -175,7 +175,7 @@ HEREDOC;
 
         return response()->json([
             'funding agencies' => $funding_agencies,
-            'summary years' => $summaryYears,
+            // 'summary years' => $summaryYears,
         ]);
     }
 }
