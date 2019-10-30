@@ -4,7 +4,7 @@
         <!-- Logo -->
         <!-- ============================================================== -->
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{ url('/') }}">
+            <a class="navbar-brand" href="http://127.0.0.1:8000/">
                 <!-- Logo icon -->
                 <b>
                     <!-- <i class="wi wi-sunset"></i> -->
@@ -116,7 +116,7 @@
                                 <!-- ============================================================== -->
                             </ul>
                         @else
-                            @if (!Route::is('register') )
+                            <!-- @if (!Route::is('register') )
                                 <li class="nav-item dropdown u-pro bg-red">
                                     <a class="nav-link waves-effect waves-dark toplink" href="{{ route('register') }}" aria-haspopup="true" aria-expanded="false">Register</a>
                                 </li>
@@ -125,7 +125,7 @@
                             <li class="nav-item dropdown u-pro bg-red">
                                 <a class="nav-link waves-effect waves-dark toplink" data-toggle="modal" data-target="#modalLogin" aria-haspopup="true" aria-expanded="false">Sign in</a>
                             </li>
-                            @endif
+                            @endif -->
                         @endif
                     </ul>
                 </div>

@@ -237,7 +237,7 @@ R&D Investments -
                                 <tbody>
                                     @forelse ( $researches as $research )
                                         <tr>
-                                            <td><a href="javascript:void(0)" class="link"> {{ $research->publication_title }}</a></td>
+                                            <td><a href="{{ route('research.show', $research->id) }}" class="link" target="_blank"> {{ $research->publication_title }}</a></td>
                                             <td>{{ strtoupper($research->funding_agency) }}</td>
                                             <td><span class="text-muted">{{ $research->projectStarted}}</span></td>
                                             <td><span class="text-muted">{{ $research->projectEnded}}</span></td>
