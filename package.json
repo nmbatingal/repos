@@ -14,7 +14,7 @@
     "bootstrap": "^4.5.0",
     "cross-env": "^5.2.1",
     "jquery": "^3.5.1",
-    "laravel-mix": "^1.0",
+    "laravel-mix": "^6.0",
     "lodash": "^4.17.19",
     "tether": "^1.4.7",
     "vue": "^2.6.11"
